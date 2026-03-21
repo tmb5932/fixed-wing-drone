@@ -25,7 +25,7 @@ typedef struct {
 typedef struct {
     uint32_t id;
     operator_t operators[MAX_OPERATORS];
-} group_t;
+} output_group_t;
 
 typedef enum {
     SERVO_TYPE,
@@ -42,9 +42,9 @@ uint32_t servo_angle_to_compare(int angle);
 
 int starting_to_pulse_width(item_type_t type, comparator_starting_value_t val);
 
-int add_operator(group_t* group_ptr, mcpwm_timer_handle_t timer);
+void add_operator(output_group_t* group_ptr, int op_idx, mcpwm_timer_handle_t timer);
 
-int add_gen_cmpr(operator_t* operator_ptr, int gpio_num, item_type_t output_type, comparator_starting_value_t starting_pulse_width);
+void add_gen_cmpr(operator_t* operator_ptr, int idx, int gpio_num, item_type_t output_type, comparator_starting_value_t starting_pulse_width);
 
 void initialize_timer(mcpwm_timer_handle_t* timer_ptr, int group_id, uint32_t resolution, uint32_t period);
 
@@ -52,7 +52,7 @@ void mcpwm_timer_start(mcpwm_timer_handle_t* timer_ptr);
 
 void mcpwm_timer_stop(mcpwm_timer_handle_t* timer_ptr);
 
-group_t create_group(int id);
+output_group_t create_group(int id);
 
 void update_comparator_value(mcpwm_cmpr_handle_t comparator, int new_val);
 

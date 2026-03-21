@@ -36,21 +36,16 @@ int starting_to_pulse_width(item_type_t type, comparator_starting_value_t val)
 
 /**
  * Creates and adds a new operator to the given group, running off the given timer.
- * 
- * Returns the index of the newly created operator.
 */
-int add_operator(group_t* group_ptr, mcpwm_timer_handle_t timer)
-{
-    // Find first empty operator spot in group
-    int op_idx = -1;
-    for (int i = 0; i < MAX_OPERATORS; i++) {
-        if (group_ptr->operators[i].op == NULL) {
-            op_idx = i;
-            break;
-        }
+void add_operator(output_group_t* group_ptr, int op_idx, mcpwm_timer_handle_t timer)
+{   
+    if (op_idx < 0 || op_idx >= SOC_MCPWM_OPERATORS_PER_GROUP) {
+        ESP_LOGE("MCPWM", "Generator/comparator index out of range [0, %d).", SOC_MCPWM_GENERATORS_PER_OPERATOR);
+        abort();
     }
-    if (op_idx == -1) {
-        ESP_LOGE("MCPWM", "No free operator slot in group %lu", (unsigned long)group_ptr->id);
+
+    if (group_ptr->operators[op_idx].op != NULL) {
+        ESP_LOGE("MCPWM", "Given operator index not free: %d", op_idx);
         abort();
     }
 
@@ -64,8 +59,6 @@ int add_operator(group_t* group_ptr, mcpwm_timer_handle_t timer)
     ESP_ERROR_CHECK(mcpwm_operator_connect_timer(*op_handle, timer));
 
     group_ptr->operators[op_idx].connected_timer = timer;
-
-    return op_idx;
 }
 
 /**
@@ -73,18 +66,15 @@ int add_operator(group_t* group_ptr, mcpwm_timer_handle_t timer)
  * 
  * Returns the index of the added comparator / generator (they always match index)
 */
-int add_gen_cmpr(operator_t* operator_ptr, int gpio_num, item_type_t output_type, comparator_starting_value_t starting_pulse_width)
+void add_gen_cmpr(operator_t* operator_ptr, int idx, int gpio_num, item_type_t output_type, comparator_starting_value_t starting_pulse_width)
 {
-    int idx = -1;
-    for (int i = 0; i < MAX_GENERATORS; i++) {
-        if (operator_ptr->comparators[i] == NULL) {
-            idx = i;
-            break;
-        }
+    if (idx < 0 || idx >= SOC_MCPWM_GENERATORS_PER_OPERATOR) {
+        ESP_LOGE("MCPWM", "Generator/comparator index %d out of range [0, %d).", idx, SOC_MCPWM_GENERATORS_PER_OPERATOR);
+        abort();
     }
 
-    if (idx == -1) {
-        ESP_LOGE("MCPWM", "No free generator/comparator slot in operator");
+    if (operator_ptr->comparators[idx] != NULL) {
+        ESP_LOGE("MCPWM", "Generator/comparator slot already in use.");
         abort();
     }
 
@@ -110,8 +100,6 @@ int add_gen_cmpr(operator_t* operator_ptr, int gpio_num, item_type_t output_type
 
     ESP_ERROR_CHECK(mcpwm_generator_set_action_on_compare_event(operator_ptr->generators[idx],
                     MCPWM_GEN_COMPARE_EVENT_ACTION(MCPWM_TIMER_DIRECTION_UP, operator_ptr->comparators[idx], MCPWM_GEN_ACTION_LOW)));
-
-    return idx;
 }
 
 /**
@@ -150,14 +138,14 @@ void mcpwm_timer_stop(mcpwm_timer_handle_t* timer_ptr)
 /**
  * Create a MCPWM group for the given ID.
 */
-group_t create_group(int id)
+output_group_t create_group(int id)
 {
     if (id < 0 || id >= SOC_MCPWM_GROUPS) {
         ESP_LOGE("MCPWM", "Invalid group id: %d", id);
         abort();
     }
 
-    group_t group = {0};
+    output_group_t group = {0};
     group.id = id;
     return group;
 }
