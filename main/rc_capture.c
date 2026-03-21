@@ -2,6 +2,7 @@
 #include "rc_capture.h"
 
 static const char *TAG = "RC_CAPTURE";
+#define US_PER_SEC (1000000ULL)
 
 /**
  * Interrupt that fires every time edge is found
@@ -11,11 +12,19 @@ static bool rc_capture_cb(mcpwm_cap_channel_handle_t channel, const mcpwm_captur
     rc_input_t* in = (rc_input_t*) user_data;
 
     if (edata->cap_edge == MCPWM_CAP_EDGE_POS) { // rising edge
-        in->last_rise_us = edata->cap_value;
+        in->last_rise_ticks = edata->cap_value;
         in->got_rise = true;
     } else if (edata->cap_edge == MCPWM_CAP_EDGE_NEG && in->got_rise) { // falling edge
-        in->pulse_width_us = edata->cap_value - in->last_rise_us;
+        uint32_t width_ticks = edata->cap_value - in->last_rise_ticks;
         in->got_rise = false;
+
+        // Convert ticks to microseconds using the actual capture timer resolution
+        uint32_t width_us = (uint32_t)(((uint64_t)width_ticks * US_PER_SEC) / in->capture_resolution_hz);
+
+        // Safety limiter
+        if (width_us >= 800 && width_us <= 2200) {
+            in->pulse_width_us = width_us;
+        }
     }
 
     return false; // no task wake needed
@@ -59,9 +68,13 @@ void rc_capture_add_channel(rc_capture_group_t *cap, int idx, int gpio_num)
         abort();
     }
 
+    uint32_t actual_resolution_hz = 0;
+    ESP_ERROR_CHECK(mcpwm_capture_timer_get_resolution(cap->timer, &actual_resolution_hz));
+
     cap->inputs[idx].gpio_num = gpio_num;
-    cap->inputs[idx].last_rise_us = 0;
+    cap->inputs[idx].last_rise_ticks = 0;
     cap->inputs[idx].pulse_width_us = 0;
+    cap->inputs[idx].capture_resolution_hz = actual_resolution_hz;
     cap->inputs[idx].got_rise = false;
 
     mcpwm_capture_channel_config_t chan_cfg = {

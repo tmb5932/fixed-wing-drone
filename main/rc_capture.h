@@ -11,8 +11,9 @@
 typedef struct {
     mcpwm_cap_channel_handle_t channel;  // MCPWM capture channel handle
     int gpio_num;                        // GPIO used for this input
+    uint32_t capture_resolution_hz;      // The capture resolution to convert ticks to microseconds
 
-    volatile uint32_t last_rise_us;      // Timestamp of last rising edge
+    volatile uint32_t last_rise_ticks;   // Tick counter of last rising edge
     volatile uint32_t pulse_width_us;    // Measured pulse width
     volatile bool got_rise;              // True after rising edge, before falling edge
 } rc_input_t;
