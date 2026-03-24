@@ -1,4 +1,5 @@
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "rc_capture.h"
 
 static const char *TAG = "RC_CAPTURE";
@@ -26,6 +27,8 @@ static bool rc_capture_cb(mcpwm_cap_channel_handle_t channel, const mcpwm_captur
             in->pulse_width_us = width_us;
         }
     }
+
+    in->last_update_us = esp_timer_get_time();
 
     return false; // no task wake needed
 }

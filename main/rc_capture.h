@@ -15,6 +15,7 @@ typedef struct {
 
     volatile uint32_t last_rise_ticks;   // Tick counter of last rising edge
     volatile uint32_t pulse_width_us;    // Measured pulse width
+    volatile int64_t last_update_us;     // Most recent update in us
     volatile bool got_rise;              // True after rising edge, before falling edge
 } rc_input_t;
 
