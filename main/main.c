@@ -14,8 +14,6 @@ static const char *TAG = "MAIN";
 
 #define CAPTURE_RESOLUTION (1000000) // This is unchangeable on the esp32s3, so its actually not this... its 80MHz
 
-#define MCPWM_CAPTURE_CHANNELS_PER_GROUP (SOC_MCPWM_CAPTURE_TIMERS_PER_GROUP * SOC_MCPWM_CAPTURE_CHANNELS_PER_TIMER)
-#define MCPWM_TRIGGERS_PER_GROUP (SOC_MCPWM_OPERATORS_PER_GROUP * SOC_MCPWM_TRIGGERS_PER_OPERATOR)
 #define NUM_RC_CHANNELS (6)
 
 // GPIO assignments for RC receiver inputs (i swear these are 6 almost neighboring pins)
