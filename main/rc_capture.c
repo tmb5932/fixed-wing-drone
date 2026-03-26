@@ -66,8 +66,8 @@ void rc_capture_add_channel(rc_capture_group_t *cap, int idx, int gpio_num)
         abort();
     }
     
-    if (idx < 0 || idx >= MAX_INPUTS_PER_GROUP) {
-        ESP_LOGE(TAG, "Invalid channel index, max is %d", MAX_INPUTS_PER_GROUP);
+    if (idx < 0 || idx >= MCPWM_CAPTURE_CHANNELS_PER_GROUP) {
+        ESP_LOGE(TAG, "Invalid channel index, max is %d", MCPWM_CAPTURE_CHANNELS_PER_GROUP);
         abort();
     }
 
@@ -109,7 +109,7 @@ void rc_capture_start(rc_capture_group_t *cap)
         abort();
     }
 
-    for (int i = 0; i < MAX_INPUTS_PER_GROUP; i++) {
+    for (int i = 0; i < MCPWM_CAPTURE_CHANNELS_PER_GROUP; i++) {
         if (cap->inputs[i].channel != NULL) {
             ESP_ERROR_CHECK(mcpwm_capture_channel_enable(cap->inputs[i].channel));
         } 

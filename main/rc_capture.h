@@ -6,7 +6,7 @@
 #include "driver/mcpwm_prelude.h"
 
 // Maximum number of capture channels per MCPWM group (hardware limitation)
-#define MAX_INPUTS_PER_GROUP 3
+#define MCPWM_CAPTURE_CHANNELS_PER_GROUP (SOC_MCPWM_CAPTURE_TIMERS_PER_GROUP * SOC_MCPWM_CAPTURE_CHANNELS_PER_TIMER)
 
 typedef struct {
     mcpwm_cap_channel_handle_t channel;  // MCPWM capture channel handle
@@ -21,9 +21,9 @@ typedef struct {
 
 
 typedef struct {
-    int group_id;                                // MCPWM group ID
-    mcpwm_cap_timer_handle_t timer;              // Capture timer for this group
-    rc_input_t inputs[MAX_INPUTS_PER_GROUP];     // RC input channels
+    int group_id;                                           // MCPWM group ID
+    mcpwm_cap_timer_handle_t timer;                         // Capture timer for this group
+    rc_input_t inputs[MCPWM_CAPTURE_CHANNELS_PER_GROUP];    // RC input channels
 } rc_capture_group_t;
 
 /**

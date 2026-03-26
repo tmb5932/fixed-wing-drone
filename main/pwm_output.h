@@ -12,8 +12,9 @@
 #define SERVO_MIN_DEGREE        -90   // Minimum angle
 #define SERVO_MAX_DEGREE        90    // Maximum angle
 
-#define MAX_OPERATORS 3
-#define MAX_GENERATORS 2
+#define MAX_OPERATORS SOC_MCPWM_OPERATORS_PER_GROUP
+#define MAX_GENERATORS SOC_MCPWM_GENERATORS_PER_OPERATOR
+#define MCPWM_TRIGGERS_PER_GROUP (SOC_MCPWM_OPERATORS_PER_GROUP * SOC_MCPWM_TRIGGERS_PER_OPERATOR)
 
 typedef struct {
     mcpwm_oper_handle_t op;
