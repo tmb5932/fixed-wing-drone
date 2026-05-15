@@ -6,13 +6,14 @@
 #include "driver/mcpwm_prelude.h"
 #include "pwm_output.h"
 #include "rc_capture.h"
+#include "imu.h"
 
 static const char *TAG = "MAIN";
 
 #define SERVO_TIMEBASE_RESOLUTION_HZ 1000000  // 1MHz, 1us per tick
 #define SERVO_TIMEBASE_PERIOD        20000    // 20000 ticks, 20ms
 
-#define CAPTURE_RESOLUTION (1000000) // This is unchangeable on the esp32s3, so its actually not this... its 80MHz
+#define CAPTURE_RESOLUTION (80000000) // This is unchangeable on the esp32s3, so its always 80MHz
 
 #define NUM_RC_CHANNELS (6)
 
@@ -51,12 +52,14 @@ static const char *TAG = "MAIN";
 
 static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
+imu_data_t imu_data = {0};
 
 bool autonomous_mode_enabled(uint32_t mode_us) {
     return (mode_us < 1500);
 }
 
 /* INPUT CONVERSIONS (2 groups with 3 capture channels each) */
+
 /**
  * Convert rc channel number to capture channel number
  * The ch parameter should be 0-indexed (subtract 1 from it before passing in) 
@@ -78,6 +81,7 @@ int rc_channel_to_capture_group(int ch)
 }
 
 /* OUTPUT CONVERSIONS (2 groups with 3 operators each, with each operator having 2 triggers) */
+
 /**
  * Convert rc channel number to output group number
  * The ch parameter should be 0-indexed (subtract 1 from it before passing in) 
@@ -179,6 +183,30 @@ void control_task(void *arg) {
 
 void app_main(void)
 {
+    imu_init();
+
+    BaseType_t result = xTaskCreate(
+        imu_loop_capture,
+        "imu_task",
+        4096,
+        &imu_data,
+        5,
+        NULL
+    );
+
+    if (result != pdPASS) {
+        ESP_LOGE(TAG, "Failed to create IMU task! Error: %d", result);
+    } else {
+        ESP_LOGI(TAG, "IMU task created successfully");
+    }
+
+
+    while (1) {
+        ESP_LOGI(TAG, "Roll: %7.2f | Pitch: %7.2f", imu_data.roll, imu_data.pitch);
+        vTaskDelay(pdMS_TO_TICKS(1000 / (int)IMU_SAMPLE_RATE_HZ));
+    }
+
+
     // OUTPUT SETUP
     ESP_LOGI(TAG, "Creating output group 0.");
     out_groups[0] = create_group(0);
