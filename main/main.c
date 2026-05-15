@@ -129,38 +129,109 @@ bool is_stale(rc_input_t input_capture) {
     return (esp_timer_get_time() - input_capture.last_update_us) > 200000;
 }
 
-void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_THROTTLE)].operators[rc_channel_to_output_op(RC_THROTTLE)].comparators[rc_channel_to_output_cmpr(RC_THROTTLE)], ch[RC_THROTTLE]);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_AILERON)].operators[rc_channel_to_output_op(RC_AILERON)].comparators[rc_channel_to_output_cmpr(RC_AILERON)], ch[RC_AILERON]);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_ELEVATOR)].operators[rc_channel_to_output_op(RC_ELEVATOR)].comparators[rc_channel_to_output_cmpr(RC_ELEVATOR)], ch[RC_ELEVATOR]);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_RUDDER)].operators[rc_channel_to_output_op(RC_RUDDER)].comparators[rc_channel_to_output_cmpr(RC_RUDDER)], ch[RC_RUDDER]);
-    // Only using 4 outputs, last 2 aren't even enabled
-    // update_comparator_value(out_groups[rc_channel_to_output_group(5)].operators[rc_channel_to_output_op(5-1)].comparators[rc_channel_to_output_cmpr(5-1)], ch[5-1]);
-    // update_comparator_value(out_groups[rc_channel_to_output_group(6)].operators[rc_channel_to_output_op(6-1)].comparators[rc_channel_to_output_cmpr(6-1)], ch[6-1]);
+/**
+ * Turns given channel number into its matching comparator handle
+ * Returns handle of comparator for given channel
+*/
+mcpwm_cmpr_handle_t channel_to_comparator(int ch) {
+    return out_groups[rc_channel_to_output_group(ch)].operators[rc_channel_to_output_op(ch)].comparators[rc_channel_to_output_cmpr(ch)];
 }
 
-float t = 0.0f;
-float dt = 0.1f;   // controls speed
+void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
+    update_comparator_value(channel_to_comparator(RC_THROTTLE), ch[RC_THROTTLE]);
+    update_comparator_value(channel_to_comparator(RC_AILERON), ch[RC_AILERON]);
+    update_comparator_value(channel_to_comparator(RC_ELEVATOR), ch[RC_ELEVATOR]);
+    update_comparator_value(channel_to_comparator(RC_RUDDER), ch[RC_RUDDER]);
 
-void step_autonomous_pid(void)
-{
-    float val = sinf(t);
-
-    uint32_t pwm = (uint32_t)(1500 + 500 * val);
-
-    t += dt;
-
-    if (t > 2 * M_PI) {
-        t -= 2 * M_PI;
-    }
-
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_THROTTLE)].operators[rc_channel_to_output_op(RC_THROTTLE)].comparators[rc_channel_to_output_cmpr(RC_THROTTLE)], 1000);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_AILERON)].operators[rc_channel_to_output_op(RC_AILERON)].comparators[rc_channel_to_output_cmpr(RC_AILERON)], pwm);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_ELEVATOR)].operators[rc_channel_to_output_op(RC_ELEVATOR)].comparators[rc_channel_to_output_cmpr(RC_ELEVATOR)], pwm);
-    update_comparator_value(out_groups[rc_channel_to_output_group(RC_RUDDER)].operators[rc_channel_to_output_op(RC_RUDDER)].comparators[rc_channel_to_output_cmpr(RC_RUDDER)], pwm);
     // Only using 4 outputs, last 2 aren't even enabled
-    // update_comparator_value(out_groups[rc_channel_to_output_group(5)].operators[rc_channel_to_output_op(5)].comparators[rc_channel_to_output_cmpr(5)], 1500);
-    // update_comparator_value(out_groups[rc_channel_to_output_group(6)].operators[rc_channel_to_output_op(6)].comparators[rc_channel_to_output_cmpr(6)], 1500);
+    // update_comparator_value(channel_to_comparator(5-1), ch[5-1]);
+    // update_comparator_value(channel_to_comparator(6-1), ch[6-1]);
+}
+
+float step_roll_pid(float goal_deg) {
+    static bool first = true;
+    static float integral = 0;
+    static float last_err = 0;
+
+    const float k_p = 0;
+    const float k_i = 0;
+    const float k_d = 0;
+
+    xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
+    float err = goal_deg - imu_data.roll; // in degrees
+    xSemaphoreGive(imu_data_mutex);
+
+
+    if (first) { last_err = err; }
+
+    integral += err * CONTROL_TASK_MS;
+    last_err = err;
+
+    float p = k_p * err;
+    float i = k_i * integral;
+    float d = k_d * ((err - last_err) / CONTROL_TASK_MS);
+
+    return p + i + d;
+}
+
+float step_pitch_pid(float goal_deg) {
+    static bool first = true;
+    static float integral = 0;
+    static float last_err = 0;
+
+    const float k_p = 0;
+    const float k_i = 0;
+    const float k_d = 0;
+
+    xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
+    float err = goal_deg - imu_data.pitch; // in degrees
+    xSemaphoreGive(imu_data_mutex);
+
+    if (first) { last_err = err; }
+
+    integral += err * CONTROL_TASK_HZ;
+    last_err = err;
+
+    float p = k_p * err;
+    float i = k_i * integral;
+    float d = k_d * ((err - last_err) / CONTROL_TASK_HZ);
+
+    return p + i + d;
+}
+
+int clip(int num, int min, int max) {
+    if (num < min) {
+        return min;
+    } else if (num > max) {
+        return max;
+    } else {
+        return num;
+    }
+}
+
+void update_autonomous_outputs(void)
+{
+    update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+
+    const int FLAT = 0;
+    const int MIDDLE_SERVO_VAL = 1500;
+
+    int roll = (int) step_roll_pid(FLAT) + MIDDLE_SERVO_VAL;
+    roll = clip(roll, 1000, 2000);
+    update_comparator_value(channel_to_comparator(RC_AILERON), roll);
+
+    int tilt = (int) step_pitch_pid(FLAT) + MIDDLE_SERVO_VAL;
+    tilt = clip(tilt, 1000, 2000);
+    update_comparator_value(channel_to_comparator(RC_ELEVATOR), tilt);
+
+
+
+
+    update_comparator_value(channel_to_comparator(RC_RUDDER), MIDDLE_SERVO_VAL);
+
+    // Only using 4 outputs, last 2 aren't even enabled
+    // update_comparator_value(channel_to_comparator(5-1), 1500);
+    // update_comparator_value(channel_to_comparator(4-1), 1500);
 }
 
 void control_task(void *arg) {
@@ -171,12 +242,12 @@ void control_task(void *arg) {
         ch[RC_ELEVATOR] = get_channel_pulse_width(RC_ELEVATOR);
         ch[RC_RUDDER] = get_channel_pulse_width(RC_RUDDER);
         ch[RC_SWITCH] = get_channel_pulse_width(RC_SWITCH);
-        // ch[RC_DIAL] = cap_groups[rc_channel_to_capture_group(RC_DIAL)].inputs[rc_channel_to_capture_channel(RC_DIAL)].pulse_width_us;
+        // ch[RC_DIAL] = get_channel_pulse_width(RC_DIAL);
 
         // if not heard from radio in a while, go autonomous. Otherwise we fall from sky...
         bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
         if (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH])) {
-            step_autonomous_pid();
+            update_autonomous_outputs();
         } else {
             // manual pass-through mode from remote controller
             pass_through_inputs(ch);
