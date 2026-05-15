@@ -2,8 +2,6 @@
 #include <math.h>
 #include "esp_log.h"
 #include "driver/i2c.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include "madgwick_wrapper.h"
 #include "imu.h"
 
@@ -11,6 +9,7 @@
 #define ACCEL_SCALE (8192.0f)
 
 static const char *TAG = "IMU";
+SemaphoreHandle_t imu_data_mutex;
 static madgwick_t filter;
 
 // ---- Low level I2C helpers ----
@@ -81,7 +80,7 @@ static void mag_init() {
     ESP_LOGI(TAG, "Magnetometer initialized");
 }
 
-void imu_init() {
+bool imu_init() {
     i2c_bus_init();
     vTaskDelay(pdMS_TO_TICKS(100));
 
@@ -91,7 +90,7 @@ void imu_init() {
     icm_read(ICM20948_WHO_AM_I, &who_am_i, 1);
     if (who_am_i != 0xEA) {
         ESP_LOGE(TAG, "ICM-20948 not found: 0x%02X", who_am_i);
-        return;
+        return false;
     }
     ESP_LOGI(TAG, "ICM-20948 found");
 
@@ -124,8 +123,16 @@ void imu_init() {
     ESP_LOGI(TAG, "IMU initialized");
     mag_init();
 
+    imu_data_mutex = xSemaphoreCreateMutex();
+    if (imu_data_mutex == NULL) {
+        ESP_LOGE(TAG, "Failed to create IMU Mutex!");
+        return false;
+    };
+
     filter = madgwick_create();
     madgwick_begin(filter, IMU_SAMPLE_RATE_HZ);
+
+    return true;
 }
 
 // Capture loop (task function)
@@ -165,9 +172,11 @@ void imu_loop_capture(void *pvParameters) {
 
             madgwick_update_imu(filter, gx, gy, gz, ax, ay, az);
 
+            xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
             data->roll  = madgwick_get_roll(filter);
             data->pitch = madgwick_get_pitch(filter);
             data->yaw = madgwick_get_yaw(filter);
+            xSemaphoreGive(imu_data_mutex);
         }
     }
 }
