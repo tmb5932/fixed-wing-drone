@@ -1,6 +1,10 @@
 #ifndef IMU_H
 #define IMU_H
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/semphr.h"
+
 // I2C config
 #define IMU_I2C_PORT        I2C_NUM_0
 #define IMU_I2C_SDA_PIN     8
@@ -45,7 +49,9 @@ typedef struct {
     float yaw;
 } imu_data_t;
 
-void imu_init(void);
+extern SemaphoreHandle_t imu_data_mutex;
+
+bool imu_init(void);
 void imu_loop_capture(void *pvParameters);
 
 #endif

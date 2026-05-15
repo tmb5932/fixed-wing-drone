@@ -1,14 +1,18 @@
+#include <math.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 #include "esp_log.h"
 #include "esp_timer.h"
-#include <math.h>
 #include "driver/mcpwm_prelude.h"
 #include "pwm_output.h"
 #include "rc_capture.h"
 #include "imu.h"
 
 static const char *TAG = "MAIN";
+
+#define CONTROL_TASK_HZ (100)
+#define CONTROL_TASK_MS (1000 / CONTROL_TASK_HZ)
 
 #define SERVO_TIMEBASE_RESOLUTION_HZ 1000000  // 1MHz, 1us per tick
 #define SERVO_TIMEBASE_PERIOD        20000    // 20000 ticks, 20ms
@@ -52,6 +56,7 @@ static const char *TAG = "MAIN";
 
 static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
+
 imu_data_t imu_data = {0};
 
 bool autonomous_mode_enabled(uint32_t mode_us) {
@@ -177,13 +182,18 @@ void control_task(void *arg) {
             pass_through_inputs(ch);
         }
         
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(CONTROL_TASK_MS));
     }
 }
 
 void app_main(void)
 {
-    imu_init();
+    bool ret = imu_init();
+
+    if (!ret) {
+        ESP_LOGE(TAG, "Failed to initialize IMU!");        
+        return;
+    }
 
     BaseType_t result = xTaskCreate(
         imu_loop_capture,
@@ -196,16 +206,10 @@ void app_main(void)
 
     if (result != pdPASS) {
         ESP_LOGE(TAG, "Failed to create IMU task! Error: %d", result);
+        return;
     } else {
         ESP_LOGI(TAG, "IMU task created successfully");
     }
-
-
-    while (1) {
-        ESP_LOGI(TAG, "Roll: %7.2f | Pitch: %7.2f", imu_data.roll, imu_data.pitch);
-        vTaskDelay(pdMS_TO_TICKS(1000 / (int)IMU_SAMPLE_RATE_HZ));
-    }
-
 
     // OUTPUT SETUP
     ESP_LOGI(TAG, "Creating output group 0.");
