@@ -135,8 +135,6 @@ bool imu_init() {
     return true;
 }
 
-led_strip_handle_t led_strip;
-
 // Capture loop (task function)
 void imu_loop_capture(void *pvParameters) {
     ESP_LOGI(TAG, "Loop task started");
@@ -179,46 +177,10 @@ void imu_loop_capture(void *pvParameters) {
                 data->roll  = madgwick_get_roll(filter);
                 data->pitch = madgwick_get_pitch(filter);
                 data->yaw = madgwick_get_yaw(filter);
-                vTaskDelay(pdMS_TO_TICKS(50));
-                ESP_LOGI(TAG, "waiting");
                 xSemaphoreGive(imu_data_mutex);
-            } else {
-                ESP_LOGE(TAG, "Failed to get mutex");
-                led_strip_set_pixel(led_strip, 0, 150, 0, 200); 
-                led_strip_refresh(led_strip);
             }
         } else {
-            ESP_LOGE(TAG, "failed to read");
+            ESP_LOGE(TAG, "failed to read IMU");
         }
     }
-}
-
-
-#define BLINK_GPIO 48
-
-void configure_led(void)
-{
-    ESP_LOGI(TAG, "Initializing onboard RGB LED via RMT backend...");
-    
-    /* 1. LED strip common configuration */
-    led_strip_config_t strip_config = {
-        .strip_gpio_num = BLINK_GPIO,
-        .max_leds = 1, // Only 1 built-in RGB pixel
-        .led_model = LED_MODEL_WS2812, // Standard model for S3 boards
-        .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB,
-    };
-
-    /* 2. RMT backend specific configuration */
-    led_strip_rmt_config_t rmt_config = {
-        .clk_src = RMT_CLK_SRC_DEFAULT,
-        .resolution_hz = 10 * 1000 * 1000, // 10MHz resolution
-        .flags.with_dma = false,
-    };
-    ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
-
-    led_strip_set_pixel(led_strip, 0, 0, 255, 200); 
-    led_strip_refresh(led_strip);
-    vTaskDelay(pdMS_TO_TICKS(2500));
-    led_strip_set_pixel(led_strip, 0, 0, 0, 0); 
-    led_strip_refresh(led_strip);
 }

@@ -4,7 +4,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
-#include "led_strip.h"
 
 // I2C config
 #define IMU_I2C_PORT        I2C_NUM_0
@@ -41,8 +40,8 @@
 #define AK09916_CNTL3               0x32
 #define AK09916_MODE_CONT_10HZ      0x02
 
-#define IMU_SAMPLE_RATE_HZ  (10)
-#define IMU_MUTEX_WAIT (50)
+#define IMU_SAMPLE_RATE_HZ  (100)
+#define IMU_MUTEX_WAIT (15)
 
 typedef struct {
     // Madgwick filter output (in degrees)
@@ -52,7 +51,7 @@ typedef struct {
 } imu_data_t;
 
 extern SemaphoreHandle_t imu_data_mutex;
-extern led_strip_handle_t led_strip;
+
 bool imu_init(void);
 void imu_loop_capture(void *pvParameters);
 

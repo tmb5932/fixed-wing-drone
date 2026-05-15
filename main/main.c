@@ -11,7 +11,7 @@
 
 static const char *TAG = "MAIN";
 
-#define CONTROL_TASK_HZ (1)
+#define CONTROL_TASK_HZ (100)
 #define CONTROL_TASK_MS (1000 / CONTROL_TASK_HZ)
 
 #define SERVO_TIMEBASE_RESOLUTION_HZ 1000000  // 1MHz, 1us per tick
@@ -31,7 +31,7 @@ static const char *TAG = "MAIN";
 
 
 // GPIO assignments for outputs to the peripherals
-#define CH1_OUT_GPIO  9
+#define CH1_OUT_GPIO  7
 #define CH2_OUT_GPIO  10
 #define CH3_OUT_GPIO  11
 #define CH4_OUT_GPIO  12
@@ -157,13 +157,7 @@ float step_roll_pid(float goal_deg) {
     const float k_i = 0;
     const float k_d = 0;
 
-    BaseType_t ret = xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
-    if (ret != pdTRUE) {
-        led_strip_set_pixel(led_strip, 0, 150, 0, 200); 
-        led_strip_refresh(led_strip);
-        return 0;
-    }
-    ESP_LOGI(TAG, "rolled");
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
     float err = goal_deg - imu_data.roll; // in degrees
     xSemaphoreGive(imu_data_mutex);
 
@@ -188,14 +182,7 @@ float step_pitch_pid(float goal_deg) {
     const float k_i = 0;
     const float k_d = 0;
 
-    BaseType_t ret = xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
-    ESP_LOGI(TAG, "pitched");
-    if (ret != pdTRUE) {
-        led_strip_set_pixel(led_strip, 0, 150, 0, 200); 
-        led_strip_refresh(led_strip);
-        return 0;
-    }
-    
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
     
     float err = goal_deg - imu_data.pitch; // in degrees
     xSemaphoreGive(imu_data_mutex);
@@ -259,13 +246,12 @@ void control_task(void *arg) {
 
         // if not heard from radio in a while, go autonomous. Otherwise we fall from sky...
         bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
-        // if (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH])) {
-        //     update_autonomous_outputs();
-        // } else {
-        //     // manual pass-through mode from remote controller
-        //     pass_through_inputs(ch);
-        // }
+        if (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH])) {
             update_autonomous_outputs();
+        } else {
+            // manual pass-through mode from remote controller
+            pass_through_inputs(ch);
+        }
         
         vTaskDelay(pdMS_TO_TICKS(CONTROL_TASK_MS));
     }
@@ -273,7 +259,6 @@ void control_task(void *arg) {
 
 void app_main(void)
 {
-    configure_led();
     bool ret = imu_init();
 
     if (!ret) {
