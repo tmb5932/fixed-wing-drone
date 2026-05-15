@@ -55,6 +55,4 @@ extern SemaphoreHandle_t imu_data_mutex;
 bool imu_init(void);
 void imu_loop_capture(void *pvParameters);
 
-void configure_led(void);
-
 #endif
