@@ -157,10 +157,9 @@ float step_roll_pid(float goal_deg) {
     const float k_i = 0;
     const float k_d = 0;
 
-    xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
     float err = goal_deg - imu_data.roll; // in degrees
     xSemaphoreGive(imu_data_mutex);
-
 
     if (first) { last_err = err; }
 
@@ -183,7 +182,8 @@ float step_pitch_pid(float goal_deg) {
     const float k_i = 0;
     const float k_d = 0;
 
-    xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+    
     float err = goal_deg - imu_data.pitch; // in degrees
     xSemaphoreGive(imu_data_mutex);
 

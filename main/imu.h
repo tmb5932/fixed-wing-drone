@@ -7,8 +7,8 @@
 
 // I2C config
 #define IMU_I2C_PORT        I2C_NUM_0
-#define IMU_I2C_SDA_PIN     8
-#define IMU_I2C_SCL_PIN     9
+#define IMU_I2C_SDA_PIN     1
+#define IMU_I2C_SCL_PIN     2
 #define IMU_I2C_FREQ_HZ     400000
 
 // ICM-20948 I2C address (AD0 low = 0x68, AD0 high = 0x69)
@@ -41,6 +41,7 @@
 #define AK09916_MODE_CONT_10HZ      0x02
 
 #define IMU_SAMPLE_RATE_HZ  (100)
+#define IMU_MUTEX_WAIT (15)
 
 typedef struct {
     // Madgwick filter output (in degrees)

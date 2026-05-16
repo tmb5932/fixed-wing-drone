@@ -172,11 +172,15 @@ void imu_loop_capture(void *pvParameters) {
 
             madgwick_update_imu(filter, gx, gy, gz, ax, ay, az);
 
-            xSemaphoreTake(imu_data_mutex, portMAX_DELAY);
-            data->roll  = madgwick_get_roll(filter);
-            data->pitch = madgwick_get_pitch(filter);
-            data->yaw = madgwick_get_yaw(filter);
-            xSemaphoreGive(imu_data_mutex);
+            BaseType_t ret = xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+            if (ret == pdTRUE) {
+                data->roll  = madgwick_get_roll(filter);
+                data->pitch = madgwick_get_pitch(filter);
+                data->yaw = madgwick_get_yaw(filter);
+                xSemaphoreGive(imu_data_mutex);
+            }
+        } else {
+            ESP_LOGE(TAG, "failed to read IMU");
         }
     }
 }
