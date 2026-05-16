@@ -31,7 +31,7 @@ static const char *TAG = "MAIN";
 
 
 // GPIO assignments for outputs to the peripherals
-#define CH1_OUT_GPIO  7
+#define CH1_OUT_GPIO  9
 #define CH2_OUT_GPIO  10
 #define CH3_OUT_GPIO  11
 #define CH4_OUT_GPIO  12
