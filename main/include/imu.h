@@ -50,6 +50,7 @@ typedef struct {
     float yaw;
 } imu_data_t;
 
+extern imu_data_t imu_data;
 extern SemaphoreHandle_t imu_data_mutex;
 
 bool imu_init(void);
