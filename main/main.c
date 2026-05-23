@@ -8,6 +8,7 @@
 #include "pwm_output.h"
 #include "rc_capture.h"
 #include "imu.h"
+#include "gps.h"
 
 static const char *TAG = "MAIN";
 
@@ -50,14 +51,39 @@ static const char *TAG = "MAIN";
 #define RC_THROTTLE (CH3_NUM - 1)
 #define RC_AILERON  (CH1_NUM - 1)
 #define RC_ELEVATOR (CH2_NUM - 1)
-#define RC_RUDDER   (CH4_NUM - 1)
-#define RC_SWITCH   (CH5_NUM - 1)
-#define RC_DIAL     (CH6_NUM - 1)
+#define RC_RUDDER   (CH5_NUM - 1)
+#define RC_SWITCH   (CH6_NUM - 1)
+#define RC_DIAL     (CH4_NUM - 1)
 
 static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 
-imu_data_t imu_data = {0};
+typedef struct {
+    float k_p;
+    float k_i;
+    float k_d;
+    float integral;
+    float last_err;
+    bool first;
+} pid_cfg_t;
+
+pid_cfg_t ROLL_PID_CFG = {
+    .k_p = 10,
+    .k_i = 0,
+    .k_d = 0,
+    .integral = 0,
+    .last_err = 0,
+    .first = true
+};
+
+pid_cfg_t PITCH_PID_CFG = {
+    .k_p = 10,
+    .k_i = 0,
+    .k_d = 0,
+    .integral = 0,
+    .last_err = 0,
+    .first = true
+};
 
 bool autonomous_mode_enabled(uint32_t mode_us) {
     return (mode_us < 1500);
@@ -137,68 +163,6 @@ mcpwm_cmpr_handle_t channel_to_comparator(int ch) {
     return out_groups[rc_channel_to_output_group(ch)].operators[rc_channel_to_output_op(ch)].comparators[rc_channel_to_output_cmpr(ch)];
 }
 
-void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
-    update_comparator_value(channel_to_comparator(RC_THROTTLE), ch[RC_THROTTLE]);
-    update_comparator_value(channel_to_comparator(RC_AILERON), ch[RC_AILERON]);
-    update_comparator_value(channel_to_comparator(RC_ELEVATOR), ch[RC_ELEVATOR]);
-    update_comparator_value(channel_to_comparator(RC_RUDDER), ch[RC_RUDDER]);
-
-    // Only using 4 outputs, last 2 aren't even enabled
-    // update_comparator_value(channel_to_comparator(5-1), ch[5-1]);
-    // update_comparator_value(channel_to_comparator(6-1), ch[6-1]);
-}
-
-float step_roll_pid(float goal_deg) {
-    static bool first = true;
-    static float integral = 0;
-    static float last_err = 0;
-
-    const float k_p = 0;
-    const float k_i = 0;
-    const float k_d = 0;
-
-    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
-    float err = goal_deg - imu_data.roll; // in degrees
-    xSemaphoreGive(imu_data_mutex);
-
-    if (first) { last_err = err; }
-
-    integral += err * CONTROL_TASK_MS;
-    last_err = err;
-
-    float p = k_p * err;
-    float i = k_i * integral;
-    float d = k_d * ((err - last_err) / CONTROL_TASK_MS);
-
-    return p + i + d;
-}
-
-float step_pitch_pid(float goal_deg) {
-    static bool first = true;
-    static float integral = 0;
-    static float last_err = 0;
-
-    const float k_p = 0;
-    const float k_i = 0;
-    const float k_d = 0;
-
-    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
-    
-    float err = goal_deg - imu_data.pitch; // in degrees
-    xSemaphoreGive(imu_data_mutex);
-
-    if (first) { last_err = err; }
-
-    integral += err * CONTROL_TASK_HZ;
-    last_err = err;
-
-    float p = k_p * err;
-    float i = k_i * integral;
-    float d = k_d * ((err - last_err) / CONTROL_TASK_HZ);
-
-    return p + i + d;
-}
-
 int clip(int num, int min, int max) {
     if (num < min) {
         return min;
@@ -209,6 +173,37 @@ int clip(int num, int min, int max) {
     }
 }
 
+void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
+    for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+        if (cap_groups[rc_channel_to_capture_group(i)].inputs[rc_channel_to_capture_channel(i)].last_update_us == 0) {
+            continue;
+        }
+
+        update_comparator_value(channel_to_comparator(i), clip(ch[i], SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US));
+    }
+}
+
+float step_pid(pid_cfg_t* cfg, float* current_ptr, float goal_deg) {
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+    float err = goal_deg - *current_ptr; // in degrees
+    xSemaphoreGive(imu_data_mutex);
+
+    if (cfg->first) { 
+        cfg->first = false;
+        cfg->last_err = err;
+    }
+
+    cfg->integral += err / CONTROL_TASK_HZ; // integral = err * dt, and dt = 1 / CONTROL_TASK_HZ
+
+    float p = cfg->k_p * err;
+    float i = cfg->k_i * cfg->integral;
+    float d = cfg->k_d * ((err - cfg->last_err) / CONTROL_TASK_HZ);
+
+    cfg->last_err = err;
+
+    return p + i + d;
+}
+
 void update_autonomous_outputs(void)
 {
     update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
@@ -216,43 +211,44 @@ void update_autonomous_outputs(void)
     const int FLAT = 0;
     const int MIDDLE_SERVO_VAL = 1500;
 
-    int roll = (int) step_roll_pid(FLAT) + MIDDLE_SERVO_VAL;
-    roll = clip(roll, 1000, 2000);
+
+    int roll = (int) step_pid(&ROLL_PID_CFG, &imu_data.roll, FLAT) + MIDDLE_SERVO_VAL;
+    roll = clip(roll, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_AILERON), roll);
 
-    int tilt = (int) step_pitch_pid(FLAT) + MIDDLE_SERVO_VAL;
-    tilt = clip(tilt, 1000, 2000);
+    int tilt = (int) step_pid(&PITCH_PID_CFG, &imu_data.pitch, FLAT) + MIDDLE_SERVO_VAL;
+    tilt = clip(tilt, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_ELEVATOR), tilt);
 
-
-
-
     update_comparator_value(channel_to_comparator(RC_RUDDER), MIDDLE_SERVO_VAL);
-
-    // Only using 4 outputs, last 2 aren't even enabled
     // update_comparator_value(channel_to_comparator(5-1), 1500);
     // update_comparator_value(channel_to_comparator(4-1), 1500);
 }
 
 void control_task(void *arg) {
+    uint32_t ch[NUM_RC_CHANNELS];
     while (1) {
-        uint32_t ch[NUM_RC_CHANNELS];
         ch[RC_THROTTLE] = get_channel_pulse_width(RC_THROTTLE);
         ch[RC_AILERON] = get_channel_pulse_width(RC_AILERON);
         ch[RC_ELEVATOR] = get_channel_pulse_width(RC_ELEVATOR);
         ch[RC_RUDDER] = get_channel_pulse_width(RC_RUDDER);
         ch[RC_SWITCH] = get_channel_pulse_width(RC_SWITCH);
-        // ch[RC_DIAL] = get_channel_pulse_width(RC_DIAL);
+        ch[RC_DIAL] = get_channel_pulse_width(RC_DIAL);
+        
+        // printf("CH: %lu, %lu, %lu, %lu, %lu, %lu\n", ch[0], ch[1], ch[2], ch[3], ch[4], ch[5]);
+
+        // No autonomous until we've heard from the radio at least once, otherwise we might start flying away on power up with bad imu data and no rc input
+        bool radio_connected = cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)].last_update_us != 0;
 
         // if not heard from radio in a while, go autonomous. Otherwise we fall from sky...
         bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
-        if (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH])) {
+        if (radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]))) {
             update_autonomous_outputs();
         } else {
             // manual pass-through mode from remote controller
             pass_through_inputs(ch);
         }
-        
+
         vTaskDelay(pdMS_TO_TICKS(CONTROL_TASK_MS));
     }
 }
@@ -270,7 +266,7 @@ void app_main(void)
         imu_loop_capture,
         "imu_task",
         4096,
-        &imu_data,
+        NULL,
         5,
         NULL
     );
@@ -280,6 +276,24 @@ void app_main(void)
         return;
     } else {
         ESP_LOGI(TAG, "IMU task created successfully");
+    }
+
+    init_gps();
+
+    result = xTaskCreate(
+        gps_task,
+        "gps_task",
+        4096,
+        NULL,
+        5,
+        NULL
+    );
+
+    if (result != pdPASS) {
+        ESP_LOGE(TAG, "Failed to create GPS task! Error: %d", result);
+        return;
+    } else {
+        ESP_LOGI(TAG, "GPS task created successfully");
     }
 
     // OUTPUT SETUP
@@ -298,9 +312,9 @@ void app_main(void)
     add_gen_cmpr(&out_groups[0].operators[1], 0, CH3_OUT_GPIO, MOTOR_TYPE, MIN_STARTING_VALUE);    
     add_gen_cmpr(&out_groups[0].operators[1], 1, CH4_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);    
     
-    // add_operator(&out_groups[0], 2, timer0);
-    // add_gen_cmpr(&out_groups[0].operators[2], 0, CH5_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);    
-    // add_gen_cmpr(&out_groups[0].operators[2], 1, CH6_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);    
+    add_operator(&out_groups[0], 2, timer0);
+    add_gen_cmpr(&out_groups[0].operators[2], 0, CH5_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);    
+    add_gen_cmpr(&out_groups[0].operators[2], 1, CH6_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);    
     mcpwm_timer_start(&timer0);
 
     // INPUT SETUP

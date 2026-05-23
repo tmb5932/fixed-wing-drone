@@ -3,8 +3,8 @@
 
 #include "driver/mcpwm_prelude.h"
 
-#define SERVO_MIN_PULSEWIDTH_US 500  // Minimum pulse width in microsecond for servo
-#define SERVO_MAX_PULSEWIDTH_US 2500  // Maximum pulse width in microsecond for servo
+#define SERVO_MIN_PULSEWIDTH_US 1000  // Minimum pulse width in microsecond for servo
+#define SERVO_MAX_PULSEWIDTH_US 2000  // Maximum pulse width in microsecond for servo
 
 #define MOTOR_MIN_PULSEWIDTH_US 1000  // Minimum pulse width in microsecond for ESC input
 #define MOTOR_MAX_PULSEWIDTH_US 2000  // Maximum pulse width in microsecond for ESC input
