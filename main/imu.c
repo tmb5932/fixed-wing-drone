@@ -10,6 +10,7 @@
 
 static const char *TAG = "IMU";
 SemaphoreHandle_t imu_data_mutex;
+imu_data_t imu_data = {0};
 static madgwick_t filter;
 
 // Low level I2C helpers
@@ -136,7 +137,6 @@ bool imu_init() {
 void imu_loop_capture(void *pvParameters) {
     ESP_LOGI(TAG, "Loop task started");
     uint8_t raw[12];
-    imu_data_t *data = pvParameters;
 
     // Do precise sleep timing
     TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -171,9 +171,9 @@ void imu_loop_capture(void *pvParameters) {
 
             BaseType_t ret = xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
             if (ret == pdTRUE) {
-                data->roll  = madgwick_get_roll(filter);
-                data->pitch = madgwick_get_pitch(filter);
-                data->yaw = madgwick_get_yaw(filter);
+                imu_data.roll  = madgwick_get_roll(filter);
+                imu_data.pitch = madgwick_get_pitch(filter);
+                imu_data.yaw = madgwick_get_yaw(filter);
                 xSemaphoreGive(imu_data_mutex);
             }
         } else {
