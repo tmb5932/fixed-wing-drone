@@ -12,17 +12,15 @@ static const char *TAG = "IMU";
 SemaphoreHandle_t imu_data_mutex;
 static madgwick_t filter;
 
-// ---- Low level I2C helpers ----
+// Low level I2C helpers
 
 static esp_err_t imu_write(uint8_t addr, uint8_t reg, uint8_t val) {
     uint8_t buf[2] = {reg, val};
-    return i2c_master_write_to_device(IMU_I2C_PORT, addr, buf, 2,
-                                      pdMS_TO_TICKS(10));
+    return i2c_master_write_to_device(IMU_I2C_PORT, addr, buf, 2, pdMS_TO_TICKS(10));
 }
 
 static esp_err_t imu_read(uint8_t addr, uint8_t reg, uint8_t *buf, size_t len) {
-    return i2c_master_write_read_device(IMU_I2C_PORT, addr, &reg, 1,
-                                        buf, len, pdMS_TO_TICKS(10));
+    return i2c_master_write_read_device(IMU_I2C_PORT, addr, &reg, 1, buf, len, pdMS_TO_TICKS(10));
 }
 
 static esp_err_t icm_write(uint8_t reg, uint8_t val) {
@@ -48,11 +46,10 @@ static void i2c_bus_init() {
         .master.clk_speed = IMU_I2C_FREQ_HZ,
     };
     ESP_ERROR_CHECK(i2c_param_config(IMU_I2C_PORT, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(IMU_I2C_PORT, I2C_MODE_MASTER,
-                                       0, 0, 0));
+    ESP_ERROR_CHECK(i2c_driver_install(IMU_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
 }
 
-// Magnometer setup (this was awful to do)
+// Magnometer setup (this was awful to do, and im not even using it rn)
 static void mag_init() {
     // Enable bypass so AK09916 is visible on I2C bus
     icm_select_bank(0);
@@ -84,7 +81,7 @@ bool imu_init() {
     i2c_bus_init();
     vTaskDelay(pdMS_TO_TICKS(100));
 
-    // Verify ICM
+    // Verify the IMU
     icm_select_bank(0);
     uint8_t who_am_i = 0;
     icm_read(ICM20948_WHO_AM_I, &who_am_i, 1);
