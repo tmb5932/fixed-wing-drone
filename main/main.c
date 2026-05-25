@@ -263,7 +263,7 @@ void app_main(void)
     }
 
     BaseType_t result = xTaskCreate(
-        imu_loop_capture,
+        imu_task,
         "imu_task",
         4096,
         NULL,
@@ -277,8 +277,6 @@ void app_main(void)
     } else {
         ESP_LOGI(TAG, "IMU task created successfully");
     }
-
-    init_gps();
 
     result = xTaskCreate(
         gps_task,

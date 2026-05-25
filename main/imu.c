@@ -134,7 +134,14 @@ bool imu_init() {
 }
 
 // Capture loop (task function)
-void imu_loop_capture(void *pvParameters) {
+void imu_task(void *pvParameters) {
+    bool ret = imu_init();
+
+    if (!ret) {
+        ESP_LOGE(TAG, "Failed to initialize IMU!");        
+        abort();
+    }
+
     ESP_LOGI(TAG, "Loop task started");
     uint8_t raw[12];
 

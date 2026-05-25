@@ -270,6 +270,8 @@ bool read_gps(gps_data_t* gps)
 
 void gps_task(void *pvParameters)
 {
+    init_gps();
+
     while (1) {
         gps_data_t gps;
         if (!read_gps(&gps)) {
