@@ -5,12 +5,6 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 
-// I2C config
-#define IMU_I2C_PORT        I2C_NUM_0
-#define IMU_I2C_SDA_PIN     1
-#define IMU_I2C_SCL_PIN     2
-#define IMU_I2C_FREQ_HZ     400000
-
 // ICM-20948 I2C address (AD0 low = 0x68, AD0 high = 0x69)
 #define ICM20948_I2C_ADDR   0x69
 
