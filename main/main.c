@@ -9,6 +9,7 @@
 #include "rc_capture.h"
 #include "imu.h"
 #include "gps.h"
+#include "pid.h"
 
 static const char *TAG = "MAIN";
 
@@ -58,19 +59,15 @@ static const char *TAG = "MAIN";
 static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 
-typedef struct {
-    float k_p;
-    float k_i;
-    float k_d;
-    float integral;
-    float last_err;
-    bool first;
-} pid_cfg_t;
-
+// i_limit=250 reserves at least half of the actuator's +/-500us range
+// (SERVO_MIN/MAX_PULSEWIDTH_US relative to MIDDLE_SERVO_VAL) for P/D, so a
+// wound-up I-term can't eat the whole output on its own. Placeholder like the
+// gains themselves --- retune once k_i is actually set to something nonzero.
 pid_cfg_t ROLL_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
     .k_d = 0,
+    .i_limit = 250,
     .integral = 0,
     .last_err = 0,
     .first = true
@@ -80,10 +77,41 @@ pid_cfg_t PITCH_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
     .k_d = 0,
+    .i_limit = 250,
     .integral = 0,
     .last_err = 0,
     .first = true
 };
+
+// Conservative caps on commanded attitud --- retune once the airframe is
+// flight-characterized. These exist so nothing (i.e. a bug or future nav logic)
+// can command an extreme attitude through set_goal_roll_deg/set_goal_pitch_deg;
+// they're not a claim that these particular numbers are correct for this plane.
+#define MAX_ROLL_GOAL_DEG  45.0f
+#define MAX_PITCH_GOAL_DEG 20.0f
+
+static float clampf(float v, float lo, float hi) {
+    if (v < lo) return lo;
+    if (v > hi) return hi;
+    return v;
+}
+
+// Attitude setpoints for the autonomous control loop. Both default to 0
+// (level) and nothing currently calls the setters below --- update_autonomous_outputs()
+// regulates toward these instead of a hardcoded 0 so that capability exists
+// once something (stick input, waypoint nav) needs to command a turn or climb.
+// Only control_task reads/writes these today; if a second task ever sets them,
+// guard access the same way imu_data is guarded by imu_data_mutex.
+float goal_roll_deg = 0.0f;
+float goal_pitch_deg = 0.0f;
+
+void set_goal_roll_deg(float deg) {
+    goal_roll_deg = clampf(deg, -MAX_ROLL_GOAL_DEG, MAX_ROLL_GOAL_DEG);
+}
+
+void set_goal_pitch_deg(float deg) {
+    goal_pitch_deg = clampf(deg, -MAX_PITCH_GOAL_DEG, MAX_PITCH_GOAL_DEG);
+}
 
 bool autonomous_mode_enabled(uint32_t mode_us) {
     return (mode_us < 1500);
@@ -183,40 +211,25 @@ void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
     }
 }
 
-float step_pid(pid_cfg_t* cfg, float* current_ptr, float goal_deg) {
-    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
-    float err = goal_deg - *current_ptr; // in degrees
-    xSemaphoreGive(imu_data_mutex);
-
-    if (cfg->first) { 
-        cfg->first = false;
-        cfg->last_err = err;
-    }
-
-    cfg->integral += err / CONTROL_TASK_HZ; // integral = err * dt, and dt = 1 / CONTROL_TASK_HZ
-
-    float p = cfg->k_p * err;
-    float i = cfg->k_i * cfg->integral;
-    float d = cfg->k_d * ((err - cfg->last_err) / CONTROL_TASK_HZ);
-
-    cfg->last_err = err;
-
-    return p + i + d;
-}
-
 void update_autonomous_outputs(void)
 {
     update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
 
-    const int FLAT = 0;
     const int MIDDLE_SERVO_VAL = 1500;
+    const float dt_s = 1.0f / CONTROL_TASK_HZ;
 
+    // Snapshot both angles under one lock rather than locking per-axis: cheaper,
+    // and guarantees roll/pitch used this cycle came from the same imu sample.
+    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+    float roll_deg = imu_data.roll;
+    float pitch_deg = imu_data.pitch;
+    xSemaphoreGive(imu_data_mutex);
 
-    int roll = (int) step_pid(&ROLL_PID_CFG, &imu_data.roll, FLAT) + MIDDLE_SERVO_VAL;
+    int roll = (int) pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s) + MIDDLE_SERVO_VAL;
     roll = clip(roll, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_AILERON), roll);
 
-    int tilt = (int) step_pid(&PITCH_PID_CFG, &imu_data.pitch, FLAT) + MIDDLE_SERVO_VAL;
+    int tilt = (int) pid_step(&PITCH_PID_CFG, pitch_deg, goal_pitch_deg, dt_s) + MIDDLE_SERVO_VAL;
     tilt = clip(tilt, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_ELEVATOR), tilt);
 

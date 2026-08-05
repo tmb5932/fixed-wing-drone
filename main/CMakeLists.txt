@@ -1,2 +1,2 @@
-idf_component_register(SRCS "main.c" "pwm_output.c" "rc_capture.c" "imu.c" "madgwick_wrapper.cpp" "MadgwickAHRS.cpp" "gps.c" "airspeed.c"
+idf_component_register(SRCS "main.c" "pwm_output.c" "rc_capture.c" "imu.c" "madgwick_wrapper.cpp" "MadgwickAHRS.cpp" "gps.c" "airspeed.c" "pid.c"
                     INCLUDE_DIRS "include")
