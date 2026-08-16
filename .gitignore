@@ -35,3 +35,8 @@ pytest_embedded_log/
 dependencies.lock
 
 .DS_Store
+
+# SITL host build output
+sitl/*.exe
+sitl/output.csv
+sitl/.venv/

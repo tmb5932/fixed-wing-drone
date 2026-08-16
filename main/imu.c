@@ -4,6 +4,7 @@
 #include "driver/i2c.h"
 #include "madgwick_wrapper.h"
 #include "imu.h"
+#include "globals.h"
 
 #define GYRO_SCALE (131.0f)
 #define ACCEL_SCALE (8192.0f)
@@ -17,11 +18,11 @@ static madgwick_t filter;
 
 static esp_err_t imu_write(uint8_t addr, uint8_t reg, uint8_t val) {
     uint8_t buf[2] = {reg, val};
-    return i2c_master_write_to_device(IMU_I2C_PORT, addr, buf, 2, pdMS_TO_TICKS(10));
+    return i2c_master_write_to_device(I2C_PORT, addr, buf, 2, pdMS_TO_TICKS(10));
 }
 
 static esp_err_t imu_read(uint8_t addr, uint8_t reg, uint8_t *buf, size_t len) {
-    return i2c_master_write_read_device(IMU_I2C_PORT, addr, &reg, 1, buf, len, pdMS_TO_TICKS(10));
+    return i2c_master_write_read_device(I2C_PORT, addr, &reg, 1, buf, len, pdMS_TO_TICKS(10));
 }
 
 static esp_err_t icm_write(uint8_t reg, uint8_t val) {
@@ -40,14 +41,14 @@ static esp_err_t icm_select_bank(uint8_t bank) {
 static void i2c_bus_init() {
     i2c_config_t conf = {
         .mode = I2C_MODE_MASTER,
-        .sda_io_num = IMU_I2C_SDA_PIN,
-        .scl_io_num = IMU_I2C_SCL_PIN,
+        .sda_io_num = I2C_SDA_PIN,
+        .scl_io_num = I2C_SCL_PIN,
         .sda_pullup_en = GPIO_PULLUP_ENABLE,
         .scl_pullup_en = GPIO_PULLUP_ENABLE,
-        .master.clk_speed = IMU_I2C_FREQ_HZ,
+        .master.clk_speed = I2C_FREQ_HZ,
     };
-    ESP_ERROR_CHECK(i2c_param_config(IMU_I2C_PORT, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(IMU_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
+    ESP_ERROR_CHECK(i2c_param_config(I2C_PORT, &conf));
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
 }
 
 // Magnometer setup (this was awful to do, and im not even using it rn)
