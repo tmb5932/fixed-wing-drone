@@ -255,12 +255,11 @@ void control_task(void *arg) {
 
 void app_main(void)
 {
-    bool ret = imu_init();
+    init_gps();
+    loop_uart_gps();
 
-    if (!ret) {
-        ESP_LOGE(TAG, "Failed to initialize IMU!");        
-        return;
-    }
+
+
 
     BaseType_t result = xTaskCreate(
         imu_task,

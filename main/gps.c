@@ -201,6 +201,35 @@ int uart_read_line(char *out, size_t max_len, TickType_t timeout)
     return idx;
 }
 
+float degrees_to_rads(float degrees) {
+    return degrees * M_PI / 180.0;
+}
+
+float rads_to_degrees(float rads) {
+    return rads * 180.0 / M_PI;
+}
+
+/**
+ * Calculates heading from current location to target location in degrees.
+ * math gotten from here: https://www.movable-type.co.uk/scripts/latlong.html
+ * 
+ * Returns heading in degrees from 0 to 360, where 0 is north, 90 is east, etc.
+*/
+float heading_to_target(float cur_lat, float cur_long, float goal_lat, float goal_long)
+{
+    float lat1 = degrees_to_rads(cur_lat);
+    float lat2 = degrees_to_rads(goal_lat);
+    float d_long = degrees_to_rads((goal_long - cur_long));
+
+    float y = sin(d_long) * cos(lat2);
+    float x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(d_long);
+    float heading_rad = atan2(y, x);
+    float heading_deg = fmod((rads_to_degrees(heading_rad) + 360.0), 360.0);
+
+    return heading_deg;
+}
+
+
 void init_gps_uart(void)
 {
     uart_config_t uart_config = {
@@ -239,6 +268,7 @@ void loop_uart_gps(void)
     {
         int len = uart_read_line(line, sizeof(line), pdMS_TO_TICKS(1000));
         if (len > 0) {
+            ESP_LOGD(TAG, "Received GPS line: %s", line);
             if (parse_nmea_rmc(line, &gps)) {
                 if (gps.valid) {
                     ESP_LOGI(TAG, "Lat: %.6f, Lon: %.6f, Speed: %.2f mph, Course: %.2f\n",
@@ -260,6 +290,7 @@ bool read_gps(gps_data_t* gps)
 
     int len = uart_read_line(line, sizeof(line), pdMS_TO_TICKS(1000));
     if (len > 0) {
+        ESP_LOGD(TAG, "Received GPS line: %s", line);
         if (parse_nmea_rmc(line, gps)) {
             return true;
         }
