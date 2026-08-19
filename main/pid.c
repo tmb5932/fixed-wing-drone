@@ -1,5 +1,4 @@
 #include <math.h>
-
 #include "pid.h"
 
 pid_cfg_t pid_init(float k_p, float k_i, float k_d, float i_limit)
@@ -36,8 +35,8 @@ float pid_step(pid_cfg_t *cfg, float current, float goal, float dt_s)
 
     if (cfg->k_i != 0.0f) {
         float i_bound = fabsf(cfg->i_limit / cfg->k_i);
-        if (cfg->integral > i_bound) cfg->integral = i_bound;
-        if (cfg->integral < -i_bound) cfg->integral = -i_bound;
+        if (cfg->integral > i_bound) { cfg->integral = i_bound; }
+        if (cfg->integral < -i_bound) { cfg->integral = -i_bound; }
     }
 
     float p = cfg->k_p * err;

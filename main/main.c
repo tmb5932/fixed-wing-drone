@@ -31,7 +31,6 @@ static const char *TAG = "MAIN";
 #define CH5_IN_GPIO  36
 #define CH6_IN_GPIO  37
 
-
 // GPIO assignments for outputs to the peripherals
 #define CH1_OUT_GPIO  9
 #define CH2_OUT_GPIO  10
@@ -56,17 +55,22 @@ static const char *TAG = "MAIN";
 #define RC_SWITCH   (CH6_NUM - 1)
 #define RC_DIAL     (CH4_NUM - 1)
 
+// Airframe control-surface layout. Define AIRFRAME_AILEVON to build for a
+// plane with combined aileron+elevator flaps instead of independent ones. 
+// Leave undefined for a conventional airframe.
+// #define AIRFRAME_AILEVON
+
 static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 
 // i_limit=250 reserves at least half of the actuator's +/-500us range
 // (SERVO_MIN/MAX_PULSEWIDTH_US relative to MIDDLE_SERVO_VAL) for P/D, so a
 // wound-up I-term can't eat the whole output on its own. Placeholder like the
-// gains themselves --- retune once k_i is actually set to something nonzero.
+// gains themselves; re-tune once k_i is actually set to something nonzero.
 pid_cfg_t ROLL_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
-    .k_d = 0,
+    .k_d = 0.1,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,
@@ -76,17 +80,16 @@ pid_cfg_t ROLL_PID_CFG = {
 pid_cfg_t PITCH_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
-    .k_d = 0,
+    .k_d = 0.1,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,
     .first = true
 };
 
-// Conservative caps on commanded attitud --- retune once the airframe is
-// flight-characterized. These exist so nothing (i.e. a bug or future nav logic)
-// can command an extreme attitude through set_goal_roll_deg/set_goal_pitch_deg;
-// they're not a claim that these particular numbers are correct for this plane.
+// Conservative caps on commanded attitude. Retune once the airframe is
+// flight-characterized / tested. These exist so nothing (i.e. a bug)
+// can command a full 180 degree pitch through set_goal_roll_deg/set_goal_pitch_deg;
 #define MAX_ROLL_GOAL_DEG  45.0f
 #define MAX_PITCH_GOAL_DEG 20.0f
 
@@ -96,12 +99,6 @@ static float clampf(float v, float lo, float hi) {
     return v;
 }
 
-// Attitude setpoints for the autonomous control loop. Both default to 0
-// (level) and nothing currently calls the setters below --- update_autonomous_outputs()
-// regulates toward these instead of a hardcoded 0 so that capability exists
-// once something (stick input, waypoint nav) needs to command a turn or climb.
-// Only control_task reads/writes these today; if a second task ever sets them,
-// guard access the same way imu_data is guarded by imu_data_mutex.
 float goal_roll_deg = 0.0f;
 float goal_pitch_deg = 0.0f;
 
@@ -211,32 +208,68 @@ void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
     }
 }
 
-void update_autonomous_outputs(void)
+/**
+ * Runs the autonomous PID outputs for one control cycle.
+ * Returns false (and leaves the outputs untouched) if the IMU isn't ready or
+ * its data couldn't be read this cycle, so the caller can fall back to manual.
+ */
+bool update_autonomous_outputs(void)
 {
-    update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+    if (!imu_ready) {
+        return false;
+    }
 
     const int MIDDLE_SERVO_VAL = 1500;
     const float dt_s = 1.0f / CONTROL_TASK_HZ;
 
-    // Snapshot both angles under one lock rather than locking per-axis: cheaper,
-    // and guarantees roll/pitch used this cycle came from the same imu sample.
-    xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+    // Grab values from the IMU
+    BaseType_t ret = xSemaphoreTake(imu_data_mutex, pdMS_TO_TICKS(IMU_MUTEX_WAIT));
+
+    // If we fail to take the mutex, log an error and return early. This is a critical failure, as we can't safely read the IMU data without the mutex.
+    if (ret != pdTRUE) {
+        ESP_LOGE(TAG, "Failed to take imu_data_mutex! Error: %d", ret);
+        return false;
+    }
+
     float roll_deg = imu_data.roll;
     float pitch_deg = imu_data.pitch;
     xSemaphoreGive(imu_data_mutex);
 
-    int roll = (int) pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s) + MIDDLE_SERVO_VAL;
-    roll = clip(roll, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
+    update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+
+    float roll_cmd = pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s);
+    float pitch_cmd = pid_step(&PITCH_PID_CFG, pitch_deg, goal_pitch_deg, dt_s);
+
+#ifdef AIRFRAME_AILEVON
+    // Combined surfaces: mix roll and pitch into left/right elevon outputs.
+    // Sign convention (which physical output is "left" vs "right", and +/-
+    // for roll) depends on servo mounting; verify direction on the bench,
+    // same as the existing single-purpose aileron/elevator outputs already
+    // require.
+    int left = clip((int) (MIDDLE_SERVO_VAL + pitch_cmd - roll_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
+    int right = clip((int) (MIDDLE_SERVO_VAL + pitch_cmd + roll_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
+    update_comparator_value(channel_to_comparator(RC_AILERON), left);
+    update_comparator_value(channel_to_comparator(RC_ELEVATOR), right);
+#else
+    int roll = clip((int) (MIDDLE_SERVO_VAL + roll_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_AILERON), roll);
 
-    int tilt = (int) pid_step(&PITCH_PID_CFG, pitch_deg, goal_pitch_deg, dt_s) + MIDDLE_SERVO_VAL;
-    tilt = clip(tilt, SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
+    int tilt = clip((int) (MIDDLE_SERVO_VAL + pitch_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     update_comparator_value(channel_to_comparator(RC_ELEVATOR), tilt);
+#endif
 
     update_comparator_value(channel_to_comparator(RC_RUDDER), MIDDLE_SERVO_VAL);
     // update_comparator_value(channel_to_comparator(5-1), 1500);
     // update_comparator_value(channel_to_comparator(4-1), 1500);
+
+    return true;
 }
+
+// Once any critical autonomous-path failure happens (e.g. IMU not ready, or
+// a failed mutex take), autonomous mode is locked out for the rest of this
+// boot. There's no in-flight recovery for "the IMU never came up" or similar,
+// so the plane needs a reset before autonomous can be trusted again.
+static bool critical_fault_latched = false;
 
 void control_task(void *arg) {
     uint32_t ch[NUM_RC_CHANNELS];
@@ -247,7 +280,7 @@ void control_task(void *arg) {
         ch[RC_RUDDER] = get_channel_pulse_width(RC_RUDDER);
         ch[RC_SWITCH] = get_channel_pulse_width(RC_SWITCH);
         ch[RC_DIAL] = get_channel_pulse_width(RC_DIAL);
-        
+
         // printf("CH: %lu, %lu, %lu, %lu, %lu, %lu\n", ch[0], ch[1], ch[2], ch[3], ch[4], ch[5]);
 
         // No autonomous until we've heard from the radio at least once, otherwise we might start flying away on power up with bad imu data and no rc input
@@ -255,9 +288,15 @@ void control_task(void *arg) {
 
         // if not heard from radio in a while, go autonomous. Otherwise we fall from sky...
         bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
-        if (radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]))) {
-            update_autonomous_outputs();
-        } else {
+
+        bool want_autonomous = !critical_fault_latched && radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]));
+
+        if (want_autonomous && !update_autonomous_outputs()) {
+            critical_fault_latched = true;
+            want_autonomous = false;
+        }
+
+        if (!want_autonomous) {
             // manual pass-through mode from remote controller
             pass_through_inputs(ch);
         }
@@ -268,12 +307,7 @@ void control_task(void *arg) {
 
 void app_main(void)
 {
-    init_gps();
-    loop_uart_gps();
-
-
-
-
+    // Create the IMU and GPS tasks
     BaseType_t result = xTaskCreate(
         imu_task,
         "imu_task",

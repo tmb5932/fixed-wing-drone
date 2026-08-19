@@ -40,3 +40,7 @@ dependencies.lock
 sitl/*.exe
 sitl/output.csv
 sitl/.venv/
+
+.cache/
+**/*.lck
+fixed-wing-drone-backups/

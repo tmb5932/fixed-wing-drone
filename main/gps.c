@@ -13,6 +13,8 @@
 #define UART_BUF_SIZE (2048)
 #define UART_BAUD_RATE (9600)
 
+#define GPS_MUTEX_WAIT (500) // in milliseconds
+
 static const char *TAG = "GPS";
 
 gps_data_t latest_gps_data = {0};
@@ -316,7 +318,7 @@ void gps_task(void *pvParameters)
             continue;
         }
         if (gps.valid) {
-            BaseType_t ret = xSemaphoreTake(gps_data_mutex, 500);
+            BaseType_t ret = xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(GPS_MUTEX_WAIT));
             if (ret == pdTRUE) {
                 latest_gps_data = gps;
                 xSemaphoreGive(gps_data_mutex);

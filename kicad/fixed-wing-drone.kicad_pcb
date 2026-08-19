@@ -10156,7 +10156,7 @@
 		(layer "Edge.Cuts")
 		(uuid "0661207b-1bb6-4159-abef-5e6465dfe57c")
 	)
-	(gr_text "DATA"
+	(gr_text "5Vin"
 		(at 143.187989 70.836695 0)
 		(layer "F.SilkS")
 		(uuid "55dc9eae-4ba3-4a04-b32b-d6ee131710f8")

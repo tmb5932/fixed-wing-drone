@@ -12,6 +12,7 @@
 static const char *TAG = "IMU";
 SemaphoreHandle_t imu_data_mutex;
 imu_data_t imu_data = {0};
+volatile bool imu_ready = false;
 static madgwick_t filter;
 
 // Low level I2C helpers
@@ -131,6 +132,7 @@ bool imu_init() {
     filter = madgwick_create();
     madgwick_begin(filter, IMU_SAMPLE_RATE_HZ);
 
+    imu_ready = true;
     return true;
 }
 
@@ -139,8 +141,11 @@ void imu_task(void *pvParameters) {
     bool ret = imu_init();
 
     if (!ret) {
-        ESP_LOGE(TAG, "Failed to initialize IMU!");        
-        abort();
+        // imu_ready stays false, so the control task will never engage
+        // autonomous mode; manual RC pass-through doesn't need the IMU, so
+        // there's no reason to take the whole system down over this.
+        ESP_LOGE(TAG, "Failed to initialize IMU! Autonomous mode unavailable.");
+        vTaskDelete(NULL);
     }
 
     ESP_LOGI(TAG, "Loop task started");
@@ -177,7 +182,7 @@ void imu_task(void *pvParameters) {
 
             madgwick_update_imu(filter, gx, gy, gz, ax, ay, az);
 
-            BaseType_t ret = xSemaphoreTake(imu_data_mutex, IMU_MUTEX_WAIT);
+            BaseType_t ret = xSemaphoreTake(imu_data_mutex, pdMS_TO_TICKS(IMU_MUTEX_WAIT));
             if (ret == pdTRUE) {
                 imu_data.roll  = madgwick_get_roll(filter);
                 imu_data.pitch = madgwick_get_pitch(filter);

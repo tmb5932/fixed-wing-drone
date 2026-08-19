@@ -46,6 +46,7 @@ typedef struct {
 
 extern imu_data_t imu_data;
 extern SemaphoreHandle_t imu_data_mutex;
+extern volatile bool imu_ready;
 
 bool imu_init(void);
 void imu_task(void *pvParameters);
