@@ -43,4 +43,5 @@ sitl/.venv/
 
 .cache/
 **/*.lck
+.history/
 fixed-wing-drone-backups/
