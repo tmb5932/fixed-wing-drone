@@ -2,7 +2,7 @@
 
 A custom flight controller for a fixed-wing RC plane, built from scratch, both the PCB and the firmware. It's built around an ESP32-S3 and runs in-between a standard RC receiver and the servos/esc, giving the plane an onboard brain capable of taking over from the pilot and flying autonomously.
 
-All software is written in ESP-IDF (targeting v5.5). It's a personal challenge to write as much of it as possible without plug-and-play libraries, mainly the device drivers and the flight control logic.
+All software is written in ESP-IDF (specifically v5.5). It's a personal challenge to write as much of it as possible without plug-and-play libraries (ESP-IDF's own UART/I2C drivers are fair game), mainly the device drivers and the flight control logic.
 
 ## The Goal
 
