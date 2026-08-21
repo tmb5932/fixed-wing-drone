@@ -3,12 +3,13 @@
 #include <stdbool.h>
 #include <math.h>
 #include "esp_log.h"
+#include "driver/gpio.h"
 #include "driver/uart.h"
 #include "sdkconfig.h"
 #include "gps.h"
 
-#define UART_TX_PIN (6)
-#define UART_RX_PIN (5)
+#define UART_TX_PIN (GPIO_NUM_41)
+#define UART_RX_PIN (GPIO_NUM_42)
 #define UART_PORT_NUM (UART_NUM_1)
 #define UART_BUF_SIZE (2048)
 #define UART_BAUD_RATE (9600)

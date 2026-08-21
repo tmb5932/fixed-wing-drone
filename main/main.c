@@ -2,6 +2,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
+#include "driver/gpio.h"
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "driver/mcpwm_prelude.h"
@@ -24,20 +25,20 @@ static const char *TAG = "MAIN";
 #define NUM_RC_CHANNELS (6)
 
 // GPIO assignments for RC receiver inputs (i swear these are 6 almost neighboring pins)
-#define CH1_IN_GPIO  21
-#define CH2_IN_GPIO  47
-#define CH3_IN_GPIO  48
-#define CH4_IN_GPIO  35
-#define CH5_IN_GPIO  36
-#define CH6_IN_GPIO  37
+#define CH1_IN_GPIO  GPIO_NUM_37
+#define CH2_IN_GPIO  GPIO_NUM_38
+#define CH3_IN_GPIO  GPIO_NUM_14
+#define CH4_IN_GPIO  GPIO_NUM_21
+#define CH5_IN_GPIO  GPIO_NUM_35
+#define CH6_IN_GPIO  GPIO_NUM_36
 
 // GPIO assignments for outputs to the peripherals
-#define CH1_OUT_GPIO  9
-#define CH2_OUT_GPIO  10
-#define CH3_OUT_GPIO  11
-#define CH4_OUT_GPIO  12
-#define CH5_OUT_GPIO  13
-#define CH6_OUT_GPIO  14
+#define CH1_OUT_GPIO  GPIO_NUM_17
+#define CH2_OUT_GPIO  GPIO_NUM_18
+#define CH3_OUT_GPIO  GPIO_NUM_46
+#define CH4_OUT_GPIO  GPIO_NUM_45
+#define CH5_OUT_GPIO  GPIO_NUM_48
+#define CH6_OUT_GPIO  GPIO_NUM_47
 
 // translating from channel numbers to what it controls
 #define CH1_NUM 1
