@@ -45,3 +45,6 @@ sitl/.venv/
 **/*.lck
 .history/
 fixed-wing-drone-backups/
+
+kicad/gerber
+kicad/production

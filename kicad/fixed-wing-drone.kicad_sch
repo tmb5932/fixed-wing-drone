@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Autonomous Fixed Wing Drone ")
-		(date "2026-06-28")
-		(rev "v1.0")
+		(date "2026-08-21")
+		(rev "v2.0")
 		(comment 1 "Travis Brown")
 	)
 	(lib_symbols
@@ -3531,7 +3531,7 @@
 		(uuid "6909c5ba-a9b1-42b1-a271-730ca994dbd4")
 	)
 	(rectangle
-		(start 208.28 110.49)
+		(start 208.28 88.9)
 		(end 241.3 134.62)
 		(stroke
 			(width 0)
@@ -3606,7 +3606,7 @@
 	)
 	(text "VCC"
 		(exclude_from_sim no)
-		(at 144.526 73.66 0)
+		(at 144.526 76.708 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3706,7 +3706,7 @@
 	)
 	(text "VCC"
 		(exclude_from_sim no)
-		(at 150.876 48.26 0)
+		(at 151.892 51.308 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3776,7 +3776,7 @@
 	)
 	(text "GND"
 		(exclude_from_sim no)
-		(at 152.4 29.972 0)
+		(at 152.654 27.178 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3796,7 +3796,7 @@
 	)
 	(text "GND"
 		(exclude_from_sim no)
-		(at 142.494 76.708 0)
+		(at 144.272 73.914 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3856,7 +3856,7 @@
 	)
 	(text "GND"
 		(exclude_from_sim no)
-		(at 150.876 51.308 0)
+		(at 152.146 48.514 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3906,7 +3906,7 @@
 	)
 	(text "VCC"
 		(exclude_from_sim no)
-		(at 152.654 27.178 0)
+		(at 152.4 29.718 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3916,7 +3916,7 @@
 	)
 	(text "Lidar"
 		(exclude_from_sim no)
-		(at 224.536 113.538 0)
+		(at 224.282 91.694 0)
 		(effects
 			(font
 				(size 1.905 1.905)
@@ -3941,16 +3941,10 @@
 		(uuid "3d144bd8-f113-4258-9866-36ff20f27e69")
 	)
 	(junction
-		(at 148.59 58.42)
+		(at 148.59 36.83)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "437e54d0-ff8b-40e9-81c4-5bf9bb31f210")
-	)
-	(junction
-		(at 148.59 30.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "83999961-69ea-4a97-bda5-403dd9443d98")
+		(uuid "aac0b375-0a5b-4279-a565-63507f591a19")
 	)
 	(junction
 		(at 132.08 45.72)
@@ -3959,22 +3953,28 @@
 		(uuid "acf6fcbc-4991-4060-9ede-98b1d56f2db0")
 	)
 	(junction
-		(at 148.59 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b0935a5a-0857-4866-9d6d-a2612e0dbb1d")
-	)
-	(junction
 		(at 132.08 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b7473a6b-6f6f-4156-aec0-f52b84bb2ffb")
 	)
 	(junction
+		(at 148.59 58.42)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c7c79e61-215e-4861-a144-3392fe625169")
+	)
+	(junction
 		(at 49.53 186.69)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d92c0017-3378-4724-b4b2-62db71cf40aa")
+	)
+	(junction
+		(at 148.59 27.94)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f0008f14-6b9d-4f86-8e81-b5b4a8bb443e")
 	)
 	(no_connect
 		(at 92.71 38.1)
@@ -3993,8 +3993,8 @@
 		(uuid "567c8cad-0e6a-4295-ad1d-09933f50a37b")
 	)
 	(no_connect
-		(at 146.05 74.93)
-		(uuid "642816d8-09a7-4ebd-916a-8061040ccc4d")
+		(at 146.05 77.47)
+		(uuid "567e32aa-10de-43ad-819b-52fd85e2b3cb")
 	)
 	(no_connect
 		(at 92.71 35.56)
@@ -4046,6 +4046,26 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 149.86) (xy 233.68 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "10ca51d5-7cde-4ec9-8f4e-3dfde5b8b7b0")
+	)
+	(wire
+		(pts
+			(xy 232.41 154.94) (xy 233.68 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "127d83bb-85b6-44e2-8c53-75375e66b498")
+	)
+	(wire
+		(pts
 			(xy 264.16 125.73) (xy 269.24 125.73)
 		)
 		(stroke
@@ -4053,6 +4073,16 @@
 			(type default)
 		)
 		(uuid "145d7f19-4874-420e-855c-36e17037d1e3")
+	)
+	(wire
+		(pts
+			(xy 146.05 74.93) (xy 139.7 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "19174107-cb03-44a9-a3ec-00d5bb4cae4c")
 	)
 	(wire
 		(pts
@@ -4076,6 +4106,16 @@
 	)
 	(wire
 		(pts
+			(xy 233.68 151.13) (xy 233.68 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "273ba0e3-01ac-4ab5-a256-6ec7620e0a44")
+	)
+	(wire
+		(pts
 			(xy 48.26 182.88) (xy 48.26 181.61)
 		)
 		(stroke
@@ -4083,26 +4123,6 @@
 			(type default)
 		)
 		(uuid "2c9e716f-f7b5-49f0-8eb3-93be7859b1f9")
-	)
-	(wire
-		(pts
-			(xy 224.79 123.19) (xy 234.95 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2d7561c5-a263-4c6a-8c7c-c4efebd60f2c")
-	)
-	(wire
-		(pts
-			(xy 231.14 157.48) (xy 233.68 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f279513-22d2-4da3-b1e0-af1a77a599cd")
 	)
 	(wire
 		(pts
@@ -4126,7 +4146,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 77.47) (xy 139.7 83.82)
+			(xy 139.7 74.93) (xy 139.7 83.82)
 		)
 		(stroke
 			(width 0)
@@ -4146,16 +4166,6 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 27.94) (xy 154.94 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "36ad10a9-fefe-442f-8fde-ffe1cbc3a13d")
-	)
-	(wire
-		(pts
 			(xy 132.08 68.58) (xy 134.62 68.58)
 		)
 		(stroke
@@ -4163,6 +4173,16 @@
 			(type default)
 		)
 		(uuid "3d98a30a-4d5a-4b56-a2e8-6486ddde01b0")
+	)
+	(wire
+		(pts
+			(xy 228.6 127) (xy 234.95 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "440fd595-93a7-4270-af71-17ff5b832f07")
 	)
 	(wire
 		(pts
@@ -4206,6 +4226,16 @@
 	)
 	(wire
 		(pts
+			(xy 231.14 129.54) (xy 234.95 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ea05317-7e4b-4389-9a5f-0a7c7a89a389")
+	)
+	(wire
+		(pts
 			(xy 74.93 154.94) (xy 80.01 154.94)
 		)
 		(stroke
@@ -4223,16 +4253,6 @@
 			(type default)
 		)
 		(uuid "53863688-7321-4279-8587-4d0a3cb99084")
-	)
-	(wire
-		(pts
-			(xy 223.52 148.59) (xy 233.68 148.59)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "55fd8e16-365f-4792-af5b-d5d0fdfa8df9")
 	)
 	(wire
 		(pts
@@ -4286,13 +4306,13 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 27.94) (xy 132.08 34.29)
+			(xy 132.08 30.48) (xy 154.94 30.48)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "680d397d-72cb-4db4-a43a-5dc5ac8bc4d6")
+		(uuid "6c825433-9d70-44e4-bc8d-6f630c1bffa4")
 	)
 	(wire
 		(pts
@@ -4323,16 +4343,6 @@
 			(type default)
 		)
 		(uuid "7499d09e-2f2c-430b-b19b-748ecdae8b53")
-	)
-	(wire
-		(pts
-			(xy 146.05 77.47) (xy 139.7 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "749bfbe0-57fc-4fea-b512-690309ea04a2")
 	)
 	(wire
 		(pts
@@ -4386,7 +4396,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 30.48) (xy 148.59 36.83)
+			(xy 148.59 27.94) (xy 148.59 36.83)
 		)
 		(stroke
 			(width 0)
@@ -4396,13 +4406,13 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 49.53) (xy 132.08 55.88)
+			(xy 154.94 49.53) (xy 148.59 49.53)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8446733f-a7b4-46c1-ade9-5c47b88c1a1d")
+		(uuid "838f58c9-75b1-4b5e-b4b9-90e134733cd7")
 	)
 	(wire
 		(pts
@@ -4413,6 +4423,16 @@
 			(type default)
 		)
 		(uuid "846df528-3775-4427-8c57-981233360a04")
+	)
+	(wire
+		(pts
+			(xy 154.94 27.94) (xy 148.59 27.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84cb9528-800f-4c3f-9ec3-73a0d7c21b9d")
 	)
 	(wire
 		(pts
@@ -4456,16 +4476,6 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 52.07) (xy 148.59 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8ff88ea2-f63f-4ab3-845f-f3eec6b97981")
-	)
-	(wire
-		(pts
 			(xy 66.04 26.67) (xy 66.04 30.48)
 		)
 		(stroke
@@ -4483,16 +4493,6 @@
 			(type default)
 		)
 		(uuid "917b7ea2-31ee-46fb-b607-3fc449231715")
-	)
-	(wire
-		(pts
-			(xy 132.08 49.53) (xy 154.94 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9377f073-c6a0-4c3c-b961-857976d6f0c4")
 	)
 	(wire
 		(pts
@@ -4536,16 +4536,6 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 148.59) (xy 233.68 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "97f0c68c-6d28-4754-8c6b-8cc21cac407b")
-	)
-	(wire
-		(pts
 			(xy 265.43 154.94) (xy 269.24 154.94)
 		)
 		(stroke
@@ -4553,6 +4543,26 @@
 			(type default)
 		)
 		(uuid "9eef3dfc-eedc-43be-ab2f-d157d5af8ca4")
+	)
+	(wire
+		(pts
+			(xy 132.08 30.48) (xy 132.08 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f4aec7a-682b-4a35-b1b9-8b9beec37ec5")
+	)
+	(wire
+		(pts
+			(xy 132.08 52.07) (xy 154.94 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a050ef3e-3934-417a-beae-528aaa412c03")
 	)
 	(wire
 		(pts
@@ -4573,26 +4583,6 @@
 			(type default)
 		)
 		(uuid "aa4c1c2f-ac81-4b51-9e17-07e1b1dc6ed1")
-	)
-	(wire
-		(pts
-			(xy 234.95 123.19) (xy 234.95 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aefa77a1-641d-4c85-a983-5553177fe2d7")
-	)
-	(wire
-		(pts
-			(xy 232.41 129.54) (xy 234.95 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "afcad023-911c-4b6b-80b8-37fe2c520e15")
 	)
 	(wire
 		(pts
@@ -4626,16 +4616,6 @@
 	)
 	(wire
 		(pts
-			(xy 231.14 154.94) (xy 233.68 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ba14b3ef-0a6c-4ad4-a64b-43196a9c0ac3")
-	)
-	(wire
-		(pts
 			(xy 68.58 29.21) (xy 68.58 30.48)
 		)
 		(stroke
@@ -4643,6 +4623,26 @@
 			(type default)
 		)
 		(uuid "ba1f4f3c-a3ec-402e-ad4b-766b17c41b26")
+	)
+	(wire
+		(pts
+			(xy 222.25 151.13) (xy 233.68 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "be50b028-630c-4ba6-b6e1-0ca9d4facdbe")
+	)
+	(wire
+		(pts
+			(xy 233.68 132.08) (xy 234.95 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c0cc60fa-b367-4393-a167-58209ef8f24e")
 	)
 	(wire
 		(pts
@@ -4676,16 +4676,6 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 152.4) (xy 233.68 152.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cd01f283-4ba3-417d-98d2-fad0503cef88")
-	)
-	(wire
-		(pts
 			(xy 241.3 35.56) (xy 243.84 35.56)
 		)
 		(stroke
@@ -4713,6 +4703,16 @@
 			(type default)
 		)
 		(uuid "cdeac6be-a596-415e-a9df-f9348090043a")
+	)
+	(wire
+		(pts
+			(xy 132.08 52.07) (xy 132.08 55.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d029942f-3e1c-4970-ab08-117e372ad8d3")
 	)
 	(wire
 		(pts
@@ -4766,7 +4766,7 @@
 	)
 	(wire
 		(pts
-			(xy 229.87 127) (xy 234.95 127)
+			(xy 227.33 124.46) (xy 234.95 124.46)
 		)
 		(stroke
 			(width 0)
@@ -4826,16 +4826,6 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 30.48) (xy 148.59 30.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e5ce0eee-6184-4ecc-83fb-91e5f4bfeb4a")
-	)
-	(wire
-		(pts
 			(xy 266.7 38.1) (xy 269.24 38.1)
 		)
 		(stroke
@@ -4876,16 +4866,6 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 132.08) (xy 234.95 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f6f20be2-ef0b-48e5-85e2-6ea25f778a51")
-	)
-	(wire
-		(pts
 			(xy 134.62 114.3) (xy 137.16 114.3)
 		)
 		(stroke
@@ -4896,16 +4876,6 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 52.07) (xy 148.59 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f900b8f6-9c7c-4b0e-84fe-adf14a0c653f")
-	)
-	(wire
-		(pts
 			(xy 269.24 95.25) (xy 269.24 97.79)
 		)
 		(stroke
@@ -4913,6 +4883,16 @@
 			(type default)
 		)
 		(uuid "fad7b33a-1830-4cab-8856-4861427fde1c")
+	)
+	(wire
+		(pts
+			(xy 148.59 49.53) (xy 148.59 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fde1e25c-da00-4f58-8028-6a5ccddcd940")
 	)
 	(wire
 		(pts
@@ -4935,7 +4915,7 @@
 		(uuid "01e733bc-7f1f-4d81-afda-20afd1408ff9")
 	)
 	(label "LIDAR_TX"
-		(at 232.41 129.54 180)
+		(at 228.6 127 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5144,6 +5124,16 @@
 		)
 		(uuid "3b88764d-0472-4f8b-b75f-c013d473685c")
 	)
+	(label "FC_5v"
+		(at 233.68 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3e6d539f-3fcb-44a4-a722-8fe033b7042c")
+	)
 	(label "SCL"
 		(at 265.43 105.41 180)
 		(effects
@@ -5194,6 +5184,16 @@
 		)
 		(uuid "5182cf72-7739-44e2-bece-827a761a8d47")
 	)
+	(label "LIDAR_RX"
+		(at 233.68 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "52500b37-061d-4c6d-88ff-444c3d049109")
+	)
 	(label "SERVO_OUT_2"
 		(at 134.62 130.81 180)
 		(effects
@@ -5233,6 +5233,16 @@
 			(justify left bottom)
 		)
 		(uuid "655e39e1-7df4-4dcf-bf07-08c9aeeea91e")
+	)
+	(label "FC_5v"
+		(at 227.33 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "66b1c2f0-e408-4969-9d2e-7078b2ac69e3")
 	)
 	(label "SCL"
 		(at 265.43 130.81 180)
@@ -5365,7 +5375,7 @@
 		(uuid "9357635b-6b5d-4380-aa6d-2ff6f593c8e3")
 	)
 	(label "GPS_RX"
-		(at 231.14 157.48 180)
+		(at 233.68 157.48 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5545,7 +5555,7 @@
 		(uuid "c67aa3eb-2b04-4ae7-8e6e-46317eba8259")
 	)
 	(label "GPS_TX"
-		(at 231.14 154.94 180)
+		(at 232.41 154.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5595,7 +5605,7 @@
 		(uuid "de6c1ce5-99f7-4ead-a0aa-c34d4e88b566")
 	)
 	(label "LIDAR_RX"
-		(at 232.41 132.08 180)
+		(at 231.14 129.54 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5693,6 +5703,16 @@
 			(justify left bottom)
 		)
 		(uuid "fb043114-57a1-480a-8462-a86ab6416520")
+	)
+	(label "LIDAR_TX"
+		(at 233.68 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fb585d8f-9248-447c-9e76-649a1874c0ad")
 	)
 	(label "ACC_2"
 		(at 92.71 58.42 0)
@@ -5813,7 +5833,7 @@
 				)
 			)
 		)
-		(property "Value" "LIDAR UART"
+		(property "Value" "LIDAR"
 			(at 232.664 117.856 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5823,7 +5843,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+		(property "Footprint" "Connector_Molex:Molex_PicoBlade_53398-0471_1x04-1MP_P1.25mm_Vertical"
 			(at 240.03 127 0)
 			(hide yes)
 			(show_name no)
@@ -5846,6 +5866,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 240.03 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 240.03 127 0)
 			(hide yes)
 			(show_name no)
@@ -5899,7 +5930,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO2"
+		(property "Value" "2"
 			(at 138.938 127.254 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5909,7 +5940,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 142.24 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -5932,6 +5963,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 142.24 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 142.24 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -6068,7 +6110,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 236.22 35.56 0)
 			(hide yes)
 			(show_name no)
@@ -6091,6 +6133,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated"
+			(at 236.22 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 236.22 35.56 0)
 			(hide yes)
 			(show_name no)
@@ -6305,7 +6358,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 274.32 38.1 0)
 			(hide yes)
 			(show_name no)
@@ -6328,6 +6381,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x06, script generated"
+			(at 274.32 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 274.32 38.1 0)
 			(hide yes)
 			(show_name no)
@@ -6387,7 +6451,7 @@
 				)
 			)
 		)
-		(property "Value" "GPS UART"
+		(property "Value" "GPS"
 			(at 232.41 143.764 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6397,7 +6461,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 238.76 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6420,6 +6484,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 238.76 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 238.76 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6607,6 +6682,83 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 233.68 111.76 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4eb37168-080b-4c71-9b5a-48a3d26cf3bf")
+		(property "Reference" "#PWR026"
+			(at 233.68 118.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 230.886 111.506 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 233.68 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 233.68 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 233.68 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ab4fd61e-9276-4d7b-8684-ea16ec7fa18e")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
+					(reference "#PWR026")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x03_Pin")
 		(at 160.02 30.48 180)
 		(unit 1)
@@ -6640,7 +6792,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 160.02 30.48 0)
 			(hide yes)
 			(show_name no)
@@ -6663,6 +6815,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 160.02 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 160.02 30.48 0)
 			(hide yes)
 			(show_name no)
@@ -6946,7 +7109,7 @@
 				)
 			)
 		)
-		(property "Value" "BAROMETER JST SH"
+		(property "Value" "I2C"
 			(at 267.462 91.186 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6979,6 +7142,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 274.32 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 274.32 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -7142,6 +7316,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x10, script generated"
+			(at 43.18 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 43.18 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -7347,6 +7532,103 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 238.76 106.68 0)
+		(mirror y)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6f1fae66-6651-4d05-8843-bd9aa8f15003")
+		(property "Reference" "J20"
+			(at 233.426 100.076 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LIDAR BKUP"
+			(at 231.394 97.536 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 238.76 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.76 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 238.76 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
+			(at 238.76 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "4"
+			(uuid "0b1c91ed-7d44-4ca5-80d5-830d78c13512")
+		)
+		(pin "1"
+			(uuid "bcbecacc-c214-4530-a102-05f50a58ffa8")
+		)
+		(pin "2"
+			(uuid "08f9e15c-ab52-4d3a-a2ca-876673905099")
+		)
+		(pin "3"
+			(uuid "db15de39-b1e5-4436-9a16-22dcea53bb4e")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
+					(reference "J20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x03_Pin")
 		(at 140.97 151.13 0)
 		(mirror y)
@@ -7368,7 +7650,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO3"
+		(property "Value" "3"
 			(at 140.208 145.034 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7378,7 +7660,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 140.97 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -7401,6 +7683,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 140.97 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 140.97 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -7647,6 +7940,17 @@
 				)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 142.24 36.83 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "e8345bb8-6bc3-48c7-97e1-92404af77e0d")
 		)
@@ -7719,6 +8023,17 @@
 			)
 		)
 		(property "Description" "ESP32-S3-DevKitC"
+			(at 67.31 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 67.31 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -7892,7 +8207,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO4"
+		(property "Value" "4"
 			(at 169.418 108.712 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7902,7 +8217,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 170.18 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -7935,6 +8250,17 @@
 				)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 170.18 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "3"
 			(uuid "3593239f-b3ba-4a71-b14c-33cf9def0107")
 		)
@@ -7955,7 +8281,7 @@
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
-		(at 148.59 30.48 90)
+		(at 148.59 27.94 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7965,7 +8291,7 @@
 		(dnp no)
 		(uuid "8a1bfd15-f1d9-4105-b6b6-1a2876b606c9")
 		(property "Reference" "#FLG03"
-			(at 146.685 30.48 0)
+			(at 146.685 27.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7976,7 +8302,7 @@
 			)
 		)
 		(property "Value" "GND_SRC"
-			(at 146.05 30.48 90)
+			(at 146.05 27.94 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7987,7 +8313,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 148.59 30.48 0)
+			(at 148.59 27.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7998,7 +8324,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 30.48 0)
+			(at 148.59 27.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8009,7 +8335,7 @@
 			)
 		)
 		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 148.59 30.48 0)
+			(at 148.59 27.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8033,7 +8359,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 228.6 152.4 0)
+		(at 228.6 149.86 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8043,7 +8369,7 @@
 		(dnp no)
 		(uuid "8e3d016f-a224-4c5f-a02d-46b578ed9c5e")
 		(property "Reference" "#PWR028"
-			(at 228.6 156.21 0)
+			(at 228.6 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8054,7 +8380,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 230.886 151.638 0)
+			(at 231.14 148.082 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8064,7 +8390,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 228.6 152.4 0)
+			(at 228.6 149.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8075,7 +8401,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 228.6 152.4 0)
+			(at 228.6 149.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8086,7 +8412,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 228.6 152.4 0)
+			(at 228.6 149.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8297,7 +8623,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 151.13 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -8320,6 +8646,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 151.13 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 151.13 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -8370,7 +8707,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO5"
+		(property "Value" "5"
 			(at 169.164 125.984 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8380,7 +8717,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 170.18 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -8403,6 +8740,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 170.18 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 170.18 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -8621,7 +8969,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 160.02 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -8654,6 +9002,17 @@
 				)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 160.02 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "c2e13add-d9ce-43fb-b57f-e00d650224c5")
 		)
@@ -8674,7 +9033,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 223.52 148.59 0)
+		(at 222.25 151.13 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8684,7 +9043,7 @@
 		(dnp no)
 		(uuid "aa92e854-52ca-4860-8974-92128749da05")
 		(property "Reference" "#PWR027"
-			(at 223.52 154.94 0)
+			(at 222.25 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8695,7 +9054,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 220.98 148.59 0)
+			(at 219.71 151.13 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8705,7 +9064,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 223.52 148.59 0)
+			(at 222.25 151.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8716,7 +9075,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 223.52 148.59 0)
+			(at 222.25 151.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8727,7 +9086,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 223.52 148.59 0)
+			(at 222.25 151.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9093,6 +9452,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 134.62 60.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "2a0146b8-b3a1-48c3-a468-0167d1b059ab")
 		)
@@ -9166,6 +9536,17 @@
 		)
 		(property "Description" "Resistor"
 			(at 142.24 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
+			(at 142.24 58.42 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9409,6 +9790,17 @@
 				)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 40.64 181.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "3"
 			(uuid "91943c4e-9ed3-44e7-b370-7b37b67e7abd")
 		)
@@ -9432,7 +9824,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 224.79 123.19 0)
+		(at 233.68 132.08 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9442,7 +9834,7 @@
 		(dnp no)
 		(uuid "dcfdd17d-97f1-44c6-a9d7-c34e31513246")
 		(property "Reference" "#PWR025"
-			(at 224.79 129.54 0)
+			(at 233.68 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9453,7 +9845,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 223.012 121.92 0)
+			(at 230.886 131.826 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9463,7 +9855,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 224.79 123.19 0)
+			(at 233.68 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9474,7 +9866,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 224.79 123.19 0)
+			(at 233.68 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9485,7 +9877,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 224.79 123.19 0)
+			(at 233.68 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9529,7 +9921,7 @@
 				)
 			)
 		)
-		(property "Value" "AIRSPEED JST SH"
+		(property "Value" "I2C"
 			(at 268.224 117.348 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9562,6 +9954,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 274.32 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 274.32 125.73 0)
 			(hide yes)
 			(show_name no)
@@ -9693,7 +10096,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO1"
+		(property "Value" "1"
 			(at 140.208 108.712 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9703,7 +10106,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 142.24 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -9736,6 +10139,17 @@
 				)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 142.24 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "3"
 			(uuid "ab1fcece-443c-4a80-b48d-677d1f5fa9e0")
 		)
@@ -9749,83 +10163,6 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
 					(reference "J1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 229.87 127 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "ebe1e9ae-b72f-4d25-a4a2-ee71cdda8bc1")
-		(property "Reference" "#PWR026"
-			(at 229.87 130.81 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 232.156 126.238 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 229.87 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 229.87 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 229.87 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "f7288dee-9172-4c2d-a1f0-50e91cc04f32")
-		)
-		(instances
-			(project "fixed-wing-drone"
-				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
-					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -9886,6 +10223,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 88.9 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 88.9 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -10261,6 +10609,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LCSC Part #" ""
+			(at 134.62 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "5311b09f-003d-4b7f-9ace-3f82e73ac526")
 		)
@@ -10301,7 +10660,7 @@
 				)
 			)
 		)
-		(property "Value" "SERVO6"
+		(property "Value" "6"
 			(at 169.418 144.526 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10311,7 +10670,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left"
 			(at 170.18 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -10334,6 +10693,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 170.18 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 170.18 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -10384,7 +10754,7 @@
 				)
 			)
 		)
-		(property "Value" "IMU JST SH"
+		(property "Value" "I2C"
 			(at 268.478 141.224 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10417,6 +10787,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 274.32 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
 			(at 274.32 149.86 0)
 			(hide yes)
 			(show_name no)
