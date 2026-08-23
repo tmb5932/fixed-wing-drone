@@ -71,7 +71,7 @@ static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 pid_cfg_t ROLL_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
-    .k_d = 0.1,
+    .k_d = 0.3,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,
@@ -81,7 +81,7 @@ pid_cfg_t ROLL_PID_CFG = {
 pid_cfg_t PITCH_PID_CFG = {
     .k_p = 10,
     .k_i = 0,
-    .k_d = 0.1,
+    .k_d = 0.3,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,
