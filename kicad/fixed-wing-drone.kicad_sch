@@ -3804,16 +3804,6 @@
 		)
 		(uuid "ac06ea86-f72b-4821-b057-38a7e86cb682")
 	)
-	(text "Doing I2C for chaining\nfor these 3 below V"
-		(exclude_from_sim no)
-		(at 258.572 82.296 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ac672197-0a66-4426-a3e1-53a246a025e5")
-	)
 	(text "Accessory I/O"
 		(exclude_from_sim no)
 		(at 65.024 140.716 0)
@@ -4066,16 +4056,6 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 125.73) (xy 269.24 125.73)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "145d7f19-4874-420e-855c-36e17037d1e3")
-	)
-	(wire
-		(pts
 			(xy 146.05 74.93) (xy 139.7 74.93)
 		)
 		(stroke
@@ -4206,16 +4186,6 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 128.27) (xy 269.24 128.27)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4b2af120-cea7-49ae-9716-e73c1d6f3119")
-	)
-	(wire
-		(pts
 			(xy 266.7 40.64) (xy 269.24 40.64)
 		)
 		(stroke
@@ -4313,16 +4283,6 @@
 			(type default)
 		)
 		(uuid "6c825433-9d70-44e4-bc8d-6f630c1bffa4")
-	)
-	(wire
-		(pts
-			(xy 269.24 120.65) (xy 269.24 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7255e0b5-e6fd-4fab-ad29-48af26bb849f")
 	)
 	(wire
 		(pts
@@ -4523,16 +4483,6 @@
 			(type default)
 		)
 		(uuid "96442151-1915-4a12-a330-f7225d572c3a")
-	)
-	(wire
-		(pts
-			(xy 265.43 130.81) (xy 269.24 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "96bc32d0-1db9-4013-812e-18cc73516dc5")
 	)
 	(wire
 		(pts
@@ -4756,16 +4706,6 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 120.65) (xy 269.24 120.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d5255c03-552d-4856-98c7-aecd376ef0b5")
-	)
-	(wire
-		(pts
 			(xy 227.33 124.46) (xy 234.95 124.46)
 		)
 		(stroke
@@ -4953,6 +4893,16 @@
 			(justify right bottom)
 		)
 		(uuid "09f18061-735a-4515-92d7-cd232ee2e02d")
+	)
+	(label "FC_5v"
+		(at 269.24 123.19 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0aadd90c-de75-4795-971b-4211fd85f990")
 	)
 	(label "SECONDARY_ESC_SIGNAL"
 		(at 143.51 86.36 0)
@@ -5245,7 +5195,7 @@
 		(uuid "66b1c2f0-e408-4969-9d2e-7078b2ac69e3")
 	)
 	(label "SCL"
-		(at 265.43 130.81 180)
+		(at 269.24 125.73 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5365,7 +5315,7 @@
 		(uuid "92da0521-6e26-40eb-92fc-2aa5ea679d40")
 	)
 	(label "SDA"
-		(at 265.43 128.27 180)
+		(at 269.24 128.27 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7456,7 +7406,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 259.08 120.65 0)
+		(at 269.24 130.81 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7466,7 +7416,7 @@
 		(dnp no)
 		(uuid "6b50b60c-9a9d-493f-af77-cd20002aae95")
 		(property "Reference" "#PWR014"
-			(at 259.08 127 0)
+			(at 269.24 137.16 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7477,7 +7427,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 257.302 119.38 0)
+			(at 267.462 129.54 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7487,7 +7437,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 259.08 120.65 0)
+			(at 269.24 130.81 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7498,7 +7448,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 259.08 120.65 0)
+			(at 269.24 130.81 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7509,7 +7459,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 259.08 120.65 0)
+			(at 269.24 130.81 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8436,7 +8386,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 264.16 125.73 0)
+		(at 264.16 100.33 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8446,7 +8396,7 @@
 		(dnp no)
 		(uuid "8f0dc707-7451-46cd-aaa4-0eb75a0d5276")
 		(property "Reference" "#PWR018"
-			(at 264.16 129.54 0)
+			(at 264.16 104.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8457,7 +8407,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 260.604 124.46 0)
+			(at 260.604 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8467,7 +8417,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 264.16 125.73 0)
+			(at 264.16 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8478,7 +8428,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 264.16 125.73 0)
+			(at 264.16 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8489,7 +8439,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 264.16 125.73 0)
+			(at 264.16 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8612,7 +8562,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "Secondary ESC Input"
+		(property "Value" "Secondary ESC"
 			(at 152.4 78.7399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9931,7 +9881,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_SH_BM04B-SRSS-TB_1x04-1MP_P1.00mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_GH_BM04B-GHS-TBT_1x04-1MP_P1.25mm_Vertical"
 			(at 274.32 125.73 0)
 			(hide yes)
 			(show_name no)
@@ -10260,83 +10210,6 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
 					(reference "J13")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 264.16 100.33 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "f2cff119-0ac7-4bfc-ab29-fc90ac091886")
-		(property "Reference" "#PWR022"
-			(at 264.16 104.14 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 260.604 99.568 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 264.16 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 264.16 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 264.16 100.33 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "0888d1ce-3f0e-4c55-93ea-37113fdba58e")
-		)
-		(instances
-			(project "fixed-wing-drone"
-				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
-					(reference "#PWR022")
 					(unit 1)
 				)
 			)

@@ -670,6 +670,12 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC Part #",
+          "name": "LCSC Part #",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -720,7 +726,7 @@
         "uuid": "6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
       }
     ],
-    "used_designators": "#PWR26,J20,C1",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
