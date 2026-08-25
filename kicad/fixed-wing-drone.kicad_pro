@@ -240,7 +240,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": "v2.0"
+      "sch_revision": "v2.1"
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -536,7 +536,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "${PROJECTNAME}.csv",
+    "bom_export_filename": "gerber/${PROJECTNAME}-bom.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -672,10 +672,10 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "LCSC Part #",
           "name": "LCSC Part #",
-          "show": false
+          "show": true
         }
       ],
       "filter_string": "",
@@ -726,7 +726,7 @@
         "uuid": "6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
       }
     ],
-    "used_designators": "",
+    "used_designators": "J21",
     "variants": []
   },
   "sheets": [
