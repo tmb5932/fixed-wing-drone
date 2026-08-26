@@ -3336,18 +3336,6 @@
 		(uuid "2b4b1a9c-2f83-4d3e-acd4-21281a46b6e0")
 	)
 	(rectangle
-		(start 17.78 17.78)
-		(end 113.03 135.89)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type none)
-		)
-		(uuid "41ba0d53-801f-4102-b292-c3cb2209915f")
-	)
-	(rectangle
 		(start 242.57 85.09)
 		(end 276.86 109.22)
 		(stroke
@@ -3418,18 +3406,6 @@
 			(type none)
 		)
 		(uuid "a89d81e6-1d78-4937-9241-5b4e629a5420")
-	)
-	(rectangle
-		(start 118.11 100.33)
-		(end 179.07 160.02)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type none)
-		)
-		(uuid "d5be27d9-96be-48ee-ade0-c6df0806bf8c")
 	)
 	(text "Extra Stemma QT port"
 		(exclude_from_sim no)
@@ -4140,16 +4116,6 @@
 			(type default)
 		)
 		(uuid "6625a06b-954e-4882-80d7-5bbf87beb87b")
-	)
-	(wire
-		(pts
-			(xy 67.31 121.92) (xy 67.31 125.73)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "66d1a863-54d3-4ae7-98d8-2418aff1d059")
 	)
 	(wire
 		(pts
@@ -5011,16 +4977,6 @@
 		)
 		(uuid "52500b37-061d-4c6d-88ff-444c3d049109")
 	)
-	(label "SERVO_OUT_2"
-		(at 134.62 130.81 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "53bbf57c-4878-4971-a143-ab4864703b1e")
-	)
 	(label "SERVO_5v"
 		(at 162.56 132.08 180)
 		(effects
@@ -5451,16 +5407,6 @@
 		)
 		(uuid "e986c9e3-934f-4477-9969-611ab9be6ad2")
 	)
-	(label "SERVO_OUT_5"
-		(at 162.56 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ed6a62bc-d9b2-4095-acbe-f4f7a9d60b11")
-	)
 	(label "SERVO_OUT_3"
 		(at 133.35 148.59 180)
 		(effects
@@ -5689,6 +5635,7 @@
 		(uuid "16dce447-789b-4432-ad9f-4fe6e81038e9")
 		(property "Reference" "J2"
 			(at 144.018 129.794 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5699,6 +5646,7 @@
 		)
 		(property "Value" "2"
 			(at 138.938 127.254 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7644,6 +7592,7 @@
 		)
 		(property "Value" "ESP32-S3-DevKitC"
 			(at 69.4533 124.46 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8352,6 +8301,7 @@
 		(uuid "98af463e-ce76-43d8-8650-48d1126d98a8")
 		(property "Reference" "J5"
 			(at 172.212 128.778 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8362,6 +8312,7 @@
 		)
 		(property "Value" "5"
 			(at 169.164 125.984 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8427,84 +8378,6 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
 					(reference "J5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 67.31 125.73 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9f1657b5-91a9-460a-9791-1759c2f6eac2")
-		(property "Reference" "#PWR08"
-			(at 67.31 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 67.31 130.81 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 67.31 125.73 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 67.31 125.73 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 67.31 125.73 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3de3bf61-6ca5-4965-9dbe-303d3e6970ef")
-		)
-		(instances
-			(project "fixed-wing-drone"
-				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
-					(reference "#PWR08")
 					(unit 1)
 				)
 			)
