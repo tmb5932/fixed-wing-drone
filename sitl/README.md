@@ -1,7 +1,8 @@
-# SITL (software-in-the-loop) for the attitude PID
+# SITL (software-in-the-loop) for the attitude + nav PIDs
 
-A host-side simulator for tuning `ROLL_PID_CFG` / `PITCH_PID_CFG` before the plane exists to fly.
-It links directly against `../main/pid.c` — the exact same source file the firmware compiles —
+Host-side simulators for tuning `ROLL_PID_CFG` / `PITCH_PID_CFG` (`sitl_sim.exe`) and
+`HEADING_PID_CFG` (`nav_sim.exe`) before the plane exists to fly. Both link directly against
+`../main/pid.c` and `../main/gps_math.c` — the exact same source files the firmware compiles —
 so a gain that behaves well here is a gain that will behave the same way on the real controller.
 
 ## Build & run
@@ -27,3 +28,15 @@ from memory. (The reference line clears when you switch axes — roll and pitch 
 dynamics now, so overlaying them wouldn't mean anything.) The noise/servo-rate/seed fields live in
 their own "Sensor / actuator realism" group, separate from the tuning fields, since they describe
 imperfections in the simulated world rather than the controller itself.
+
+`nav_sim.exe` simulates the outer waypoint-following loop added in `nav.c`: it cascades
+`HEADING_PID_CFG` into the same roll-attitude loop as `sitl_sim.exe` (reusing its plant/actuator
+model), flying a simple coordinated-turn/flat-earth world model toward one or more waypoints.
+
+```sh
+./nav_sim.exe [--target_bearing=deg] [--target_dist_m=m] [--wp=lat,lon (repeatable, overrides target_bearing/dist)] [--start_lat=deg] [--start_lon=deg] [--heading0=deg] [--airspeed=mps] [--duration_s=s] [--heading_kp=] [--heading_ki=] [--heading_kd=] [--heading_ilimit=] [--roll_kp=] [--roll_ki=] [--roll_kd=] [--roll_ilimit=] [--roll_noise_deg=] [--heading_noise_deg=] [--servo_rate=deg_per_s] [--seed=n]
+python plot_nav.py nav_output.csv
+```
+
+With no `--wp`, it generates a single waypoint at `--target_bearing`/`--target_dist_m` from the
+start position, which is usually more convenient for gain-sweeping than hand-picked lat/lon pairs.

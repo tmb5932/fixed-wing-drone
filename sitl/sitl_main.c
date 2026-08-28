@@ -6,6 +6,8 @@
 #include <time.h>
 
 #include "actuator.h"
+#include "airframe_params.h"
+#include "noise.h"
 #include "pid.h"
 #include "plant.h"
 
@@ -16,39 +18,12 @@
 #define SERVO_MAX_DEGREE        90
 #define CONTROL_TASK_HZ 100
 
-#define TWO_PI 6.28318530718f
-
 static float clampf(float v, float lo, float hi)
 {
     if (v < lo) return lo;
     if (v > hi) return hi;
     return v;
 }
-
-// Box-Muller transform to turn the uniform noise rand() into Gaussian noise, 
-static float gaussian_noise(float stddev)
-{
-    static bool have_spare = false;
-    static float spare;
-
-    if (stddev <= 0.0f) return 0.0f;
-
-    if (have_spare) {
-        have_spare = false;
-        return spare * stddev;
-    }
-
-    float u1 = ((float)rand() + 1.0f) / ((float)RAND_MAX + 1.0f);
-    float u2 = (float)rand() / (float)RAND_MAX;
-    float mag = sqrtf(-2.0f * logf(u1));
-
-    spare = mag * sinf(TWO_PI * u2);
-    have_spare = true;
-    return mag * cosf(TWO_PI * u2) * stddev;
-}
-
-static const plant_params_t ROLL_PARAMS  = { .control_effectiveness = 400.0f, .damping = 3.0f, .restoring = 0.0f };
-static const plant_params_t PITCH_PARAMS = { .control_effectiveness = 400.0f, .damping = 3.0f, .restoring = 40.0f };
 
 int main(int argc, char **argv)
 {

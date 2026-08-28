@@ -39,6 +39,7 @@ dependencies.lock
 # SITL host build output
 sitl/*.exe
 sitl/output.csv
+sitl/nav_output.csv
 sitl/.venv/
 
 .cache/
