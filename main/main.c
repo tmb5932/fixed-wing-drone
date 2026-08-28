@@ -70,20 +70,32 @@ static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 // (SERVO_MIN/MAX_PULSEWIDTH_US relative to MIDDLE_SERVO_VAL) for P/D, so a
 // wound-up I-term can't eat the whole output on its own. Placeholder like the
 // gains themselves; re-tune once k_i is actually set to something nonzero.
+// SITL-validated (sitl/nav_sim.exe + sitl/sitl_sim.exe, see sitl/README.md):
+// k_p=10 k_d=0.3 -- this project's gains before this pass -- is only stable
+// for small corrections; it diverges under a full-authority step (the ±45deg
+// commanded by set_goal_roll_deg's clamp, which the new waypoint-following
+// nav_task actually issues in practice, not just small disturbance recovery).
+// k_p=5 k_d=0.4 was the most aggressive gain that stayed stable across the
+// entire commanded range (10/20/30/45deg steps, both signs) AND across 20
+// noise seeds at up to 2deg IMU noise stddev -- higher k_p consistently
+// failed the noise sweep before it failed the clean-signal sweep.
 pid_cfg_t ROLL_PID_CFG = {
-    .k_p = 10,
+    .k_p = 5,
     .k_i = 0,
-    .k_d = 0.3,
+    .k_d = 0.4,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,
     .first = true
 };
 
+// Same SITL sweep as ROLL_PID_CFG, run separately against the pitch axis's
+// own plant model (it has a nonzero restoring term -- see sitl/plant.h --
+// unlike roll) and its own ±20deg commanded range. Same winning gain.
 pid_cfg_t PITCH_PID_CFG = {
-    .k_p = 10,
+    .k_p = 5,
     .k_i = 0,
-    .k_d = 0.3,
+    .k_d = 0.4,
     .i_limit = 250,
     .integral = 0,
     .last_err = 0,

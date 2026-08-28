@@ -7,8 +7,7 @@
 #include "driver/uart.h"
 #include "sdkconfig.h"
 #include "gps.h"
-
-#define EARTH_RADIUS (6371000.0) // in meters
+#include "gps_math.h"
 
 #define UART_TX_PIN (GPIO_NUM_41)
 #define UART_RX_PIN (GPIO_NUM_42)
@@ -211,52 +210,6 @@ int uart_read_line(char *out, size_t max_len, TickType_t timeout)
 
     out[idx] = '\0';
     return idx;
-}
-
-double degrees_to_rads(double degrees) {
-    return degrees * (M_PI / 180.0);
-}
-
-double rads_to_degrees(double rads) {
-    return rads * 180.0 / M_PI;
-}
-
-/**
- * Calculates heading from current location to target location in degrees.
- * math gotten from here: https://www.movable-type.co.uk/scripts/latlong.html
- * 
- * Returns heading in degrees from 0 to 360, where 0 is north, 90 is east, etc.
-*/
-float heading_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long)
-{
-    double lat1 = degrees_to_rads(cur_lat);
-    double lat2 = degrees_to_rads(goal_lat);
-    double d_long = degrees_to_rads((goal_long - cur_long));
-
-    double y = sin(d_long) * cos(lat2);
-    double x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(d_long);
-    double heading_rad = atan2(y, x);
-    float heading_deg = fmod((rads_to_degrees(heading_rad) + 360.0), 360.0);
-
-    return heading_deg;
-}
-
-/**
- * Calculates distance to target in meters.
- * Using Equirectangular approximation, as the distances for this use case will be in the hundreds of meters, not miles.
- */
-double distance_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long)
-{
-    double lat1 = degrees_to_rads(cur_lat);
-    double lat2 = degrees_to_rads(goal_lat);
-    double d_lat = lat2 - lat1;
-    double d_long = degrees_to_rads((goal_long - cur_long));
-
-    double x = d_long * cos(((lat1 + lat2) / 2));
-    double y = d_lat;
-    double dist = sqrt((x*x) + (y*y)) * EARTH_RADIUS;
-
-    return dist;
 }
 
 void init_gps_uart(void)

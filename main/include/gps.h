@@ -4,6 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
+#include "gps_math.h"
 
 typedef enum Hemisphere {
     NORTH = 'N',
@@ -28,11 +29,6 @@ extern SemaphoreHandle_t gps_data_mutex;
 extern volatile bool gps_ready;
 
 bool parse_nmea_rmc(const char *sentence, gps_data_t *out);
-
-double degrees_to_rads(double degrees);
-double rads_to_degrees(double rads);
-float heading_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long);
-double distance_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long);
 
 esp_err_t uart_send_bytes(const uint8_t *data, size_t len);
 
