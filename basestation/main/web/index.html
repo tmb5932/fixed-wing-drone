@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Basestation</title>
+<link rel="stylesheet" href="/leaflet.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Basestation</h1>
+  <button id="sync-btn" class="sync-btn" type="button">Sync now</button>
+</header>
+
+<main>
+  <section class="card map-card">
+    <div class="card-head">
+      <h2>Mission</h2>
+      <span id="mission-status" class="badge">&nbsp;</span>
+    </div>
+    <div id="map"></div>
+    <p class="hint">Tap the map to add a waypoint. Drag a marker to move it.</p>
+    <ol id="waypoint-list" class="waypoint-list"></ol>
+    <label class="loop-toggle">
+      <input type="checkbox" id="loop-toggle">
+      <span>Loop mission &mdash; wrap back to the first waypoint after the last</span>
+    </label>
+    <button id="clear-mission-btn" class="secondary-btn" type="button">Clear all waypoints</button>
+  </section>
+
+  <section class="card">
+    <h2>PID gains</h2>
+    <p class="hint">Only fields you change are sent &mdash; edits are saved on this device immediately either way.</p>
+    <div id="pid-targets"></div>
+  </section>
+</main>
+
+<template id="pid-card-template">
+  <div class="pid-card">
+    <div class="card-head">
+      <h3 class="pid-title"></h3>
+    </div>
+    <div class="pid-fields">
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>p</sub><span class="status-dot" data-field="k_p"></span></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_p">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>i</sub><span class="status-dot" data-field="k_i"></span></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_i">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>d</sub><span class="status-dot" data-field="k_d"></span></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_d">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">I-limit<span class="status-dot" data-field="i_limit"></span></span>
+        <input type="number" step="any" inputmode="decimal" data-field="i_limit">
+      </label>
+    </div>
+    <div class="pid-card-footer">
+      <span class="fail-reason"></span>
+      <button class="save-btn" type="button" disabled>Save changes</button>
+    </div>
+  </div>
+</template>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="/leaflet.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

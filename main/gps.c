@@ -3,10 +3,12 @@
 #include <stdbool.h>
 #include <math.h>
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
 #include "sdkconfig.h"
 #include "gps.h"
+#include "sim_config.h"
 
 #define EARTH_RADIUS (6371000.0) // in meters
 
@@ -277,9 +279,13 @@ void init_gps_uart(void)
 
 void init_gps(void)
 {
+#ifdef GPS_SIMULATED
+    ESP_LOGW(TAG, "GPS_SIMULATED is defined (sim_config.h) -- using fake GPS data, no real UART/hardware I/O");
+#else
     init_gps_uart();
     vTaskDelay(pdMS_TO_TICKS(1000));
     configure_gps();
+#endif
 
     gps_data_mutex = xSemaphoreCreateMutex();
     if (gps_data_mutex == NULL) {
@@ -337,6 +343,57 @@ void gps_task(void *pvParameters)
 {
     init_gps();
 
+#ifdef GPS_SIMULATED
+    // Circular "orbit" around a fixed home point, alternating with a
+    // stationary "parked" phase -- see sim_config.h for the constants and
+    // why. Position/speed/course are all derived analytically from the
+    // orbit's own parametric circle, so they stay mutually consistent (e.g.
+    // course_deg always matches the direction the fake position is
+    // actually moving), rather than being independently made-up numbers.
+    const double meters_per_deg_lat = 111320.0;
+    const double meters_per_deg_lon = 111320.0 * cos(degrees_to_rads(GPS_SIM_HOME_LAT_DEG));
+    const double angular_rate_rad_s = 2.0 * M_PI / GPS_SIM_ORBIT_PERIOD_S;
+    const int cycle_s = GPS_SIM_MOVING_DURATION_S + GPS_SIM_PARKED_DURATION_S;
+    int64_t start_us = esp_timer_get_time();
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(200)); // ~5Hz, matching the real module's configured fix rate
+
+        double elapsed_s = (double)(esp_timer_get_time() - start_us) / 1e6;
+        bool moving = fmod(elapsed_s, (double)cycle_s) < GPS_SIM_MOVING_DURATION_S;
+
+        gps_data_t gps = {0};
+        gps.valid = true;
+
+        if (moving) {
+            double theta = angular_rate_rad_s * elapsed_s;
+            double east_m  = GPS_SIM_ORBIT_RADIUS_M * cos(theta);
+            double north_m = GPS_SIM_ORBIT_RADIUS_M * sin(theta);
+            double east_vel_mps  = -GPS_SIM_ORBIT_RADIUS_M * angular_rate_rad_s * sin(theta);
+            double north_vel_mps =  GPS_SIM_ORBIT_RADIUS_M * angular_rate_rad_s * cos(theta);
+
+            gps.latitude_deg  = GPS_SIM_HOME_LAT_DEG + north_m / meters_per_deg_lat;
+            gps.longitude_deg = GPS_SIM_HOME_LON_DEG + east_m / meters_per_deg_lon;
+
+            double speed_mps = sqrt(east_vel_mps * east_vel_mps + north_vel_mps * north_vel_mps);
+            gps.speed_knots = speed_mps * 1.943844;
+            gps.speed_mph = gps.speed_knots * 1.15078;
+            gps.course_deg = fmod(rads_to_degrees(atan2(east_vel_mps, north_vel_mps)) + 360.0, 360.0);
+        } else {
+            gps.latitude_deg = GPS_SIM_HOME_LAT_DEG;
+            gps.longitude_deg = GPS_SIM_HOME_LON_DEG;
+            gps.speed_knots = 0.0;
+            gps.speed_mph = 0.0;
+            gps.course_deg = 0.0;
+        }
+
+        BaseType_t ret = xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(GPS_MUTEX_WAIT));
+        if (ret == pdTRUE) {
+            latest_gps_data = gps;
+            xSemaphoreGive(gps_data_mutex);
+        }
+    }
+#else
     while (1) {
         gps_data_t gps;
         if (!read_gps(&gps)) {
@@ -355,4 +412,5 @@ void gps_task(void *pvParameters)
 
         vTaskDelay(pdMS_TO_TICKS(100));
     }
+#endif
 }

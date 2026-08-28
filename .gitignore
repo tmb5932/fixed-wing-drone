@@ -48,3 +48,7 @@ fixed-wing-drone-backups/
 
 kicad/gerber
 kicad/production
+
+# config-link ESP-NOW pre-shared keys / peer MACs -- device-specific, never committed
+main/config_link_secrets.h
+basestation/main/link_secrets.h

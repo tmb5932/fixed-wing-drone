@@ -6,6 +6,7 @@
 #include "madgwick_wrapper.h"
 #include "imu.h"
 #include "globals.h"
+#include "sim_config.h"
 
 // 32768/1000 LSB per deg/s, matching the +-1000dps range set via
 // GYRO_CONFIG_1 below.
@@ -185,40 +186,116 @@ static bool read_mag() {
 // that fixed step can claw back, yaw drifts effectively forever. Averaging
 // a couple hundred stationary samples at boot and subtracting that offset
 // from every later reading is the standard fix.
-#define GYRO_CAL_SAMPLES 200
+//
+// Bias genuinely shifts boot-to-boot with temperature, so a fresh per-boot
+// calibration is more accurate than one hardcoded number -- but that only
+// holds if the board is actually still while it happens. In the field the
+// plane gets carried/handled right around power-on, so this can't just
+// blindly average whatever the first GYRO_CAL_SAMPLES readings are: it
+// waits for a rolling window of samples to look genuinely still (low
+// max-min range) before it starts accumulating the average, and restarts
+// the average (not just the stillness wait) if motion is detected partway
+// through, so a bump mid-calibration can't contaminate the result. If it
+// never settles within GYRO_CAL_TIMEOUT_MS, falls back to a bench-derived
+// hardcoded default (see GYRO_BIAS_*_DPS_DEFAULT in imu.h) rather than
+// hanging boot indefinitely or using a garbage in-motion average.
+#define GYRO_CAL_SAMPLES (200)
+// ~200ms rolling window at IMU_SAMPLE_RATE_HZ, used only to detect
+// stillness -- not necessarily the same samples that end up in the average.
+#define GYRO_CAL_STILL_WINDOW (20)
+#define GYRO_CAL_STILL_THRESHOLD_DPS (1.0f)
+#define GYRO_CAL_TIMEOUT_MS (15000)
+
 static float gyro_bias_x = 0.0f, gyro_bias_y = 0.0f, gyro_bias_z = 0.0f;
 
 static void calibrate_gyro_bias() {
-    ESP_LOGI(TAG, "Calibrating gyro bias -- keep the board still...");
+    ESP_LOGI(TAG, "Calibrating gyro bias -- waiting for the board to go still...");
+
+    float win_x[GYRO_CAL_STILL_WINDOW], win_y[GYRO_CAL_STILL_WINDOW], win_z[GYRO_CAL_STILL_WINDOW];
+    int win_count = 0, win_idx = 0;
 
     double sum_gx = 0.0, sum_gy = 0.0, sum_gz = 0.0;
     int good = 0;
+    int64_t start_us = esp_timer_get_time();
     uint8_t raw[12];
 
-    for (int i = 0; i < GYRO_CAL_SAMPLES; i++) {
+    while (good < GYRO_CAL_SAMPLES) {
+        if ((esp_timer_get_time() - start_us) > (int64_t)GYRO_CAL_TIMEOUT_MS * 1000) {
+            ESP_LOGW(TAG, "Board never settled within %dms -- falling back to bench-derived gyro bias defaults", GYRO_CAL_TIMEOUT_MS);
+            gyro_bias_x = GYRO_BIAS_X_DPS_DEFAULT;
+            gyro_bias_y = GYRO_BIAS_Y_DPS_DEFAULT;
+            gyro_bias_z = GYRO_BIAS_Z_DPS_DEFAULT;
+            return;
+        }
+
         vTaskDelay(pdMS_TO_TICKS(1000 / IMU_SAMPLE_RATE_HZ));
         icm_select_bank(0);
-        if (icm_read(ICM20948_ACCEL_XOUT_H, raw, 12) == ESP_OK) {
-            int16_t raw_gx = (int16_t)((raw[6]  << 8) | raw[7]);
-            int16_t raw_gy = (int16_t)((raw[8]  << 8) | raw[9]);
-            int16_t raw_gz = (int16_t)((raw[10] << 8) | raw[11]);
-            sum_gx += (double)raw_gx / GYRO_SCALE;
-            sum_gy += (double)raw_gy / GYRO_SCALE;
-            sum_gz += (double)raw_gz / GYRO_SCALE;
-            good++;
+        if (icm_read(ICM20948_ACCEL_XOUT_H, raw, 12) != ESP_OK) {
+            continue;
         }
+        int16_t raw_gx = (int16_t)((raw[6]  << 8) | raw[7]);
+        int16_t raw_gy = (int16_t)((raw[8]  << 8) | raw[9]);
+        int16_t raw_gz = (int16_t)((raw[10] << 8) | raw[11]);
+        float gx = (float)raw_gx / GYRO_SCALE;
+        float gy = (float)raw_gy / GYRO_SCALE;
+        float gz = (float)raw_gz / GYRO_SCALE;
+
+        win_x[win_idx] = gx; win_y[win_idx] = gy; win_z[win_idx] = gz;
+        win_idx = (win_idx + 1) % GYRO_CAL_STILL_WINDOW;
+        if (win_count < GYRO_CAL_STILL_WINDOW) win_count++;
+
+        bool still = false;
+        if (win_count == GYRO_CAL_STILL_WINDOW) {
+            float min_x = win_x[0], max_x = win_x[0];
+            float min_y = win_y[0], max_y = win_y[0];
+            float min_z = win_z[0], max_z = win_z[0];
+            for (int i = 1; i < GYRO_CAL_STILL_WINDOW; i++) {
+                if (win_x[i] < min_x) { min_x = win_x[i]; }
+                if (win_x[i] > max_x) { max_x = win_x[i]; }
+                if (win_y[i] < min_y) { min_y = win_y[i]; }
+                if (win_y[i] > max_y) { max_y = win_y[i]; }
+                if (win_z[i] < min_z) { min_z = win_z[i]; }
+                if (win_z[i] > max_z) { max_z = win_z[i]; }
+            }
+            still = (max_x - min_x) <= GYRO_CAL_STILL_THRESHOLD_DPS
+                 && (max_y - min_y) <= GYRO_CAL_STILL_THRESHOLD_DPS
+                 && (max_z - min_z) <= GYRO_CAL_STILL_THRESHOLD_DPS;
+        }
+
+        if (!still) {
+            if (good > 0) {
+                ESP_LOGI(TAG, "Motion detected mid-calibration (%d/%d samples) -- restarting average", good, GYRO_CAL_SAMPLES);
+            }
+            sum_gx = sum_gy = sum_gz = 0.0;
+            good = 0;
+            continue;
+        }
+
+        sum_gx += (double)gx;
+        sum_gy += (double)gy;
+        sum_gz += (double)gz;
+        good++;
     }
 
-    if (good > 0) {
-        gyro_bias_x = (float)(sum_gx / good);
-        gyro_bias_y = (float)(sum_gy / good);
-        gyro_bias_z = (float)(sum_gz / good);
-    }
-    ESP_LOGI(TAG, "Gyro bias: x=%.3f y=%.3f z=%.3f deg/s (%d/%d samples)",
-        gyro_bias_x, gyro_bias_y, gyro_bias_z, good, GYRO_CAL_SAMPLES);
+    gyro_bias_x = (float)(sum_gx / good);
+    gyro_bias_y = (float)(sum_gy / good);
+    gyro_bias_z = (float)(sum_gz / good);
+    ESP_LOGI(TAG, "Gyro bias: x=%.3f y=%.3f z=%.3f deg/s (%d/%d samples, settled after %lldms)",
+        gyro_bias_x, gyro_bias_y, gyro_bias_z, good, GYRO_CAL_SAMPLES,
+        (long long)((esp_timer_get_time() - start_us) / 1000));
 }
 
 bool imu_init() {
+#ifdef IMU_SIMULATED
+    ESP_LOGW(TAG, "IMU_SIMULATED is defined (sim_config.h) -- using fake IMU data, no real I2C/hardware I/O");
+    imu_data_mutex = xSemaphoreCreateMutex();
+    if (imu_data_mutex == NULL) {
+        ESP_LOGE(TAG, "Failed to create IMU Mutex!");
+        return false;
+    }
+    imu_ready = true;
+    return true;
+#else
     i2c_bus_init();
     vTaskDelay(pdMS_TO_TICKS(100));
 
@@ -287,6 +364,7 @@ bool imu_init() {
 
     imu_ready = true;
     return true;
+#endif
 }
 
 // Capture loop (task function)
@@ -302,11 +380,28 @@ void imu_task(void *pvParameters) {
     }
 
     ESP_LOGI(TAG, "Loop task started");
-    uint8_t raw[12];
 
     // Do precise sleep timing
     TickType_t xLastWakeTime = xTaskGetTickCount();
     const TickType_t xFrequency = pdMS_TO_TICKS(1000 / IMU_SAMPLE_RATE_HZ);
+
+#ifdef IMU_SIMULATED
+    float fake_yaw_deg = 0.0f;
+    while (1) {
+        vTaskDelayUntil(&xLastWakeTime, xFrequency);
+        fake_yaw_deg = fmodf(fake_yaw_deg + (IMU_SIM_YAW_RATE_DPS / IMU_SAMPLE_RATE_HZ) + 360.0f, 360.0f);
+
+        BaseType_t mret = xSemaphoreTake(imu_data_mutex, pdMS_TO_TICKS(IMU_MUTEX_WAIT));
+        if (mret == pdTRUE) {
+            imu_data.roll = 0.0f;
+            imu_data.pitch = 0.0f;
+            imu_data.yaw = fake_yaw_deg;
+            imu_data.mag_valid = true;
+            xSemaphoreGive(imu_data_mutex);
+        }
+    }
+#else
+    uint8_t raw[12];
 
     while (1) {
         // Precise frequency control
@@ -367,32 +462,11 @@ void imu_task(void *pvParameters) {
                 // fusion math itself to stay correct.
                 imu_data.yaw = fmodf(-madgwick_get_yaw(filter) + MAG_YAW_OFFSET_DEG + 360.0f, 360.0f);
                 imu_data.mag_valid = mag_fresh;
-                float roll_deg = imu_data.roll;
-                float pitch_deg = imu_data.pitch;
-                float yaw_deg = imu_data.yaw;
                 xSemaphoreGive(imu_data_mutex);
-
-                // TEMPORARY: diagnosing continuous yaw drift while
-                // stationary. mx/my/mz/mag_norm let us tell apart two very
-                // different causes: if the raw field itself is stable but
-                // yaw still drifts, that's the gyro bias winning against a
-                // too-weak magnetometer correction; if mx/my/mz drift too,
-                // something nearby is producing a genuinely changing
-                // magnetic field (not the static hard-iron bias already
-                // corrected for). roll/pitch are logged too so we can tell
-                // whether this is yaw-specific or a more general problem --
-                // those are continuously anchored by gravity and shouldn't
-                // drift at rest regardless of magnetometer behavior.
-                static int heading_log_counter = 0;
-                if (++heading_log_counter >= (IMU_SAMPLE_RATE_HZ / 5)) { // ~5Hz
-                    heading_log_counter = 0;
-                    float mag_norm = sqrtf(last_mx * last_mx + last_my * last_my + last_mz * last_mz);
-                    ESP_LOGI(TAG, "roll=%.1f pitch=%.1f yaw=%.1f mag_valid=%d mx=%.1f my=%.1f mz=%.1f mag_norm=%.1f",
-                        roll_deg, pitch_deg, yaw_deg, mag_fresh, last_mx, last_my, last_mz, mag_norm);
-                }
             }
         } else {
             ESP_LOGE(TAG, "failed to read IMU");
         }
     }
+#endif
 }

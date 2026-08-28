@@ -13,6 +13,8 @@
 #include "pid.h"
 #include "nav.h"
 #include "airspeed.h"
+#include "config_link.h"
+#include "config_store.h"
 
 static const char *TAG = "MAIN";
 
@@ -127,6 +129,34 @@ void set_goal_roll_deg(float deg) {
 
 void set_goal_pitch_deg(float deg) {
     goal_pitch_deg = clampf(deg, -MAX_PITCH_GOAL_DEG, MAX_PITCH_GOAL_DEG);
+}
+
+// Merges the fields marked present in `fields_present` (a cl_pid_field_mask_t
+// bitmask) into *cfg's live gains, leaving absent fields untouched, then
+// persists the merged 4-gain result to NVS under `nvs_key`. No mutex needed:
+// these three PID configs are only ever read inside update_autonomous_outputs(),
+// which config_link's gating guarantees can't be running while this is
+// called (see config_link.c's gate -- it requires want_autonomous == false
+// for its entire active window).
+static bool apply_pid_field_update(pid_cfg_t *cfg, const char *nvs_key, uint8_t fields_present, const cl_pid_gains_t *g) {
+    if (fields_present & CL_FIELD_KP)     cfg->k_p = g->k_p;
+    if (fields_present & CL_FIELD_KI)     cfg->k_i = g->k_i;
+    if (fields_present & CL_FIELD_KD)     cfg->k_d = g->k_d;
+    if (fields_present & CL_FIELD_ILIMIT) cfg->i_limit = g->i_limit;
+    cl_pid_gains_t merged = { cfg->k_p, cfg->k_i, cfg->k_d, cfg->i_limit };
+    return config_store_save_pid_gains(nvs_key, &merged) == ESP_OK;
+}
+
+bool set_roll_pid_gains(uint8_t fields_present, const cl_pid_gains_t *g) {
+    return apply_pid_field_update(&ROLL_PID_CFG, "pid_roll", fields_present, g);
+}
+
+bool set_pitch_pid_gains(uint8_t fields_present, const cl_pid_gains_t *g) {
+    return apply_pid_field_update(&PITCH_PID_CFG, "pid_pitch", fields_present, g);
+}
+
+bool set_airspeed_pid_gains(uint8_t fields_present, const cl_pid_gains_t *g) {
+    return apply_pid_field_update(&AIRSPEED_PID_CFG, "pid_aspd", fields_present, g);
 }
 
 bool autonomous_mode_enabled(uint32_t mode_us) {
@@ -262,13 +292,14 @@ bool update_autonomous_outputs(void)
     // is deliberately left byte-for-byte unchanged: this scaffolding must
     // not alter any already flight-tested behavior.
     int16_t airspeed_cms = airspeed_get();
+    int throttle_out;
     if (airspeed_reading() && airspeed_cms != INT16_MIN) {
         float throttle_cmd = pid_step(&AIRSPEED_PID_CFG, (float)airspeed_cms, (float)AIRSPEED_TARGET_CMS, dt_s);
-        int throttle = clip((int)(1000 + throttle_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
-        update_comparator_value(channel_to_comparator(RC_THROTTLE), throttle);
+        throttle_out = clip((int)(1000 + throttle_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
     } else {
-        update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+        throttle_out = 1000;
     }
+    update_comparator_value(channel_to_comparator(RC_THROTTLE), throttle_out);
 
     float roll_cmd = pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s);
     float pitch_cmd = pid_step(&PITCH_PID_CFG, pitch_deg, goal_pitch_deg, dt_s);
@@ -325,6 +356,22 @@ void control_task(void *arg) {
 
         bool want_autonomous = !critical_fault_latched && radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]));
 
+        // Feed this cycle's freshest inputs to the config-link gate. Short,
+        // dedicated mutex wait (not the usual 500ms GPS_DATA_MUTEX_WAIT_MS)
+        // since control_task runs at 100Hz with a 10ms budget -- a missed
+        // take just treats gps_fix_valid as false for this one cycle, which
+        // config_link_update_gate() already treats as "skip the GPS check".
+        bool gps_fix_valid = false;
+        float gps_speed_kts = 0.0f;
+        if (gps_ready) {
+            if (xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+                gps_fix_valid = latest_gps_data.valid;
+                gps_speed_kts = (float)latest_gps_data.speed_knots;
+                xSemaphoreGive(gps_data_mutex);
+            }
+        }
+        config_link_update_gate(want_autonomous, ch[RC_THROTTLE], gps_fix_valid, gps_speed_kts);
+
         // On the manual->autonomous transition edge, clear out accumulated
         // PID/nav state so a nav task that's been idling in the background
         // (or a previous autonomous run) doesn't hand this engagement stale
@@ -353,6 +400,29 @@ void control_task(void *arg) {
 
 void app_main(void)
 {
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Wait for the system to stabilize
+
+    // Must run before anything else touches NVS (config_store.c, and
+    // nav_init()'s own persisted-mission/heading-PID load below).
+    ESP_ERROR_CHECK(config_store_init());
+
+    // Override compiled-in PID defaults with whatever was last persisted by
+    // the config link, if anything. HEADING_PID_CFG's own load happens
+    // inside nav_init() itself, since it's nav.c's own private state.
+    cl_pid_gains_t g;
+    if (config_store_load_pid_gains("pid_roll", &g)) {
+        ROLL_PID_CFG.k_p = g.k_p; ROLL_PID_CFG.k_i = g.k_i; ROLL_PID_CFG.k_d = g.k_d; ROLL_PID_CFG.i_limit = g.i_limit;
+        ESP_LOGI(TAG, "Loaded persisted roll PID gains from NVS");
+    }
+    if (config_store_load_pid_gains("pid_pitch", &g)) {
+        PITCH_PID_CFG.k_p = g.k_p; PITCH_PID_CFG.k_i = g.k_i; PITCH_PID_CFG.k_d = g.k_d; PITCH_PID_CFG.i_limit = g.i_limit;
+        ESP_LOGI(TAG, "Loaded persisted pitch PID gains from NVS");
+    }
+    if (config_store_load_pid_gains("pid_aspd", &g)) {
+        AIRSPEED_PID_CFG.k_p = g.k_p; AIRSPEED_PID_CFG.k_i = g.k_i; AIRSPEED_PID_CFG.k_d = g.k_d; AIRSPEED_PID_CFG.i_limit = g.i_limit;
+        ESP_LOGI(TAG, "Loaded persisted airspeed PID gains from NVS");
+    }
+
     // Create the IMU and GPS tasks
     BaseType_t result = xTaskCreate(
         imu_task,
@@ -429,6 +499,12 @@ void app_main(void)
     rc_capture_start(&cap_groups[1]);
 
     nav_init();
+
+    // Must run after nav_init(): the config-link receive path depends on
+    // nav_config_mutex already existing. Opens the ESP-NOW link immediately
+    // at boot (see config_link.h) -- after this, config_link_update_gate()
+    // (called from control_task below) takes over closing/reopening it.
+    config_link_init();
 
     // Scaffolding only: this wires up the mutex+task so airspeed_get()/
     // airspeed_reading() are live, but airspeed_enable() is deliberately

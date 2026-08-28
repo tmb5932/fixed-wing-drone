@@ -8,6 +8,7 @@
 #include "driver/i2c.h"
 #include "globals.h"
 #include "airspeed.h"
+#include "sim_config.h"
 
 static const char *TAG = "AIRSPEED";
 bool airspeed_enabled = false;
@@ -183,6 +184,22 @@ static bool ms4525_init_and_calibrate() {
 static void airspeed_task(void *_params) {
     int16_t local_airspeed = 0;
 
+#ifdef AIRSPEED_SIMULATED
+    ESP_LOGW(TAG, "AIRSPEED_SIMULATED is defined (sim_config.h) -- using fake airspeed data, no real I2C/hardware I/O");
+    airspeed_enable();
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(AIRSPEED_SAMPLE_PERIOD_MS));
+
+        local_airspeed = AIRSPEED_SIM_CMS;
+
+        BaseType_t ret = xSemaphoreTake(airspeed_mutex, pdMS_TO_TICKS(AIRSPEED_MUTEX_WAIT_MS));
+        if (ret == pdTRUE) {
+            airspeed_g = local_airspeed;
+            xSemaphoreGive(airspeed_mutex);
+        }
+    }
+#else
     // Validate + zero-calibrate the sensor before ever calling
     // airspeed_enable(). This mirrors imu_init()'s WHO_AM_I-gated pattern:
     // main.c's throttle path only trusts airspeed_get() once
@@ -209,6 +226,7 @@ static void airspeed_task(void *_params) {
         }
 
     }
+#endif
 }
 
 /**

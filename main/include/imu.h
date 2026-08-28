@@ -71,9 +71,20 @@
 // tumbling the board through as many orientations as possible -- redo this
 // if the board's position relative to nearby servos/motor/wiring changes
 // (e.g. once mounted in the actual airframe).
-#define MAG_HARD_IRON_OFFSET_X_UT   (29.0f)
-#define MAG_HARD_IRON_OFFSET_Y_UT   (-9.4f)
-#define MAG_HARD_IRON_OFFSET_Z_UT   (-8.6f)
+#define MAG_HARD_IRON_OFFSET_X_UT   (31.1f)
+#define MAG_HARD_IRON_OFFSET_Y_UT   (-54.2f)
+#define MAG_HARD_IRON_OFFSET_Z_UT   (13.7f)
+
+// Fallback gyro bias (deg/s), used only if calibrate_gyro_bias() (imu.c)
+// times out waiting for the board to go still -- e.g. it's still being
+// carried/handled at power-on. A live per-boot calibration is preferred
+// whenever the board settles in time (bias genuinely shifts with
+// temperature boot-to-boot), so this is a safety-net default, not the
+// primary source. Placeholder until bench-derived from a real calibration
+// run's logged result -- see calibrate_gyro_bias()'s ESP_LOGI output.
+#define GYRO_BIAS_X_DPS_DEFAULT (0.0f)
+#define GYRO_BIAS_Y_DPS_DEFAULT (0.0f)
+#define GYRO_BIAS_Z_DPS_DEFAULT (0.0f)
 
 #define IMU_SAMPLE_RATE_HZ  (100)
 #define IMU_MUTEX_WAIT (15)
