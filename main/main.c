@@ -11,6 +11,8 @@
 #include "imu.h"
 #include "gps.h"
 #include "pid.h"
+#include "nav.h"
+#include "airspeed.h"
 
 static const char *TAG = "MAIN";
 
@@ -87,6 +89,22 @@ pid_cfg_t PITCH_PID_CFG = {
     .last_err = 0,
     .first = true
 };
+
+// Placeholder gains, real sensor not in hand yet -- retune once
+// read_airspeed() is actually implemented and bench-verified.
+pid_cfg_t AIRSPEED_PID_CFG = {
+    .k_p = 5,
+    .k_i = 0,
+    .k_d = 0,
+    .i_limit = 250,
+    .integral = 0,
+    .last_err = 0,
+    .first = true
+};
+
+// Target cruise airspeed, in cm/s. Placeholder until the airframe is
+// flight-characterized.
+#define AIRSPEED_TARGET_CMS (1000)
 
 // Conservative caps on commanded attitude. Retune once the airframe is
 // flight-characterized / tested. These exist so nothing (i.e. a bug)
@@ -236,7 +254,21 @@ bool update_autonomous_outputs(void)
     float pitch_deg = imu_data.pitch;
     xSemaphoreGive(imu_data_mutex);
 
-    update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+    // Airspeed-hold throttle. airspeed_reading() is only ever true once a
+    // real driver calls airspeed_enable() after validating its hardware is
+    // actually present (mirroring imu_init()'s WHO_AM_I-gated pattern), so
+    // today -- with no sensor driver written yet -- this always falls
+    // through to the same hardcoded idle throttle as before. That fallback
+    // is deliberately left byte-for-byte unchanged: this scaffolding must
+    // not alter any already flight-tested behavior.
+    int16_t airspeed_cms = airspeed_get();
+    if (airspeed_reading() && airspeed_cms != INT16_MIN) {
+        float throttle_cmd = pid_step(&AIRSPEED_PID_CFG, (float)airspeed_cms, (float)AIRSPEED_TARGET_CMS, dt_s);
+        int throttle = clip((int)(1000 + throttle_cmd), SERVO_MIN_PULSEWIDTH_US, SERVO_MAX_PULSEWIDTH_US);
+        update_comparator_value(channel_to_comparator(RC_THROTTLE), throttle);
+    } else {
+        update_comparator_value(channel_to_comparator(RC_THROTTLE), 1000);
+    }
 
     float roll_cmd = pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s);
     float pitch_cmd = pid_step(&PITCH_PID_CFG, pitch_deg, goal_pitch_deg, dt_s);
@@ -274,6 +306,7 @@ static bool critical_fault_latched = false;
 
 void control_task(void *arg) {
     uint32_t ch[NUM_RC_CHANNELS];
+    bool was_autonomous = false;
     while (1) {
         ch[RC_THROTTLE] = get_channel_pulse_width(RC_THROTTLE);
         ch[RC_AILERON] = get_channel_pulse_width(RC_AILERON);
@@ -291,6 +324,18 @@ void control_task(void *arg) {
         bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
 
         bool want_autonomous = !critical_fault_latched && radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]));
+
+        // On the manual->autonomous transition edge, clear out accumulated
+        // PID/nav state so a nav task that's been idling in the background
+        // (or a previous autonomous run) doesn't hand this engagement stale
+        // integral/derivative history.
+        if (want_autonomous && !was_autonomous) {
+            pid_reset(&ROLL_PID_CFG);
+            pid_reset(&PITCH_PID_CFG);
+            pid_reset(&AIRSPEED_PID_CFG);
+            nav_reset();
+        }
+        was_autonomous = want_autonomous;
 
         if (want_autonomous && !update_autonomous_outputs()) {
             critical_fault_latched = true;
@@ -382,6 +427,17 @@ void app_main(void)
     rc_capture_add_channel(&cap_groups[1], 2, CH6_IN_GPIO);
 
     rc_capture_start(&cap_groups[1]);
+
+    nav_init();
+
+    // Scaffolding only: this wires up the mutex+task so airspeed_get()/
+    // airspeed_reading() are live, but airspeed_enable() is deliberately
+    // NOT called here. That should happen from inside the real sensor
+    // driver's init, only after it self-validates the hardware is present
+    // (mirroring imu_init()'s WHO_AM_I-gated pattern) -- so throttle stays
+    // on the known-good hardcoded path until real, validated hardware
+    // exists.
+    airspeed_init();
 
     xTaskCreatePinnedToCore(control_task, "control", 8096, NULL, 1, NULL, 1);
     return;

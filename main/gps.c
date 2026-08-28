@@ -22,6 +22,7 @@ static const char *TAG = "GPS";
 
 gps_data_t latest_gps_data = {0};
 SemaphoreHandle_t gps_data_mutex;
+volatile bool gps_ready = false;
 
 static const uint8_t rate_5Hz[] = {
     0xB5,0x62,0x06,0x08,
@@ -285,6 +286,11 @@ void init_gps(void)
         ESP_LOGE(TAG, "Failed to create GPS Mutex!");
         abort();
     };
+
+    // Signals other tasks (e.g. nav_task) that gps_data_mutex now exists and
+    // is safe to take. Before this, it's NULL -- xSemaphoreTake() on a NULL
+    // handle is a hard assert/crash, not a graceful failure.
+    gps_ready = true;
 }
 
 void loop_uart_gps(void)

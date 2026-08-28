@@ -9,6 +9,7 @@ typedef void* madgwick_t;
 
 madgwick_t madgwick_create(void);
 void madgwick_begin(madgwick_t handle, float sampleFrequency);
+void madgwick_set_beta(madgwick_t handle, float beta);
 void madgwick_update(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
 void madgwick_update_imu(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az);
 

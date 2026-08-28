@@ -11,6 +11,10 @@ void madgwick_begin(madgwick_t handle, float sampleFrequency) {
     static_cast<Madgwick*>(handle)->begin(sampleFrequency);
 }
 
+void madgwick_set_beta(madgwick_t handle, float beta) {
+    static_cast<Madgwick*>(handle)->setBeta(beta);
+}
+
 void madgwick_update(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
     static_cast<Madgwick*>(handle)->update(gx, gy, gz, ax, ay, az, mx, my, mz);
 }

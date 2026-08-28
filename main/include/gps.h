@@ -21,10 +21,18 @@ typedef struct {
     double course_deg;
 } gps_data_t;
 
+#define GPS_DATA_MUTEX_WAIT_MS (500) // matches GPS_MUTEX_WAIT in gps.c
+
 extern gps_data_t latest_gps_data;
 extern SemaphoreHandle_t gps_data_mutex;
+extern volatile bool gps_ready;
 
 bool parse_nmea_rmc(const char *sentence, gps_data_t *out);
+
+double degrees_to_rads(double degrees);
+double rads_to_degrees(double rads);
+float heading_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long);
+double distance_to_target(double cur_lat, double cur_long, double goal_lat, double goal_long);
 
 esp_err_t uart_send_bytes(const uint8_t *data, size_t len);
 
