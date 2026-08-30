@@ -40,3 +40,7 @@ python plot_nav.py nav_output.csv
 
 With no `--wp`, it generates a single waypoint at `--target_bearing`/`--target_dist_m` from the
 start position, which is usually more convenient for gain-sweeping than hand-picked lat/lon pairs.
+
+`mingw32-make test` builds both binaries and runs `tests/run_tests.py`, an 80-scenario regression
+suite against the current firmware gains (clean step responses, noise-robustness sweeps, and
+waypoint-mission edge cases) — exits nonzero if anything fails.

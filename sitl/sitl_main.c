@@ -101,6 +101,14 @@ int main(int argc, char **argv)
     fprintf(out, "t_s,goal_deg,angle_deg,measured_angle_deg,rate_dps,pid_output_us,"
                  "commanded_deflection_deg,actual_deflection_deg\n");
 
+    // Summary stats, gathered as the run progresses -- mirrors nav_sitl_main.c's
+    // "Result:" line so both binaries expose pass/fail metrics the same way.
+    const float SETTLE_BAND_DEG = 2.0f;
+    const float DIVERGED_BOUND_DEG = 150.0f;
+    float max_abs_angle_deg = 0.0f;
+    float last_outside_t_s = -1.0f;
+    bool diverged = false;
+
     for (int i = 0; i < steps; i++) {
         float t = i * dt_s;
 
@@ -124,13 +132,33 @@ int main(int argc, char **argv)
                 t, goal_deg, true_angle_deg, measured_angle_deg, true_rate_dps, pid_output_us,
                 commanded_deflection_deg, actuator.deflection_deg);
 
+        float abs_angle = fabsf(true_angle_deg);
+        if (abs_angle > max_abs_angle_deg) max_abs_angle_deg = abs_angle;
+        if (!isfinite(true_angle_deg) || abs_angle > DIVERGED_BOUND_DEG) diverged = true;
+        if (fabsf(true_angle_deg - goal_deg) > SETTLE_BAND_DEG) last_outside_t_s = t;
+
         plant_step(&plant, &params, actuator.deflection_deg, dt_s);
     }
 
     fclose(out);
+
+    float final_error_deg = fabsf(plant.angle_deg - goal_deg);
+    float settle_time_s;
+    if (diverged) {
+        settle_time_s = -1.0f;
+    } else if (last_outside_t_s < 0.0f) {
+        settle_time_s = 0.0f; // within band for the whole run
+    } else if (last_outside_t_s >= (steps - 1) * dt_s) {
+        settle_time_s = -1.0f; // never settled within duration_s
+    } else {
+        settle_time_s = last_outside_t_s + dt_s;
+    }
+
     printf("Wrote output.csv: axis=%s %d steps, %.1fs, k_p=%.3f k_i=%.3f k_d=%.3f i_limit=%.1fus, "
            "initial disturbance=%.1fdeg, goal=%.1fdeg, noise=%.2fdeg, servo_rate=%.1fdps, seed=%ld\n",
            axis, steps, duration_s, k_p, k_i, k_d, i_limit, initial_disturbance_deg, goal_deg,
            noise_deg, servo_rate_dps, seed);
+    printf("Result: max_abs_angle_deg=%.2f final_error_deg=%.2f settle_time_s=%.2f diverged=%s\n",
+           max_abs_angle_deg, final_error_deg, settle_time_s, diverged ? "yes" : "no");
     return 0;
 }

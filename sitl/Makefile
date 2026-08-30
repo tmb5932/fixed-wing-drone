@@ -18,7 +18,10 @@ $(ATTITUDE_BIN): $(ATTITUDE_SRCS) plant.h actuator.h airframe_params.h noise.h .
 $(NAV_BIN): $(NAV_SRCS) plant.h actuator.h airframe_params.h noise.h nav_world.h ../main/include/pid.h ../main/include/gps_math.h
 	$(CC) $(CFLAGS) -o $(NAV_BIN) $(NAV_SRCS) -lm
 
+test: all
+	python3 tests/run_tests.py
+
 clean:
 	rm -f $(ATTITUDE_BIN) $(NAV_BIN) output.csv nav_output.csv
 
-.PHONY: all clean
+.PHONY: all test clean
