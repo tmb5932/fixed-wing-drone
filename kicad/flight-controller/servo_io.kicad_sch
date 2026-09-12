@@ -7,7 +7,7 @@
 	(title_block
 		(title "Actuator IO")
 		(date "2026-09-09")
-		(rev "v3.0")
+		(rev "v3.1")
 		(company "Travis Brown")
 	)
 	(lib_symbols
@@ -233,6 +233,172 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:D_TVS"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "D_TVS"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bidirectional transient-voltage-suppression diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode TVS thyrector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "D_TVS_0_1"
+				(polyline
+					(pts
+						(xy -2.54 1.27) (xy -2.54 -1.27) (xy 2.54 1.27) (xy 2.54 -1.27) (xy -2.54 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.508 1.27) (xy 0 1.27) (xy 0 -1.27) (xy -0.508 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_TVS_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "A1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "SERVO_5V"
 		(exclude_from_sim no)
@@ -261,6 +427,12 @@
 		(uuid "1f7f96a7-a032-42fd-b702-79f0a044e440")
 	)
 	(junction
+		(at 100.33 86.36)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "58a5f03a-c312-4518-8cb7-eb747ae1f120")
+	)
+	(junction
 		(at 125.73 135.89)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -271,6 +443,16 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c543873b-4ee1-457c-b745-702cfe2db803")
+	)
+	(wire
+		(pts
+			(xy 100.33 78.74) (xy 100.33 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13bd2ce2-32f6-4c7a-a37b-1d344ab46d94")
 	)
 	(wire
 		(pts
@@ -314,6 +496,16 @@
 	)
 	(wire
 		(pts
+			(xy 93.98 78.74) (xy 100.33 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62bd1427-a930-449e-80ca-b23e54116512")
+	)
+	(wire
+		(pts
 			(xy 118.11 128.27) (xy 125.73 128.27)
 		)
 		(stroke
@@ -351,6 +543,36 @@
 			(type default)
 		)
 		(uuid "85e25c09-7198-4de1-aaf4-804a1883259d")
+	)
+	(wire
+		(pts
+			(xy 100.33 86.36) (xy 101.6 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "adea07b2-ee5d-4fa9-83c6-6aa79d5341e3")
+	)
+	(wire
+		(pts
+			(xy 85.09 78.74) (xy 86.36 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4e345d3-3eb7-4d08-bebe-8f7125764ea4")
+	)
+	(wire
+		(pts
+			(xy 99.06 86.36) (xy 100.33 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c56d7614-a33a-4567-8698-673a23f61107")
 	)
 	(wire
 		(pts
@@ -392,6 +614,16 @@
 		)
 		(uuid "f547acd3-888c-4206-a300-81d2d1263e43")
 	)
+	(wire
+		(pts
+			(xy 85.09 78.74) (xy 85.09 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb86eb60-a406-4c39-894f-cbca0259a392")
+	)
 	(hierarchical_label "ESC_OUT2"
 		(shape input)
 		(at 77.47 133.35 180)
@@ -402,6 +634,17 @@
 			(justify right)
 		)
 		(uuid "06ed6667-fbd1-4106-b728-27f43f8a91ad")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 85.09 80.01 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "21a79c09-2842-4d5c-aab1-525e6016c015")
 	)
 	(hierarchical_label "GND"
 		(shape output)
@@ -480,17 +723,6 @@
 		)
 		(uuid "ac9325bb-2d8b-4936-9602-c82ec479188f")
 	)
-	(hierarchical_label "RC_SBUS"
-		(shape output)
-		(at 99.06 86.36 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c9dbe36c-fda4-43ab-80a7-a37a0fcd3cfd")
-	)
 	(hierarchical_label "SERVO_OUT5"
 		(shape input)
 		(at 151.13 73.66 180)
@@ -512,6 +744,17 @@
 			(justify right)
 		)
 		(uuid "debedf0c-6d2c-4e15-8158-48143dac41e9")
+	)
+	(hierarchical_label "RC_SBUS"
+		(shape output)
+		(at 101.6 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e48ebe01-1216-420d-854f-10c2347ef8c2")
 	)
 	(hierarchical_label "ESC_OUT1"
 		(shape input)
@@ -556,8 +799,8 @@
 				)
 			)
 		)
-		(property "Value" "RC Connector"
-			(at 96.266 82.804 0)
+		(property "Value" "RC Conn"
+			(at 93.726 93.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -612,6 +855,109 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
 					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_TVS")
+		(at 90.17 78.74 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a1b93962-6099-4452-b2cb-5a6a2666ccf1")
+		(property "Reference" "D6"
+			(at 89.154 75.692 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ESD5Z5.0T1G"
+			(at 87.122 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-523"
+			(at 90.17 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
+			(at 90.17 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
+			(at 90.17 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "SBUS signal ESD/surge protection (added in review)"
+			(at 90.17 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C82044"
+			(at 90.17 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "95af887b-4984-4eb4-bb5d-1876ca0f6f6c")
+		)
+		(pin "2"
+			(uuid "e1b640a1-b686-44b7-bb47-b7e689bd56ee")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(reference "D6")
 					(unit 1)
 				)
 			)

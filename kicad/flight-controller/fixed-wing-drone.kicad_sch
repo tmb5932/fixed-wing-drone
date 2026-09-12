@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Autonomous Fixed Wing Drone ")
-		(date "2026-09-08")
-		(rev "v3.0")
+		(date "2026-09-12")
+		(rev "v3.1")
 		(comment 1 "Travis Brown")
 	)
 	(lib_symbols)

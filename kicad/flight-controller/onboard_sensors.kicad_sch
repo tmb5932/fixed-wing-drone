@@ -7,7 +7,7 @@
 	(title_block
 		(title "FC Onboard Sensors")
 		(date "2026-09-09")
-		(rev "v3.0")
+		(rev "v3.1")
 		(company "Travis Brown")
 	)
 	(lib_symbols)

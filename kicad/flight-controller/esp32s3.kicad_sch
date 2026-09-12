@@ -7,7 +7,7 @@
 	(title_block
 		(title "ESP32")
 		(date "2026-09-09")
-		(rev "v3.0")
+		(rev "v3.1")
 		(company "Travis Brown")
 		(comment 1 "ESP32-S3-N16-R8 Wroom 1 Module")
 	)
@@ -3791,7 +3791,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "USB_C_Receptacle_USB2.0_16P"
+		(property "Value" "USB-C"
 			(at 200.914 145.034 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4020,7 +4020,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TVS 5V"
+		(property "Value" "ESD5Z5.0T1G"
 			(at 138.43 125.38 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4042,7 +4042,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
 			(at 138.43 118.11 0)
 			(hide yes)
 			(show_name no)
@@ -4053,7 +4053,7 @@
 				)
 			)
 		)
-		(property "Description" "TVS diode"
+		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
 			(at 138.43 118.11 0)
 			(hide yes)
 			(show_name no)
@@ -4064,7 +4064,18 @@
 				)
 			)
 		)
-		(property "Notes" "USB VBUS ESD/surge protection (added in review) - specific MPN not yet sourced, select a 5V-rated USB VBUS TVS before BOM lock"
+		(property "Notes" "USB VBUS ESD/surge protection (added in review)"
+			(at 138.43 118.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C82044"
 			(at 138.43 118.11 0)
 			(hide yes)
 			(show_name no)
@@ -4646,7 +4657,7 @@
 				)
 			)
 		)
-		(property "Notes" "Boot button"
+		(property "Notes" "Boot"
 			(at 262.89 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -4932,7 +4943,7 @@
 				)
 			)
 		)
-		(property "Notes" "Reset button"
+		(property "Notes" "Reset"
 			(at 247.65 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -5013,7 +5024,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C440198.pdf"
 			(at 154.94 128.27 0)
 			(hide yes)
 			(show_name no)
@@ -5024,7 +5035,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "Unpolarized capacitor, Murata GRM21BR61H106KE43L, 50V X5R"
 			(at 154.94 128.27 0)
 			(hide yes)
 			(show_name no)
@@ -5035,7 +5046,18 @@
 				)
 			)
 		)
-		(property "Notes" "USB VBUS bulk/decoupling cap (added in review) - value/voltage rating not yet sourced"
+		(property "Notes" "USB VBUS bulk/decoupling cap (added in review)"
+			(at 154.94 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C440198"
 			(at 154.94 128.27 0)
 			(hide yes)
 			(show_name no)
