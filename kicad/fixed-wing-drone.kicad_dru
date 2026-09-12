@@ -1,0 +1,5 @@
+(version 1)
+(rule "FC_SERVO_5V_isolation"
+    (condition "A.NetName == '/FC_5V' && B.NetName == '/actuator_io/esc_io/SERVO_5V'")
+    (constraint clearance (min 2mm))
+)

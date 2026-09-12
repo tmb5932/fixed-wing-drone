@@ -1,0 +1,2639 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "94a6a4a0-e968-47dc-a5cb-6a14746d56e4")
+	(paper "A4")
+	(title_block
+		(title "ESC IO")
+		(date "2026-09-09")
+		(rev "v3.0")
+		(company "Travis Brown")
+	)
+	(lib_symbols
+		(symbol "Connector:Conn_01x03_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x03_Pin"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x03, script generated"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_01x03_Pin_1_1"
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:D_Schottky"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "D_Schottky"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Schottky diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode Schottky"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "D_Schottky_0_1"
+				(polyline
+					(pts
+						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27) (xy 1.27 -1.27) (xy -1.27 0) (xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_Schottky_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "easyeda2kicad:AO3407A"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 0 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AO3407A"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+				(at 0 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_AOS_AO3407A_AO3407A_C15155.html"
+				(at 0 -15.24 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "AO3407A"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "AOS"
+				(at 0 -17.78 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "AO3407A"
+				(at 0 -20.32 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "LCSC Part" "C15155"
+				(at 0 -22.86 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "MOSFETs"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AO3407A_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -0.51 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.51 2.29) (xy -0.51 -2.29)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 2.29)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 2.54 0) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -0.51) (xy 0 0.51)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.29) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.78) (xy 0 1.78)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.78) (xy 2.54 2.54) (xy 5.08 2.54) (xy 5.08 0.76)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy 1.02 0.51) (xy 1.02 -0.51) (xy 2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -1.78) (xy 0 -1.78)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 5.08 -2.54) (xy 5.08 -0.51)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 -0.51) (xy 5.84 0.76) (xy 4.32 0.76) (xy 5.08 -0.51)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.84 -0.51) (xy 5.59 -0.51) (xy 4.57 -0.51) (xy 4.32 -0.51)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin unspecified line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "GND"
+		(exclude_from_sim no)
+		(at 153.924 50.038 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "0f38c92f-7092-4e0b-8838-ed4e1a5c3b28")
+	)
+	(text "GND"
+		(exclude_from_sim no)
+		(at 143.256 96.774 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "15610260-855d-4276-827a-e0b63e04472c")
+	)
+	(text "VCC"
+		(exclude_from_sim no)
+		(at 145.288 99.568 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3dedccc4-99ad-4e4d-8cd2-dac57eb72c3e")
+	)
+	(text "VCC"
+		(exclude_from_sim no)
+		(at 195.072 101.854 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a297e380-d638-4cb3-b696-f1046d1a1a09")
+	)
+	(text "VCC"
+		(exclude_from_sim no)
+		(at 154.686 52.578 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "baa2b637-0826-4461-b46e-e0e4b215c069")
+	)
+	(text "Only takes 5v from ESC1 to control servos. Doing power OR'ing is not worth it.\nESC2 5v line is NC."
+		(exclude_from_sim no)
+		(at 198.882 118.364 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "de815149-dd52-4413-a4e6-55eeebf35452")
+	)
+	(junction
+		(at 142.24 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0c5e9d88-3556-48ca-97a8-d5184478477a")
+	)
+	(junction
+		(at 133.35 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2ac631a1-20d2-486e-9d4a-9eab0fb9ce2f")
+	)
+	(junction
+		(at 123.19 116.84)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4aa1a149-36b4-4540-b310-f3a816dac787")
+	)
+	(junction
+		(at 142.24 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e80fe5ee-9122-49e2-835a-8cc19092b6c1")
+	)
+	(junction
+		(at 152.4 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e863e763-5c8b-409f-95e4-7647e71d56ed")
+	)
+	(no_connect
+		(at 156.21 55.88)
+		(uuid "b6b5b9e0-47a7-47b7-9e77-a366e4e18f74")
+	)
+	(no_connect
+		(at 198.12 101.6)
+		(uuid "cfa32f37-281f-475c-9f4d-f5f97dbaf0df")
+	)
+	(wire
+		(pts
+			(xy 156.21 50.8) (xy 152.4 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2ea94b97-b354-40d3-a972-11a55c047e86")
+	)
+	(wire
+		(pts
+			(xy 142.24 97.79) (xy 146.05 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "34f30fca-c99c-47dd-a462-2cb70b4b9196")
+	)
+	(wire
+		(pts
+			(xy 123.19 119.38) (xy 128.27 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3af105ea-7d8c-48a4-9683-817b98e10fd3")
+	)
+	(wire
+		(pts
+			(xy 123.19 114.3) (xy 123.19 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3dd21430-d291-436b-918d-44a6cf460490")
+	)
+	(wire
+		(pts
+			(xy 123.19 100.33) (xy 123.19 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3e4405d7-77ef-449e-8a50-76fcfef0f86f")
+	)
+	(wire
+		(pts
+			(xy 123.19 119.38) (xy 123.19 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45148438-6f09-416a-8e7f-3fd134d5488d")
+	)
+	(wire
+		(pts
+			(xy 133.35 72.39) (xy 133.35 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49d7cd45-5a99-448c-9a00-a9e54eacfcaf")
+	)
+	(wire
+		(pts
+			(xy 196.85 104.14) (xy 198.12 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "571e8461-bd33-4510-a4dc-b568a3a8c93e")
+	)
+	(wire
+		(pts
+			(xy 152.4 50.8) (xy 152.4 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61c4824e-41a9-474c-a7f6-34a22c2a61da")
+	)
+	(wire
+		(pts
+			(xy 146.05 102.87) (xy 146.05 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "65009bd8-2c3a-4393-ba47-f8e2cd60d089")
+	)
+	(wire
+		(pts
+			(xy 140.97 97.79) (xy 142.24 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f5eb559-be84-47c9-a5cb-2d693821d8b8")
+	)
+	(wire
+		(pts
+			(xy 187.96 104.14) (xy 189.23 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71b8d82c-95cf-4e64-bac1-3cc4edb70e0a")
+	)
+	(wire
+		(pts
+			(xy 146.05 111.76) (xy 146.05 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a8dc87f-be00-440e-b6f1-9ffdc0289b3a")
+	)
+	(wire
+		(pts
+			(xy 133.35 76.2) (xy 137.16 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94475514-3a4f-4d08-b197-f6ada37b2e0e")
+	)
+	(wire
+		(pts
+			(xy 149.86 62.23) (xy 152.4 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98ebfa76-84a7-47b7-8d46-807d80298d45")
+	)
+	(wire
+		(pts
+			(xy 133.35 53.34) (xy 133.35 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b1df4f5-5bad-43d5-9d6e-3444e30c9beb")
+	)
+	(wire
+		(pts
+			(xy 133.35 53.34) (xy 156.21 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a46c0dac-3c14-40fa-aa47-bf29ded9552e")
+	)
+	(wire
+		(pts
+			(xy 133.35 67.31) (xy 133.35 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8d1a6e5-6412-4170-b0ce-8ede134b6da8")
+	)
+	(wire
+		(pts
+			(xy 152.4 62.23) (xy 152.4 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aa1e5c48-59d4-4fb7-82ba-060ba0683d08")
+	)
+	(wire
+		(pts
+			(xy 140.97 62.23) (xy 142.24 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ad1a08d5-a8d4-43e8-9352-ace4525f7694")
+	)
+	(wire
+		(pts
+			(xy 139.7 109.22) (xy 142.24 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b45bd633-1309-4b49-b8c2-ba50734ee73d")
+	)
+	(wire
+		(pts
+			(xy 142.24 109.22) (xy 142.24 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d52599b4-0943-4416-bfc4-e20d564b57c0")
+	)
+	(wire
+		(pts
+			(xy 123.19 100.33) (xy 146.05 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e54e25b5-7850-4099-9e6a-c4f9f4170762")
+	)
+	(wire
+		(pts
+			(xy 142.24 97.79) (xy 142.24 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f8a8ae94-c2a0-4f5e-958a-79d090b0f786")
+	)
+	(wire
+		(pts
+			(xy 130.81 109.22) (xy 132.08 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb725784-53b2-49fe-902e-4bd7de4a9d73")
+	)
+	(hierarchical_label "PRIMARY_ESC_SIGNAL"
+		(shape input)
+		(at 146.05 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0333ec5e-3b71-4a71-915e-1a8edd3ed66c")
+	)
+	(hierarchical_label "GND"
+		(shape output)
+		(at 142.24 110.49 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "18ec54da-4333-4697-9677-f762fba820a4")
+	)
+	(hierarchical_label "SERVO_5V"
+		(shape output)
+		(at 128.27 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6683ddd5-b6e7-4dc6-ac80-1e8b2077ab11")
+	)
+	(hierarchical_label "FC_5V"
+		(shape output)
+		(at 144.78 76.2 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6c246666-0c03-4b9d-b41f-099064466722")
+	)
+	(hierarchical_label "SECONDARY_ESC_SIGNAL"
+		(shape input)
+		(at 187.96 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "819d10fe-c16c-4360-95e4-8bec11b25133")
+	)
+	(hierarchical_label "GND"
+		(shape output)
+		(at 152.4 63.5 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "92b3fd65-6d12-416d-884f-b1c6f9e81060")
+	)
+	(hierarchical_label "GND"
+		(shape output)
+		(at 198.12 99.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "db9d3eb6-9d0a-4b83-bbe3-126b79f9b294")
+	)
+	(symbol
+		(lib_id "easyeda2kicad:AO3407A")
+		(at 125.73 109.22 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "14d10763-0cec-40ef-9f80-64f43d44c2f4")
+		(property "Reference" "Q2"
+			(at 118.11 107.9499 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "reverse polarity protection"
+			(at 118.11 110.4899 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+			(at 125.73 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_AOS_AO3407A_AO3407A_C15155.html"
+			(at 125.73 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "AO3407A"
+			(at 125.73 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "AOS"
+			(at 125.73 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO3407A"
+			(at 125.73 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C15155"
+			(at 125.73 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "ESC REV POLARITY PROT"
+			(at 125.73 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b18debac-3fdf-4bb5-9eb2-4eb2db7a072a")
+		)
+		(pin "2"
+			(uuid "e1e9591e-3e5f-4f88-a809-f4e442393b8b")
+		)
+		(pin "3"
+			(uuid "bb6b0226-6aa0-4151-a681-3e5b67277387")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "Q2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "easyeda2kicad:AO3407A")
+		(at 135.89 62.23 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1d2a8ef9-2462-41e1-bc92-f55fd20edade")
+		(property "Reference" "Q1"
+			(at 128.27 60.9599 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "reverse polarity protection"
+			(at 128.27 63.4999 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "easyeda2kicad:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+			(at 135.89 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_AOS_AO3407A_AO3407A_C15155.html"
+			(at 135.89 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "AO3407A"
+			(at 135.89 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "AOS"
+			(at 135.89 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO3407A"
+			(at 135.89 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C15155"
+			(at 135.89 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "FC REV POLARITY PROT"
+			(at 135.89 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b5bfaded-4b69-4460-9fce-c63fc57b2fc1")
+		)
+		(pin "2"
+			(uuid "b3b2e904-4254-47e4-9581-442e3ca3ee80")
+		)
+		(pin "3"
+			(uuid "aa3de3e3-1227-4cd5-8682-177ccd8c6163")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x03_Pin")
+		(at 161.29 53.34 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(uuid "32f8e570-2ab0-4ee5-841a-71baa845816a")
+		(property "Reference" "J20"
+			(at 162.56 52.0699 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "FC UBEC Input"
+			(at 162.56 54.6099 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical"
+			(at 161.29 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 161.29 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 161.29 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
+			(at 161.29 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "b195be80-da5f-4678-9f85-7c3f7dc4b431")
+		)
+		(pin "3"
+			(uuid "5f17dd73-4356-4337-9393-22dff4fdf12c")
+		)
+		(pin "1"
+			(uuid "123a0751-61bd-4b9d-ac18-1f3064223d88")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "J20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x03_Pin")
+		(at 203.2 101.6 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files no)
+		(dnp yes)
+		(uuid "43df36ba-10c0-45fd-b07d-8b6fbc212bb8")
+		(property "Reference" "J19"
+			(at 204.47 100.3299 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "ESC2"
+			(at 204.978 102.616 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical"
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
+			(at 203.2 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "dc56ef1b-18e8-4717-855e-327ad9c1826e")
+		)
+		(pin "3"
+			(uuid "84fa8ccc-5960-4bea-bf59-7c92b51e8348")
+		)
+		(pin "1"
+			(uuid "38da27b5-f438-41f7-944c-98e92e487b8b")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "J19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 140.97 76.2 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4ea97387-45d7-42bb-a159-bc8ea8c91f51")
+		(property "Reference" "D5"
+			(at 142.494 70.612 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "B5819W"
+			(at 148.844 78.994 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-123"
+			(at 140.97 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 140.97 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 140.97 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "ESC1 UBEC diode"
+			(at 140.97 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C8598"
+			(at 140.97 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1f2ce2c3-8c7e-486b-8145-c7f57ac8d967")
+		)
+		(pin "2"
+			(uuid "46707299-3859-4b44-a2f8-15f83878f5dc")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x03_Pin")
+		(at 151.13 100.33 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files no)
+		(dnp yes)
+		(uuid "59acb197-c145-4f48-a29b-efbabfc2baee")
+		(property "Reference" "J22"
+			(at 152.4 99.0599 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "ESC1"
+			(at 153.416 102.108 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical"
+			(at 151.13 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 151.13 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 151.13 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" ""
+			(at 151.13 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "c8410e8b-ebc6-4ed0-aa83-cc3ab07a9ea1")
+		)
+		(pin "3"
+			(uuid "d45eb12a-733e-4315-a465-db262dc3db44")
+		)
+		(pin "1"
+			(uuid "fd1c2e1f-7352-4ce5-802f-005256fd58e7")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "J22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 146.05 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a91af9c9-2057-4df8-9cb7-e5e91256b047")
+		(property "Reference" "R23"
+			(at 150.368 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330R"
+			(at 148.082 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 144.272 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 146.05 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 146.05 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25104"
+			(at 146.05 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "10a27421-0a54-485a-93ef-108894bfd076")
+		)
+		(pin "2"
+			(uuid "be9c05c2-d05e-4461-ba90-49edbf69e366")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "R23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 140.97 97.79 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a9431be2-101a-410f-9c4c-fdd4d911b3fd")
+		(property "Reference" "#FLG05"
+			(at 139.065 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND_SRC"
+			(at 138.43 97.79 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 140.97 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 140.97 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 140.97 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f1b3e36e-3d59-4821-8aba-ae92b810cdac")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "#FLG05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 123.19 116.84 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ab58a6e5-f409-4073-8d06-de8e4bbc9add")
+		(property "Reference" "#FLG09"
+			(at 121.285 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "5V_SRC"
+			(at 116.84 116.84 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 123.19 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 123.19 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 123.19 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "46372dac-77be-4367-a2cc-3ff9f35df5e0")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "#FLG09")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 146.05 62.23 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b0865528-7423-4293-8e8f-e5060c838c60")
+		(property "Reference" "R8"
+			(at 146.304 60.198 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100K"
+			(at 146.304 62.23 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 146.05 60.452 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 146.05 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 146.05 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25741"
+			(at 146.05 62.23 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "155e891a-bdb3-4e36-91b1-96d57ca6d875")
+		)
+		(pin "2"
+			(uuid "3f44cba2-bfb6-41c5-ba23-be9b8990cf13")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 193.04 104.14 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b85f8b5f-0018-4d82-9dee-8f3536a4346f")
+		(property "Reference" "R22"
+			(at 193.04 108.458 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330R"
+			(at 193.04 106.172 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 193.04 102.362 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 193.04 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 193.04 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25104"
+			(at 193.04 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "950e7941-1c6e-4686-b03a-593a54b2c110")
+		)
+		(pin "2"
+			(uuid "c150c5f6-1bce-4b2e-ac48-aae818a338bd")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "R22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 133.35 72.39 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "be3c9e88-b17c-4b8e-9b70-5e17249077fe")
+		(property "Reference" "#FLG08"
+			(at 131.445 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "5V_SRC"
+			(at 127.508 72.136 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 133.35 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 133.35 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "83017576-a3ce-4241-a06d-dfbbed0bc540")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "#FLG08")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 135.89 109.22 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c410ae8e-26e3-48fe-9275-ac3ee5818d2d")
+		(property "Reference" "R10"
+			(at 136.144 107.188 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100K"
+			(at 135.89 109.22 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 135.89 107.442 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 135.89 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 135.89 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25741"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "406e3331-85aa-4a85-a9fc-345e4225c6ee")
+		)
+		(pin "2"
+			(uuid "861f5d2a-a99c-40d4-8687-a3da02510208")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0/5eb01b74-1a14-4da5-85cf-2e127058f032"
+					(reference "R10")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

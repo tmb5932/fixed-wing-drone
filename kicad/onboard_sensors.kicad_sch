@@ -1,0 +1,421 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "bf1b16bc-a948-471a-9b2a-578951567e6e")
+	(paper "A4")
+	(title_block
+		(title "FC Onboard Sensors")
+		(date "2026-09-09")
+		(rev "v3.0")
+		(company "Travis Brown")
+	)
+	(lib_symbols)
+	(hierarchical_label "SENSOR_3V3"
+		(shape input)
+		(at 54.61 102.87 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0a8f321d-7ff1-4eb0-929c-b6c2eea70f37")
+	)
+	(hierarchical_label "IMU1_CS"
+		(shape input)
+		(at 54.61 72.39 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1dfa1d84-b23a-4c57-8228-6db61f5eddce")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 54.61 105.41 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "297c1b59-09a1-4b63-bf55-6df965a1253b")
+	)
+	(hierarchical_label "MISO"
+		(shape output)
+		(at 193.04 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "346c2107-48d5-45af-8b1c-a577e0c51010")
+	)
+	(hierarchical_label "MISO"
+		(shape output)
+		(at 105.41 95.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "45215d4b-d2f1-4285-8e55-310a1f61275a")
+	)
+	(hierarchical_label "SCK"
+		(shape input)
+		(at 140.97 83.82 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "53456d32-7ad6-48f9-8dcc-682ba0272d32")
+	)
+	(hierarchical_label "MOSI"
+		(shape input)
+		(at 140.97 78.74 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8c8f2e8c-878d-43ab-9743-d8548ccf76db")
+	)
+	(hierarchical_label "IMU1_INT"
+		(shape output)
+		(at 105.41 90.17 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "927caf51-86da-408d-beb4-9c974d49a149")
+	)
+	(hierarchical_label "IMU2_ACCEL_CS"
+		(shape input)
+		(at 54.61 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "adac9f3d-89b4-467a-9fad-3ab1159716e4")
+	)
+	(hierarchical_label "MOSI"
+		(shape input)
+		(at 54.61 85.09 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b020488e-c2d7-4271-a980-29fff15af648")
+	)
+	(hierarchical_label "SENSOR_3V3"
+		(shape input)
+		(at 140.97 102.87 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b6516f40-52dc-49e5-bcc0-3998183131e5")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 140.97 105.41 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b6c500a8-55cd-4378-a531-849ad1d117b1")
+	)
+	(hierarchical_label "SCK"
+		(shape input)
+		(at 54.61 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bb13b2c3-9966-4212-a83c-b9d2a8545fc5")
+	)
+	(hierarchical_label "IMU2_GYRO_CS"
+		(shape input)
+		(at 54.61 80.01 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ccb9ae99-70dd-4515-8758-7a571a59b0a1")
+	)
+	(hierarchical_label "BAROMETER_CS"
+		(shape input)
+		(at 140.97 74.93 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d84e1cd4-2da9-4a9c-a8b9-e841f5fae2d0")
+	)
+	(sheet
+		(at 54.61 67.31)
+		(size 50.8 40.64)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "22aa69dc-010b-4ef7-9708-61662eeb6e4c")
+		(property "Sheetname" "imu"
+			(at 54.61 66.5984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "imu.kicad_sch"
+			(at 54.61 108.5346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 54.61 105.41 180)
+			(uuid "9a0fc9c7-9cae-41ff-a577-41f5cd7c8e61")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IMU1_CS" input
+			(at 54.61 72.39 180)
+			(uuid "982064e6-5b7a-4377-abc9-59699939af9c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IMU2_ACCEL_CS" input
+			(at 54.61 76.2 180)
+			(uuid "616d5444-1c39-49e9-97f7-12fd265211d6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IMU2_GYRO_CS" input
+			(at 54.61 80.01 180)
+			(uuid "3b02f33f-ccf7-4389-a936-509bb8a7b1e5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MISO" output
+			(at 105.41 95.25 0)
+			(uuid "7d45dd80-4543-4698-861a-8dbb3f511ba9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSI" input
+			(at 54.61 85.09 180)
+			(uuid "fd9699ac-cf85-4679-82fe-6191393f06d3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SCK" input
+			(at 54.61 88.9 180)
+			(uuid "c28a7c73-8a29-40b1-bbd9-065351f1ff14")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SENSOR_3V3" input
+			(at 54.61 102.87 180)
+			(uuid "842d7cf2-b2d6-4215-94cb-42a9a7320359")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IMU1_INT" output
+			(at 105.41 90.17 0)
+			(uuid "f5c3d95b-4934-49a0-9ad7-49acf41d6bf6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/0cd0f03e-731b-4746-9c76-29b59823d72d"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 140.97 68.58)
+		(size 52.07 40.64)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "741ce9a3-fcb2-4f85-b73f-550c4cfa127c")
+		(property "Sheetname" "barometer"
+			(at 140.97 67.8684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "barometer.kicad_sch"
+			(at 140.97 109.8046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "BAROMETER_CS" input
+			(at 140.97 74.93 180)
+			(uuid "5951b470-7602-42f5-852f-97b6eac9a012")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GND" input
+			(at 140.97 105.41 180)
+			(uuid "b5b0be1d-a3b9-428c-85c3-3cf2d004fa6f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MISO" output
+			(at 193.04 80.01 0)
+			(uuid "b0247c47-1eb5-4219-8c41-cd99f8e370b9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSI" input
+			(at 140.97 78.74 180)
+			(uuid "cdd70f98-e9c2-48d2-8bf4-0f908220ed8c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SCK" input
+			(at 140.97 83.82 180)
+			(uuid "b8619461-76ee-437d-91bd-e734c78868ff")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SENSOR_3V3" input
+			(at 140.97 102.87 180)
+			(uuid "01d66b0e-5e41-497c-8823-bd67365901ff")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/0cd0f03e-731b-4746-9c76-29b59823d72d"
+					(page "10")
+				)
+			)
+		)
+	)
+)

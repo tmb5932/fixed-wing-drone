@@ -60,7 +60,7 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.5,
+          "min_clearance": 0.0,
           "min_island_area": 10.0,
           "min_thickness": 0.25,
           "pad_connection": 1,
@@ -70,7 +70,16 @@
         }
       },
       "diff_pair_dimensions": [],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "silk_edge_clearance|117800000|62250000|b68c2d53-ae89-400f-a605-11ee29234ade|35e2fe33-22fa-48ab-ab76-3997f74e20c6",
+          ""
+        ],
+        [
+          "silk_edge_clearance|135820000|62250000|b68c2d53-ae89-400f-a605-11ee29234ade|023c4559-bf51-4f57-ba6d-0cc2f8cdfffa",
+          ""
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -240,7 +249,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": "v2.1"
+      "sch_revision": "v3.0"
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -448,7 +457,7 @@
       "field_name_whitespace": "warning",
       "footprint_filter": "ignore",
       "footprint_link_issues": "warning",
-      "four_way_junction": "ignore",
+      "four_way_junction": "warning",
       "ground_pin_not_ground": "warning",
       "hier_label_mismatch": "error",
       "isolated_pin_label": "warning",
@@ -466,14 +475,14 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
       "similar_labels": "warning",
       "similar_power": "warning",
       "simulation_model_issue": "ignore",
-      "single_global_label": "ignore",
+      "single_global_label": "warning",
       "stacked_pin_name": "warning",
       "unannotated": "error",
       "unconnected_wire_endpoint": "warning",
@@ -726,13 +735,57 @@
         "uuid": "6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
       }
     ],
-    "used_designators": "J21",
+    "used_designators": "C8,C18-23,U4,U6-10",
     "variants": []
   },
   "sheets": [
     [
       "6fbedc8c-8b3e-4075-8dcf-52085fc3223b",
       "fixed-wing-drone"
+    ],
+    [
+      "0cd0f03e-731b-4746-9c76-29b59823d72d",
+      "onboard_sensors"
+    ],
+    [
+      "f6c03e16-26ab-4025-8458-13bade097d3d",
+      "external_sensors"
+    ],
+    [
+      "c5f0c20f-db19-4cbe-9f5c-05ea41a374c0",
+      "actuator_io"
+    ],
+    [
+      "de73f962-17e6-4239-8857-7990a4cf3949",
+      "esp32s3"
+    ],
+    [
+      "7900f9d3-bd64-4359-9298-7068f3270a89",
+      "aux"
+    ],
+    [
+      "29a7a03f-dd44-44ab-adeb-9b2c8ecf689a",
+      "fc_ldo"
+    ],
+    [
+      "5eb01b74-1a14-4da5-85cf-2e127058f032",
+      "esc_io"
+    ],
+    [
+      "22aa69dc-010b-4ef7-9708-61662eeb6e4c",
+      "imu"
+    ],
+    [
+      "741ce9a3-fcb2-4f85-b73f-550c4cfa127c",
+      "barometer"
+    ],
+    [
+      "06f10e75-ab55-40b5-b78a-385640ed59db",
+      "servo_out"
+    ],
+    [
+      "72179897-d6e6-486a-b05c-b111b61d42f8",
+      "microsd"
     ]
   ],
   "text_variables": {},

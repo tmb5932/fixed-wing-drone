@@ -1,0 +1,1294 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "41f902eb-3d81-49c1-8ac8-da228dd7fbf2")
+	(paper "A4")
+	(title_block
+		(title "Regulators")
+		(date "2026-09-09")
+		(rev "v3.0")
+		(company "Travis Brown")
+	)
+	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Regulator_Linear:AP2112K-3.3"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -5.08 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "AP2112K-3.3"
+				(at 0 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+				(at 0 8.255 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.diodes.com/assets/Datasheets/AP2112.pdf"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "600mA low dropout linear regulator, with enable pin, 3.8V-6V input voltage range, 3.3V fixed positive output, SOT-23-5"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "linear regulator ldo fixed positive"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23?5*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AP2112K-3.3_0_1"
+				(rectangle
+					(start -5.08 4.445)
+					(end 5.08 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AP2112K-3.3_1_1"
+				(pin power_in line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "VIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "EN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at 5.08 0 180)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(rectangle
+		(start 147.32 71.12)
+		(end 214.63 107.95)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "32d44a29-401e-4c73-a2ba-4c03e3e81fe6")
+	)
+	(rectangle
+		(start 76.2 71.12)
+		(end 142.24 107.95)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "d1142640-cbed-475e-bfac-b9b48121b2da")
+	)
+	(text "Sensor LDO"
+		(exclude_from_sim no)
+		(at 108.458 76.454 0)
+		(effects
+			(font
+				(size 1.905 1.905)
+			)
+		)
+		(uuid "3e5a7268-92b2-4f01-b797-d20f24b70a25")
+	)
+	(text "ESP32 LDO"
+		(exclude_from_sim no)
+		(at 178.308 77.978 0)
+		(effects
+			(font
+				(size 1.905 1.905)
+			)
+		)
+		(uuid "ecafc4e6-78d2-4497-a518-b3e4067276d5")
+	)
+	(junction
+		(at 119.38 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a5d55ad-e652-4d17-998a-9a1b128158e9")
+	)
+	(junction
+		(at 167.64 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "42dd2021-b672-44c3-beeb-968984c68dbd")
+	)
+	(junction
+		(at 162.56 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7fb26c7f-379e-4f29-a583-821309747757")
+	)
+	(junction
+		(at 187.96 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7fbcb66f-97eb-4e78-abb4-2e5a95598fa4")
+	)
+	(junction
+		(at 92.71 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "939a3ee7-d6d7-440c-8103-5fc1e2d9f0c4")
+	)
+	(junction
+		(at 99.06 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e912647d-e330-4016-a435-c2dd1ca56e0b")
+	)
+	(wire
+		(pts
+			(xy 115.57 91.44) (xy 119.38 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "07d935cb-c540-47b3-a9b7-f372dc9276cf")
+	)
+	(wire
+		(pts
+			(xy 87.63 91.44) (xy 92.71 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "279eafdc-c364-4428-a829-48ac2c4a0008")
+	)
+	(wire
+		(pts
+			(xy 187.96 100.33) (xy 187.96 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "41960d70-78fb-4129-a775-9dc12e86034b")
+	)
+	(wire
+		(pts
+			(xy 186.69 91.44) (xy 187.96 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "47369e90-28fa-4487-bb9c-676c4ee7e609")
+	)
+	(wire
+		(pts
+			(xy 119.38 91.44) (xy 128.27 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55765fef-390e-4bcd-bfd8-4d5e4cf3e388")
+	)
+	(wire
+		(pts
+			(xy 92.71 91.44) (xy 99.06 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d7e2387-9519-4e17-b916-530221ca8dc4")
+	)
+	(wire
+		(pts
+			(xy 167.64 93.98) (xy 171.45 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79437c6f-f6c2-49a1-a332-15c27c10d5b3")
+	)
+	(wire
+		(pts
+			(xy 100.33 93.98) (xy 99.06 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0700376-37c9-49fb-9515-8094e4785afc")
+	)
+	(wire
+		(pts
+			(xy 156.21 91.44) (xy 162.56 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4304a8e-977a-46c8-8701-75f5eb40b899")
+	)
+	(wire
+		(pts
+			(xy 167.64 91.44) (xy 167.64 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c215faea-d08c-4bca-9664-8961fc52f247")
+	)
+	(wire
+		(pts
+			(xy 162.56 91.44) (xy 167.64 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ce9b2592-26db-4939-9f00-ae8108fef5cf")
+	)
+	(wire
+		(pts
+			(xy 167.64 91.44) (xy 171.45 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d05feb6f-95dd-4936-b7ca-52790aa782ca")
+	)
+	(wire
+		(pts
+			(xy 187.96 91.44) (xy 199.39 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d46d0eb6-1865-4c6f-8318-7e1d71ec3cfe")
+	)
+	(wire
+		(pts
+			(xy 99.06 93.98) (xy 99.06 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f5e514f0-1d17-40ac-bf67-43b516faca67")
+	)
+	(wire
+		(pts
+			(xy 99.06 91.44) (xy 100.33 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fadc2a15-c574-4396-91af-b1d82ab24293")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 162.56 99.06 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "01e225f0-4c67-4787-9f40-9621c9505611")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 119.38 99.06 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2e9a212c-0c60-4022-b157-ccbfc5f671c1")
+	)
+	(hierarchical_label "FC_5V"
+		(shape input)
+		(at 87.63 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "684d5c50-0ca7-4ffb-9678-3524b4bf7d85")
+	)
+	(hierarchical_label "SENSOR_3V3"
+		(shape output)
+		(at 128.27 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "77ea019d-3f51-4a46-a6b6-37149a7c8b3b")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 92.71 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a8f8b298-942d-4392-a3ea-dec41c48011d")
+	)
+	(hierarchical_label "ESP_3V3"
+		(shape output)
+		(at 199.39 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d384e03a-3bf1-4a2d-9045-97997b2d5571")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 179.07 101.6 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d615f16f-a507-4986-81c5-a53653d6fafc")
+	)
+	(hierarchical_label "FC_5V"
+		(shape input)
+		(at 156.21 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e6ca4ce4-2b64-4c0e-9118-62c53c4f863b")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 187.96 100.33 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f0fb68d8-2d27-4185-a8d3-a4af7691b9b2")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 107.95 101.6 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fe8fed0d-9d17-4818-8417-0124cd010b51")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 92.71 95.25 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "068771b6-d2d1-483f-85c0-efce1d7e4472")
+		(property "Reference" "C9"
+			(at 90.424 96.012 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 90.424 94.234 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 91.7448 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 92.71 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 92.71 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C14445"
+			(at 92.71 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "de270e3a-83ab-4ef6-92f0-d8e22cf59a05")
+		)
+		(pin "2"
+			(uuid "9a4a1add-fc79-446e-a21b-b8e28cee6b33")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 119.38 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "45f375ad-5df4-4c77-9f9f-1f9106b22c00")
+		(property "Reference" "C8"
+			(at 120.142 97.536 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 121.666 95.758 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 120.3452 99.06 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 119.38 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C14445"
+			(at 119.38 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c14b17c5-14c7-4729-b138-6591bfe1e1d7")
+		)
+		(pin "2"
+			(uuid "6d4a7c2b-839d-4367-a4d4-3395fbb7f2f6")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Regulator_Linear:AP2112K-3.3")
+		(at 179.07 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "67eada35-686f-4701-88e8-68d2594e5812")
+		(property "Reference" "U5"
+			(at 179.07 85.09 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AP2112K-3.3"
+			(at 179.07 87.63 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 179.07 85.725 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/AP2112.pdf"
+			(at 179.07 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "600mA low dropout linear regulator, with enable pin, 3.8V-6V input voltage range, 3.3V fixed positive output, SOT-23-5"
+			(at 179.07 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "ESP32 3.3V supply"
+			(at 179.07 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C51118"
+			(at 179.07 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "baf61a0b-eae0-4933-b657-7fc03a4f9231")
+		)
+		(pin "4"
+			(uuid "f81e3ec4-d607-4aef-913b-ae4479acab31")
+		)
+		(pin "2"
+			(uuid "253dedb4-1e2a-4acb-9849-b184212f9691")
+		)
+		(pin "3"
+			(uuid "53e58f54-d532-4455-b065-e9829a9c81fe")
+		)
+		(pin "5"
+			(uuid "c101d407-9617-4f62-8731-e86ef4d5e6d7")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "U5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 187.96 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7c822885-25b1-4957-910b-44d98f41e6b8")
+		(property "Reference" "C7"
+			(at 188.468 93.472 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 188.722 97.282 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 188.9252 99.06 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 187.96 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C14445"
+			(at 187.96 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "11ada2da-4cab-4ce8-a0e1-cdb5ab48b40a")
+		)
+		(pin "2"
+			(uuid "59882627-c7c7-49e1-84d2-df3189088795")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "C7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 162.56 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "bff22242-c68f-4459-bdc5-924feb7015dd")
+		(property "Reference" "C6"
+			(at 157.48 96.012 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 156.972 94.234 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 163.5252 99.06 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 162.56 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C14445"
+			(at 162.56 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "288bcfba-a38b-43a0-98f7-c676375da13e")
+		)
+		(pin "2"
+			(uuid "694f208f-8103-451a-b5e0-c76a7485b50f")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "C6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Regulator_Linear:AP2112K-3.3")
+		(at 107.95 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f62f4598-3a1e-4989-83f2-6c2d30a87d53")
+		(property "Reference" "U6"
+			(at 107.95 85.09 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AP2112K-3.3"
+			(at 107.95 87.63 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 107.95 85.725 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/AP2112.pdf"
+			(at 107.95 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "600mA low dropout linear regulator, with enable pin, 3.8V-6V input voltage range, 3.3V fixed positive output, SOT-23-5"
+			(at 107.95 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "Sensor 3.3V supply"
+			(at 107.95 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C51118"
+			(at 107.95 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "576eaebd-e1a5-4d2a-840a-f04b042f2ae2")
+		)
+		(pin "4"
+			(uuid "8b6a1c4a-5be8-45d7-bd7d-379a0aa4111e")
+		)
+		(pin "2"
+			(uuid "f7235bec-3ec8-45ed-9738-87904912014f")
+		)
+		(pin "3"
+			(uuid "68f0c19d-9d97-4048-815b-9e143779a46d")
+		)
+		(pin "5"
+			(uuid "dcc1056f-46e2-4491-ac8d-cfc849d53f54")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/29a7a03f-dd44-44ab-adeb-9b2c8ecf689a"
+					(reference "U6")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

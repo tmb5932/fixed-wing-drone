@@ -1,0 +1,862 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "58e56a87-f98b-4637-8f64-58b42e0b11ab")
+	(paper "A4")
+	(title_block
+		(title "Actuator IO")
+		(date "2026-09-09")
+		(rev "v3.0")
+		(company "Travis Brown")
+	)
+	(lib_symbols
+		(symbol "Connector:Conn_01x03_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x03_Pin"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x03, script generated"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_01x03_Pin_1_1"
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "SERVO_5V"
+		(exclude_from_sim no)
+		(at 115.57 88.138 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c069d328-0165-447f-b806-22c49a0d01d8")
+	)
+	(text "GND"
+		(exclude_from_sim no)
+		(at 106.934 91.948 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c810e691-c8b3-4483-87c0-09055f08f8a2")
+	)
+	(junction
+		(at 138.43 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1f7f96a7-a032-42fd-b702-79f0a044e440")
+	)
+	(junction
+		(at 125.73 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b254ab73-2563-448b-ad2d-f7a47987e67e")
+	)
+	(junction
+		(at 140.97 92.71)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c543873b-4ee1-457c-b745-702cfe2db803")
+	)
+	(wire
+		(pts
+			(xy 140.97 135.89) (xy 140.97 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f70f3dc-97b6-4e10-848e-f4dbcef8a778")
+	)
+	(wire
+		(pts
+			(xy 125.73 135.89) (xy 125.73 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5560c93a-7087-4772-b759-ccac7b2f8cee")
+	)
+	(wire
+		(pts
+			(xy 99.06 91.44) (xy 99.06 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bcc7deb-5098-401f-ae70-ab975d326033")
+	)
+	(wire
+		(pts
+			(xy 140.97 92.71) (xy 151.13 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5e510056-4f06-4e72-9ff3-149f091eff8f")
+	)
+	(wire
+		(pts
+			(xy 118.11 128.27) (xy 125.73 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62c7fe2e-511e-41e9-9ccb-95e3610d2afd")
+	)
+	(wire
+		(pts
+			(xy 99.06 92.71) (xy 140.97 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "777c084b-e8f3-41e4-ae18-36bd52272871")
+	)
+	(wire
+		(pts
+			(xy 138.43 132.08) (xy 138.43 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "851774bc-9263-40fb-8fdd-806864ea7add")
+	)
+	(wire
+		(pts
+			(xy 125.73 135.89) (xy 140.97 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85e25c09-7198-4de1-aaf4-804a1883259d")
+	)
+	(wire
+		(pts
+			(xy 118.11 132.08) (xy 138.43 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cc6a3d86-0ae6-42bd-89eb-33fb447fbaa5")
+	)
+	(wire
+		(pts
+			(xy 138.43 88.9) (xy 151.13 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d729ff87-8ea1-4f08-8fca-19fa6b681314")
+	)
+	(wire
+		(pts
+			(xy 118.11 135.89) (xy 125.73 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e0ff5a50-aac4-4183-b23b-9a45720713c8")
+	)
+	(wire
+		(pts
+			(xy 99.06 88.9) (xy 138.43 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f547acd3-888c-4206-a300-81d2d1263e43")
+	)
+	(hierarchical_label "ESC_OUT2"
+		(shape input)
+		(at 77.47 133.35 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "06ed6667-fbd1-4106-b728-27f43f8a91ad")
+	)
+	(hierarchical_label "GND"
+		(shape output)
+		(at 125.73 137.16 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2de7e269-de8b-4ac4-8716-a105ab31193b")
+	)
+	(hierarchical_label "SERVO_OUT8"
+		(shape input)
+		(at 151.13 85.09 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "728523fc-35b0-465d-9797-1c8bb613d196")
+	)
+	(hierarchical_label "SERVO_OUT6"
+		(shape input)
+		(at 151.13 77.47 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7c803d5a-a069-4c19-ac1c-6ee0e65dcaca")
+	)
+	(hierarchical_label "FC_5V"
+		(shape output)
+		(at 125.73 128.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "84c689fd-dddb-4aba-a738-a77e7e2063ae")
+	)
+	(hierarchical_label "SERVO_OUT4"
+		(shape input)
+		(at 151.13 69.85 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8c2eff49-ba9d-4565-b8dc-10f0cbc35c88")
+	)
+	(hierarchical_label "SERVO_OUT2"
+		(shape input)
+		(at 151.13 62.23 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a086a7e2-2aad-48ce-82c7-fcf0f5cc373f")
+	)
+	(hierarchical_label "SERVO_OUT3"
+		(shape input)
+		(at 151.13 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ac9325bb-2d8b-4936-9602-c82ec479188f")
+	)
+	(hierarchical_label "RC_SBUS"
+		(shape output)
+		(at 99.06 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c9dbe36c-fda4-43ab-80a7-a37a0fcd3cfd")
+	)
+	(hierarchical_label "SERVO_OUT5"
+		(shape input)
+		(at 151.13 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cbe9e56e-1e5c-4ed2-b7f7-5fc00d0d3dfe")
+	)
+	(hierarchical_label "SERVO_OUT7"
+		(shape input)
+		(at 151.13 81.28 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "debedf0c-6d2c-4e15-8158-48143dac41e9")
+	)
+	(hierarchical_label "ESC_OUT1"
+		(shape input)
+		(at 77.47 127 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fb114801-ac93-4023-9ecd-844bdeae8894")
+	)
+	(hierarchical_label "SERVO_OUT1"
+		(shape input)
+		(at 151.13 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fe3a3068-21a3-4f08-86d8-096277f28443")
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x03_Pin")
+		(at 93.98 88.9 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp yes)
+		(uuid "6b8a0fa5-6504-41a1-b890-6d44c28f04bc")
+		(property "Reference" "J7"
+			(at 91.948 86.868 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "RC Connector"
+			(at 96.266 82.804 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical"
+			(at 93.98 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 93.98 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated"
+			(at 93.98 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "4732f5c3-d584-4e80-846e-dc8610302aab")
+		)
+		(pin "1"
+			(uuid "99f456c0-aac4-4418-a53d-13c6be5ddb0f")
+		)
+		(pin "3"
+			(uuid "02f62ede-1943-41a9-ac47-76e61ce38b41")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet
+		(at 151.13 54.61)
+		(size 36.83 41.91)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "06f10e75-ab55-40b5-b78a-385640ed59db")
+		(property "Sheetname" "servo_out"
+			(at 151.13 53.8984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "servo_out.kicad_sch"
+			(at 151.13 97.1046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 151.13 92.71 180)
+			(uuid "0126be04-71ad-4b07-9a39-0a96775a5836")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_5V" input
+			(at 151.13 88.9 180)
+			(uuid "4e002ac4-bce7-4eee-b481-5425f99c4623")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_1" input
+			(at 151.13 58.42 180)
+			(uuid "3ca3b49e-46c5-48e5-851a-7ca5d35fa8b8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_2" input
+			(at 151.13 62.23 180)
+			(uuid "4b95a613-5491-420d-8bd2-a3a3bb21510a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_3" input
+			(at 151.13 66.04 180)
+			(uuid "4bd076bb-673c-47a9-9585-1cdb9e0ba4cd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_4" input
+			(at 151.13 69.85 180)
+			(uuid "c739ebe1-f2de-4dde-b36a-6afed6d4d272")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_5" input
+			(at 151.13 73.66 180)
+			(uuid "fd1d4ece-c2de-473e-96c8-354dcc15af2b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_6" input
+			(at 151.13 77.47 180)
+			(uuid "47b5f64d-7f39-404a-8c94-be67ca95d509")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_7" input
+			(at 151.13 81.28 180)
+			(uuid "d8e50abe-776a-4631-af40-fedbb7b851dc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_OUT_8" input
+			(at 151.13 85.09 180)
+			(uuid "4a0ddcf5-24cc-409d-8af0-3c47bd2b58f6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(page "14")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 77.47 121.92)
+		(size 40.64 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5eb01b74-1a14-4da5-85cf-2e127058f032")
+		(property "Sheetname" "esc_io"
+			(at 77.47 121.2084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "esc_io.kicad_sch"
+			(at 77.47 142.8246 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FC_5V" output
+			(at 118.11 128.27 0)
+			(uuid "7782a945-4e77-41aa-a6f6-4b57fa66c5b0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "GND" output
+			(at 118.11 135.89 0)
+			(uuid "69f6c555-c41a-4665-b4d3-fa5cd4f50858")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "PRIMARY_ESC_SIGNAL" input
+			(at 77.47 127 180)
+			(uuid "e3916b69-f152-4788-b7f3-fa6891c0531c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SECONDARY_ESC_SIGNAL" input
+			(at 77.47 133.35 180)
+			(uuid "4d7afcb0-6bb6-47ce-9a43-ad16708486e3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SERVO_5V" output
+			(at 118.11 132.08 0)
+			(uuid "17873d4a-d748-4507-af4a-9471acfa2c63")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(page "8")
+				)
+			)
+		)
+	)
+)
