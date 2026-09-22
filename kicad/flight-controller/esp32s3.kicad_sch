@@ -1631,7 +1631,7 @@
 						(type none)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at -21.59 11.43 0)
 					(length 2.54)
 					(name "GND"
@@ -1649,7 +1649,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at -21.59 8.89 0)
 					(length 2.54)
 					(name "3V3"
@@ -1667,7 +1667,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at -21.59 6.35 0)
 					(length 2.54)
 					(name "EN"
@@ -1685,7 +1685,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 3.81 0)
 					(length 2.54)
 					(name "IO4"
@@ -1703,7 +1703,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 1.27 0)
 					(length 2.54)
 					(name "IO5"
@@ -1721,7 +1721,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -1.27 0)
 					(length 2.54)
 					(name "IO6"
@@ -1739,7 +1739,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -3.81 0)
 					(length 2.54)
 					(name "IO7"
@@ -1757,7 +1757,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -6.35 0)
 					(length 2.54)
 					(name "IO15"
@@ -1775,7 +1775,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -8.89 0)
 					(length 2.54)
 					(name "IO16"
@@ -1793,7 +1793,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -11.43 0)
 					(length 2.54)
 					(name "IO17"
@@ -1811,7 +1811,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -13.97 0)
 					(length 2.54)
 					(name "IO18"
@@ -1829,7 +1829,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -16.51 0)
 					(length 2.54)
 					(name "IO8"
@@ -1847,7 +1847,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -19.05 0)
 					(length 2.54)
 					(name "IO19"
@@ -1865,7 +1865,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -21.59 -21.59 0)
 					(length 2.54)
 					(name "IO20"
@@ -1883,7 +1883,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -12.7 -35.56 90)
 					(length 2.54)
 					(name "IO3"
@@ -1901,7 +1901,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -10.16 -35.56 90)
 					(length 2.54)
 					(name "IO46"
@@ -1919,7 +1919,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -7.62 -35.56 90)
 					(length 2.54)
 					(name "IO9"
@@ -1937,7 +1937,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -5.08 -35.56 90)
 					(length 2.54)
 					(name "IO10"
@@ -1955,7 +1955,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at -2.54 -35.56 90)
 					(length 2.54)
 					(name "IO11"
@@ -1973,7 +1973,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 0 -35.56 90)
 					(length 2.54)
 					(name "IO12"
@@ -1991,7 +1991,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 2.54 -35.56 90)
 					(length 2.54)
 					(name "IO13"
@@ -2009,7 +2009,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 5.08 -35.56 90)
 					(length 2.54)
 					(name "IO14"
@@ -2027,7 +2027,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 7.62 -35.56 90)
 					(length 2.54)
 					(name "IO21"
@@ -2045,7 +2045,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 10.16 -35.56 90)
 					(length 2.54)
 					(name "IO47"
@@ -2063,7 +2063,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 12.7 -35.56 90)
 					(length 2.54)
 					(name "IO48"
@@ -2081,7 +2081,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 15.24 -35.56 90)
 					(length 2.54)
 					(name "IO45"
@@ -2099,7 +2099,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -21.59 180)
 					(length 2.54)
 					(name "IO0"
@@ -2117,7 +2117,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -19.05 180)
 					(length 2.54)
 					(name "IO35"
@@ -2135,7 +2135,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -16.51 180)
 					(length 2.54)
 					(name "IO36"
@@ -2153,7 +2153,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -13.97 180)
 					(length 2.54)
 					(name "IO37"
@@ -2171,7 +2171,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -11.43 180)
 					(length 2.54)
 					(name "IO38"
@@ -2189,7 +2189,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -8.89 180)
 					(length 2.54)
 					(name "IO39"
@@ -2207,7 +2207,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -6.35 180)
 					(length 2.54)
 					(name "IO40"
@@ -2225,7 +2225,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -3.81 180)
 					(length 2.54)
 					(name "IO41"
@@ -2243,7 +2243,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 -1.27 180)
 					(length 2.54)
 					(name "IO42"
@@ -2261,7 +2261,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 1.27 180)
 					(length 2.54)
 					(name "RXD0"
@@ -2279,7 +2279,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 3.81 180)
 					(length 2.54)
 					(name "TXD0"
@@ -2297,7 +2297,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 6.35 180)
 					(length 2.54)
 					(name "IO2"
@@ -2315,7 +2315,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin bidirectional line
 					(at 21.59 8.89 180)
 					(length 2.54)
 					(name "IO1"
@@ -2333,7 +2333,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at 21.59 11.43 180)
 					(length 2.54)
 					(name "GND"
@@ -2351,7 +2351,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at 21.59 15.24 180)
 					(length 2.54)
 					(name "GND"
@@ -2501,7 +2501,7 @@
 		(uuid "3cf592af-cec2-4e6f-9688-6dee6604db86")
 	)
 	(rectangle
-		(start 152.4 100.33)
+		(start 143.51 100.33)
 		(end 222.25 148.59)
 		(stroke
 			(width 0)
@@ -2583,12 +2583,6 @@
 		(uuid "6777ccc4-bcc5-4a7d-b289-643aba53c7c4")
 	)
 	(junction
-		(at 154.94 118.11)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "9fef4597-4264-4beb-bc6a-1832e95928e2")
-	)
-	(junction
 		(at 172.72 110.49)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2605,6 +2599,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d1571b9c-d8c5-4f25-a491-26e2744ea4b2")
+	)
+	(junction
+		(at 161.29 118.11)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d3e6e2c8-25ea-4a47-bf2a-109abee00229")
 	)
 	(junction
 		(at 186.69 118.11)
@@ -2670,7 +2670,7 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 118.11) (xy 134.62 124.46)
+			(xy 149.86 118.11) (xy 149.86 121.92)
 		)
 		(stroke
 			(width 0)
@@ -2690,7 +2690,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 118.11) (xy 154.94 118.11)
+			(xy 172.72 118.11) (xy 161.29 118.11)
 		)
 		(stroke
 			(width 0)
@@ -2830,7 +2830,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 124.46) (xy 154.94 118.11)
+			(xy 161.29 124.46) (xy 161.29 118.11)
 		)
 		(stroke
 			(width 0)
@@ -2850,7 +2850,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 132.08) (xy 154.94 137.16)
+			(xy 161.29 132.08) (xy 161.29 137.16)
 		)
 		(stroke
 			(width 0)
@@ -2960,7 +2960,7 @@
 	)
 	(wire
 		(pts
-			(xy 154.94 118.11) (xy 142.24 118.11)
+			(xy 157.48 118.11) (xy 161.29 118.11)
 		)
 		(stroke
 			(width 0)
@@ -3068,6 +3068,17 @@
 		)
 		(uuid "b919cebb-0047-4e67-8e22-d9bb70b0ba4a")
 	)
+	(hierarchical_label "LED_TOGGLE"
+		(shape output)
+		(at 111.76 105.41 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0403aaa6-e6ae-4054-b4b6-0993f133ce45")
+	)
 	(hierarchical_label "IMU2_ACCEL_CS"
 		(shape output)
 		(at 74.93 76.2 180)
@@ -3089,17 +3100,6 @@
 			(justify right)
 		)
 		(uuid "06ff878c-eb7c-4fb9-9e43-1b3672f6a542")
-	)
-	(hierarchical_label "SERVO_OUT7"
-		(shape output)
-		(at 118.11 78.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0a679fad-594b-432f-b193-fba9bf578b77")
 	)
 	(hierarchical_label "UWB_CS"
 		(shape output)
@@ -3136,7 +3136,7 @@
 	)
 	(hierarchical_label "RC_SBUS"
 		(shape input)
-		(at 118.11 66.04 0)
+		(at 118.11 68.58 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3144,17 +3144,6 @@
 			(justify left)
 		)
 		(uuid "1b71d67a-0ad1-4bfe-ad88-5dfbc6df1256")
-	)
-	(hierarchical_label "SERVO_OUT3"
-		(shape output)
-		(at 118.11 76.2 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "1bfe7616-ed69-41d3-89e1-2c92b1f340cd")
 	)
 	(hierarchical_label "SD_CARD_DETECT"
 		(shape input)
@@ -3167,6 +3156,17 @@
 		)
 		(uuid "1df2dd04-9cc6-46ae-b271-09c07784f62c")
 	)
+	(hierarchical_label "SERVO_OUT_2"
+		(shape output)
+		(at 118.11 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "276dcfb4-7a43-437d-b745-f07e72b21633")
+	)
 	(hierarchical_label "INTER_ESP_UART_RX"
 		(shape input)
 		(at 74.93 68.58 180)
@@ -3178,27 +3178,27 @@
 		)
 		(uuid "29c54c0c-435d-49eb-9700-ec2d54604f30")
 	)
-	(hierarchical_label "SERVO_OUT4"
+	(hierarchical_label "SERVO_OUT_3"
 		(shape output)
-		(at 118.11 81.28 0)
+		(at 118.11 78.74 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
+		)
+		(uuid "2e8855ab-1365-4f44-9be3-102658d973a6")
+	)
+	(hierarchical_label "SERVO_OUT_4"
+		(shape output)
+		(at 109.22 105.41 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
 		)
 		(uuid "316bf60a-3ad5-4b29-a311-cb0f189a53d4")
-	)
-	(hierarchical_label "SERVO_OUT1"
-		(shape output)
-		(at 118.11 68.58 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "33629f02-abff-4d7a-bc84-4b6c4335669b")
 	)
 	(hierarchical_label "SCK"
 		(shape output)
@@ -3244,17 +3244,6 @@
 		)
 		(uuid "3ce355d3-1d04-4347-916b-5393d356eece")
 	)
-	(hierarchical_label "SERVO_OUT2"
-		(shape output)
-		(at 118.11 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "5c567c18-777a-4d04-9f1e-86b2b813fb8a")
-	)
 	(hierarchical_label "INTER_ESP_UART_TX"
 		(shape output)
 		(at 74.93 71.12 180)
@@ -3265,6 +3254,17 @@
 			(justify right)
 		)
 		(uuid "61ddd8b2-bb4f-43fb-a206-d67795c53ffb")
+	)
+	(hierarchical_label "RC_TX"
+		(shape output)
+		(at 118.11 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6406a8a2-ca59-49dc-b29b-df13ace02891")
 	)
 	(hierarchical_label "GND"
 		(shape input)
@@ -3290,12 +3290,12 @@
 	)
 	(hierarchical_label "GND"
 		(shape input)
-		(at 154.94 137.16 90)
+		(at 161.29 137.16 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "76254d4d-8eca-42aa-8bce-33b39cb96fdc")
 	)
@@ -3331,17 +3331,6 @@
 			(justify right)
 		)
 		(uuid "8941fe31-087d-487b-88d8-463f32dd234f")
-	)
-	(hierarchical_label "SERVO_OUT6"
-		(shape output)
-		(at 118.11 73.66 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8d4cba34-ea7d-405b-ad9f-c31244658309")
 	)
 	(hierarchical_label "GPS_RX"
 		(shape input)
@@ -3398,17 +3387,6 @@
 		)
 		(uuid "a49383a6-b5a6-47c3-a79c-d3bb84b6ed96")
 	)
-	(hierarchical_label "SERVO_OUT8"
-		(shape output)
-		(at 111.76 105.41 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a63dd0df-41cb-4640-927d-8de8472d4884")
-	)
 	(hierarchical_label "ESP_3V3"
 		(shape input)
 		(at 266.7 109.22 90)
@@ -3464,25 +3442,36 @@
 		)
 		(uuid "bdefd1d9-2152-4d0d-84f0-ec4cad3954f8")
 	)
-	(hierarchical_label "SERVO_OUT5"
+	(hierarchical_label "SERVO_OUT_5"
 		(shape output)
-		(at 109.22 105.41 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "bef400b1-32e3-4a39-b307-276e6ab6588c")
-	)
-	(hierarchical_label "GND"
-		(shape input)
-		(at 134.62 124.46 90)
+		(at 118.11 76.2 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
+		)
+		(uuid "bef400b1-32e3-4a39-b307-276e6ab6588c")
+	)
+	(hierarchical_label "SERVO_OUT_1"
+		(shape output)
+		(at 118.11 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c8b6a07b-8536-4d6e-9dee-36441f4ba8f2")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 149.86 121.92 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
 		)
 		(uuid "cbc3d564-7a88-4e4d-bb46-39b96fd87582")
 	)
@@ -3562,6 +3551,17 @@
 			(justify left)
 		)
 		(uuid "f14d7557-ec71-4de9-9cbe-57c243fd1c7a")
+	)
+	(hierarchical_label "SERVO_OUT_6"
+		(shape output)
+		(at 118.11 81.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "faf94a0d-eccd-473c-83b6-623fc141cf2b")
 	)
 	(hierarchical_label "IMU1_CS"
 		(shape output)
@@ -4000,7 +4000,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_TVS")
-		(at 138.43 118.11 0)
+		(at 153.67 118.11 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4010,7 +4010,7 @@
 		(dnp no)
 		(uuid "7146d23a-3143-4e80-bb84-8bbaf6142fc4")
 		(property "Reference" "D4"
-			(at 138.43 111.89 0)
+			(at 154.432 112.522 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4021,7 +4021,7 @@
 			)
 		)
 		(property "Value" "ESD5Z5.0T1G"
-			(at 138.43 125.38 0)
+			(at 158.75 115.062 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4032,7 +4032,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-523"
-			(at 138.43 118.11 0)
+			(at 153.67 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4043,7 +4043,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
-			(at 138.43 118.11 0)
+			(at 153.67 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4054,7 +4054,7 @@
 			)
 		)
 		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
-			(at 138.43 118.11 0)
+			(at 153.67 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4065,7 +4065,7 @@
 			)
 		)
 		(property "Notes" "USB VBUS ESD/surge protection (added in review)"
-			(at 138.43 118.11 0)
+			(at 153.67 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4076,7 +4076,7 @@
 			)
 		)
 		(property "LCSC Part" "C82044"
-			(at 138.43 118.11 0)
+			(at 153.67 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4201,7 +4201,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 261.62 114.554 0)
+			(at 261.366 113.538 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4982,7 +4982,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 154.94 128.27 0)
+		(at 161.29 128.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4992,7 +4992,7 @@
 		(dnp no)
 		(uuid "bf6cfb8a-2fcf-4266-82c9-5492fbfe90b1")
 		(property "Reference" "C17"
-			(at 148.086 126.746 0)
+			(at 154.436 126.746 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5003,7 +5003,7 @@
 			)
 		)
 		(property "Value" "10uF"
-			(at 147.832 129.54 0)
+			(at 154.182 129.54 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5014,7 +5014,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 154.94 128.27 0)
+			(at 161.29 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5025,7 +5025,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C440198.pdf"
-			(at 154.94 128.27 0)
+			(at 161.29 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5036,7 +5036,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, Murata GRM21BR61H106KE43L, 50V X5R"
-			(at 154.94 128.27 0)
+			(at 161.29 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5047,7 +5047,7 @@
 			)
 		)
 		(property "Notes" "USB VBUS bulk/decoupling cap (added in review)"
-			(at 154.94 128.27 0)
+			(at 161.29 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5058,7 +5058,7 @@
 			)
 		)
 		(property "LCSC Part" "C440198"
-			(at 154.94 128.27 0)
+			(at 161.29 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5198,7 +5198,7 @@
 			)
 		)
 		(property "Value" "B5819W"
-			(at 155.448 116.586 90)
+			(at 164.338 116.332 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

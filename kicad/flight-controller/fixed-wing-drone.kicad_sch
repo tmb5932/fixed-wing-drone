@@ -41,7 +41,7 @@
 		)
 		(uuid "06ca8ef0-1530-42a8-bb1d-5920c02c5855")
 	)
-	(label "SERVO_OUT6"
+	(label "SERVO_OUT_6"
 		(at 127 48.26 180)
 		(effects
 			(font
@@ -61,7 +61,17 @@
 		)
 		(uuid "0f1b0719-9c37-4aa1-8078-f9a04de4fb0c")
 	)
-	(label "SERVO_OUT1"
+	(label "LED_TOGGLE"
+		(at 60.96 154.94 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "109bc97a-3dca-4451-bc27-2951f9da182b")
+	)
+	(label "SERVO_OUT_1"
 		(at 85.09 125.73 0)
 		(effects
 			(font
@@ -101,7 +111,7 @@
 		)
 		(uuid "1617b2f3-fb2b-4ee1-bd10-2134648070e7")
 	)
-	(label "SERVO_OUT3"
+	(label "SERVO_OUT_3"
 		(at 127 40.64 180)
 		(effects
 			(font
@@ -121,17 +131,7 @@
 		)
 		(uuid "17f20c5f-f207-47e3-b7b5-c70f4cf2b791")
 	)
-	(label "SERVO_OUT7"
-		(at 85.09 140.97 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1fb2d9ca-080d-489c-90c3-8ee992e65bd2")
-	)
-	(label "SERVO_OUT8"
+	(label "RC_TX"
 		(at 127 53.34 180)
 		(effects
 			(font
@@ -171,7 +171,7 @@
 		)
 		(uuid "315303c2-ce7a-4b0f-bc09-4250499dd482")
 	)
-	(label "SERVO_OUT8"
+	(label "RC_TX"
 		(at 85.09 143.51 0)
 		(effects
 			(font
@@ -190,6 +190,16 @@
 			(justify right bottom)
 		)
 		(uuid "39a043bc-bc37-4853-9215-608ee79fb797")
+	)
+	(label "LED_TOGGLE"
+		(at 238.76 58.42 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3a08748d-9a7b-49e5-a456-0119718c55b8")
 	)
 	(label "MOSI"
 		(at 212.09 36.83 180)
@@ -211,7 +221,7 @@
 		)
 		(uuid "48861215-d95f-42e5-ae92-34a359749665")
 	)
-	(label "SERVO_OUT3"
+	(label "SERVO_OUT_3"
 		(at 85.09 130.81 0)
 		(effects
 			(font
@@ -221,18 +231,8 @@
 		)
 		(uuid "4b3d8db9-947a-4fd5-9fc2-37cd32ed1427")
 	)
-	(label "SERVO_OUT7"
-		(at 127 50.8 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4e5634f5-65f1-49c6-aa28-91a2c7a18cec")
-	)
 	(label "STATUS_LED"
-		(at 64.77 154.94 270)
+		(at 67.31 154.94 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -281,7 +281,7 @@
 		)
 		(uuid "614d4c8f-988c-41ef-b684-e71e443b2154")
 	)
-	(label "SERVO_OUT1"
+	(label "SERVO_OUT_1"
 		(at 127 35.56 180)
 		(effects
 			(font
@@ -311,7 +311,7 @@
 		)
 		(uuid "65a9808b-350e-496d-aa52-1d40bca756f0")
 	)
-	(label "SERVO_OUT5"
+	(label "SERVO_OUT_5"
 		(at 127 45.72 180)
 		(effects
 			(font
@@ -371,7 +371,7 @@
 		)
 		(uuid "7c749860-cefe-44d0-b7d3-9c8464f83364")
 	)
-	(label "SERVO_OUT4"
+	(label "SERVO_OUT_4"
 		(at 85.09 133.35 0)
 		(effects
 			(font
@@ -411,7 +411,7 @@
 		)
 		(uuid "881d7d16-5870-4bee-9c1e-ed37566be384")
 	)
-	(label "SERVO_OUT2"
+	(label "SERVO_OUT_2"
 		(at 85.09 128.27 0)
 		(effects
 			(font
@@ -431,7 +431,7 @@
 		)
 		(uuid "8e21f473-bd4b-4482-8596-348dd52922a9")
 	)
-	(label "SERVO_OUT2"
+	(label "SERVO_OUT_2"
 		(at 127 38.1 180)
 		(effects
 			(font
@@ -491,7 +491,7 @@
 		)
 		(uuid "ae2a4927-7486-4264-a9f6-acadedc93bc3")
 	)
-	(label "SERVO_OUT6"
+	(label "SERVO_OUT_6"
 		(at 85.09 138.43 0)
 		(effects
 			(font
@@ -611,7 +611,7 @@
 		)
 		(uuid "c4e88473-9d1c-4d74-9c82-51611fcab225")
 	)
-	(label "SERVO_OUT4"
+	(label "SERVO_OUT_4"
 		(at 127 43.18 180)
 		(effects
 			(font
@@ -621,7 +621,7 @@
 		)
 		(uuid "c943189b-a596-41b8-8879-cb5330fea3e9")
 	)
-	(label "SERVO_OUT5"
+	(label "SERVO_OUT_5"
 		(at 85.09 135.89 0)
 		(effects
 			(font
@@ -1201,6 +1201,16 @@
 				(justify left)
 			)
 		)
+		(pin "LED_TOGGLE" input
+			(at 238.76 58.42 270)
+			(uuid "7e58ae56-539d-4359-a4b4-df9e6d055e44")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(instances
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
@@ -1287,7 +1297,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT1" input
+		(pin "SERVO_OUT_1" input
 			(at 127 35.56 180)
 			(uuid "3973f6af-78fd-4815-bc28-b977ea865134")
 			(effects
@@ -1297,7 +1307,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT2" input
+		(pin "SERVO_OUT_2" input
 			(at 127 38.1 180)
 			(uuid "9875b70b-6657-4f49-81bf-591f1c6913f9")
 			(effects
@@ -1307,7 +1317,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT3" input
+		(pin "SERVO_OUT_3" input
 			(at 127 40.64 180)
 			(uuid "e2861750-c830-4429-bdab-cf1bb97210ab")
 			(effects
@@ -1317,7 +1327,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT4" input
+		(pin "SERVO_OUT_4" input
 			(at 127 43.18 180)
 			(uuid "f4511163-8fa7-4e31-9464-d4026205549d")
 			(effects
@@ -1327,7 +1337,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT5" input
+		(pin "SERVO_OUT_5" input
 			(at 127 45.72 180)
 			(uuid "45bfd270-5bdb-40d1-a9d3-4e60bdfe1d73")
 			(effects
@@ -1337,7 +1347,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT6" input
+		(pin "SERVO_OUT_6" input
 			(at 127 48.26 180)
 			(uuid "4c07f508-67a2-4de5-9f24-b2948d6298fc")
 			(effects
@@ -1347,17 +1357,7 @@
 				(justify left)
 			)
 		)
-		(pin "SERVO_OUT7" input
-			(at 127 50.8 180)
-			(uuid "acccca9f-66e7-4f04-8343-0ba91ccbd9fc")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SERVO_OUT8" input
+		(pin "RC_TX" input
 			(at 127 53.34 180)
 			(uuid "f7248b14-f2a7-4905-9775-18ceefebba9c")
 			(effects
@@ -1643,7 +1643,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT1" output
+		(pin "SERVO_OUT_1" output
 			(at 85.09 125.73 0)
 			(uuid "d7df6033-4b22-4245-a49b-30b54852bec0")
 			(effects
@@ -1653,7 +1653,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT2" output
+		(pin "SERVO_OUT_2" output
 			(at 85.09 128.27 0)
 			(uuid "82c484cb-69c1-4999-a7b5-54e2714152f0")
 			(effects
@@ -1663,7 +1663,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT3" output
+		(pin "SERVO_OUT_3" output
 			(at 85.09 130.81 0)
 			(uuid "64fc1a66-dab3-48e7-b040-68f2c49ab179")
 			(effects
@@ -1673,7 +1673,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT4" output
+		(pin "SERVO_OUT_4" output
 			(at 85.09 133.35 0)
 			(uuid "600f8157-681c-4c22-93a9-0035173afd9b")
 			(effects
@@ -1683,7 +1683,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT5" output
+		(pin "SERVO_OUT_5" output
 			(at 85.09 135.89 0)
 			(uuid "66d0d588-26b1-4b04-b9d5-5e7a85e7dc8f")
 			(effects
@@ -1693,7 +1693,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT6" output
+		(pin "SERVO_OUT_6" output
 			(at 85.09 138.43 0)
 			(uuid "fcbed243-d0cb-4cc4-868f-471e3d2286f2")
 			(effects
@@ -1703,17 +1703,7 @@
 				(justify right)
 			)
 		)
-		(pin "SERVO_OUT7" output
-			(at 85.09 140.97 0)
-			(uuid "b4927490-7a83-42db-b694-7f5b9d192098")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "SERVO_OUT8" output
+		(pin "RC_TX" output
 			(at 85.09 143.51 0)
 			(uuid "7c1850c0-e710-44db-acc1-15d332333f67")
 			(effects
@@ -1724,7 +1714,7 @@
 			)
 		)
 		(pin "STATUS_LED" output
-			(at 64.77 154.94 270)
+			(at 67.31 154.94 270)
 			(uuid "efd112e1-dcb6-4926-9cc4-de7aa7504b13")
 			(effects
 				(font
@@ -1746,6 +1736,16 @@
 		(pin "UWB_INT" input
 			(at 35.56 105.41 180)
 			(uuid "281c4e15-0783-4915-ab2b-647bde0f8f60")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LED_TOGGLE" output
+			(at 60.96 154.94 270)
+			(uuid "2e612f17-9524-4fa2-a551-d35131747661")
 			(effects
 				(font
 					(size 1.27 1.27)

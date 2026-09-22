@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.5,
-          "height": 1.0,
-          "width": 1.0
+          "drill": 0.8,
+          "height": 1.27,
+          "width": 2.54
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -50,36 +50,11 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "border_display_style": 2,
-          "border_hatch_pitch": 0.5,
-          "corner_radius": 0.0,
-          "corner_smoothing": 0,
-          "fill_mode": 0,
-          "hatch_gap": 1.5,
-          "hatch_orientation": 0.0,
-          "hatch_smoothing_level": 0,
-          "hatch_smoothing_value": 0.1,
-          "hatch_thickness": 1.0,
-          "min_clearance": 0.0,
-          "min_island_area": 10.0,
-          "min_thickness": 0.25,
-          "pad_connection": 1,
-          "remove_islands": 1,
-          "thermal_relief_gap": 0.5,
-          "thermal_relief_spoke_width": 0.5
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [],
-      "drc_exclusions": [
-        [
-          "silk_edge_clearance|117800000|62250000|b68c2d53-ae89-400f-a605-11ee29234ade|35e2fe33-22fa-48ab-ab76-3997f74e20c6",
-          ""
-        ],
-        [
-          "silk_edge_clearance|135820000|62250000|b68c2d53-ae89-400f-a605-11ee29234ade|023c4559-bf51-4f57-ba6d-0cc2f8cdfffa",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -100,7 +75,7 @@
         "footprint_filters_mismatch": "ignore",
         "footprint_symbol_field_mismatch": "warning",
         "footprint_symbol_mismatch": "warning",
-        "footprint_type_mismatch": "warning",
+        "footprint_type_mismatch": "ignore",
         "hole_clearance": "error",
         "hole_to_hole": "warning",
         "holes_co_located": "warning",
@@ -124,7 +99,7 @@
         "pth_inside_courtyard": "error",
         "shorting_items": "error",
         "silk_edge_clearance": "warning",
-        "silk_over_copper": "ignore",
+        "silk_over_copper": "warning",
         "silk_overlap": "warning",
         "skew_out_of_range": "error",
         "solder_mask_bridge": "error",
@@ -165,7 +140,7 @@
         "min_track_width": 0.2,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
-        "solder_mask_to_copper_clearance": 0.005,
+        "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -249,7 +224,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": "v3.1"
+      "sch_revision": "v1.0"
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -457,7 +432,7 @@
       "field_name_whitespace": "warning",
       "footprint_filter": "ignore",
       "footprint_link_issues": "warning",
-      "four_way_junction": "warning",
+      "four_way_junction": "ignore",
       "ground_pin_not_ground": "warning",
       "hier_label_mismatch": "error",
       "isolated_pin_label": "warning",
@@ -475,14 +450,14 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "error",
+      "pin_to_pin": "warning",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
       "similar_labels": "warning",
       "similar_power": "warning",
       "simulation_model_issue": "ignore",
-      "single_global_label": "warning",
+      "single_global_label": "ignore",
       "stacked_pin_name": "warning",
       "unannotated": "error",
       "unconnected_wire_endpoint": "warning",
@@ -497,7 +472,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "fixed-wing-drone.kicad_pro",
+    "filename": "uwb-radio.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -533,7 +508,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "gerber/",
+      "plot": "",
       "specctra_dsn": "",
       "vrml": ""
     },
@@ -545,7 +520,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "gerber/${PROJECTNAME}-bom.csv",
+    "bom_export_filename": "${PROJECTNAME}.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -607,90 +582,12 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
-        },
-        {
-          "group_by": false,
-          "label": "Check_prices",
-          "name": "Check_prices",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MANUFACTURER",
-          "name": "MANUFACTURER",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MF",
-          "name": "MF",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MP",
-          "name": "MP",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "PARTREV",
-          "name": "PARTREV",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Package",
-          "name": "Package",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Price",
-          "name": "Price",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "STANDARD",
-          "name": "STANDARD",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "SnapEDA_Link",
-          "name": "SnapEDA_Link",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Availability",
-          "name": "Availability",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Description",
-          "name": "Description",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "#",
-          "name": "${ITEM_NUMBER}",
-          "show": false
-        },
-        {
-          "group_by": true,
-          "label": "LCSC Part #",
-          "name": "LCSC Part #",
-          "show": true
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "",
+      "name": "Default Editing",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -730,62 +627,18 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "fixed-wing-drone.kicad_sch",
-        "name": "fixed-wing-drone",
-        "uuid": "6fbedc8c-8b3e-4075-8dcf-52085fc3223b"
+        "filename": "uwb-radio.kicad_sch",
+        "name": "uwb-radio",
+        "uuid": "ed589ab5-08b9-420f-ab6e-6b3456fbaeef"
       }
     ],
-    "used_designators": "J9,J12,Q4,C8,C18-23,D6-7,R14-15,R18-19,R24-26,U4-10",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
     [
-      "6fbedc8c-8b3e-4075-8dcf-52085fc3223b",
-      "fixed-wing-drone"
-    ],
-    [
-      "0cd0f03e-731b-4746-9c76-29b59823d72d",
-      "onboard_sensors"
-    ],
-    [
-      "f6c03e16-26ab-4025-8458-13bade097d3d",
-      "external_sensors"
-    ],
-    [
-      "c5f0c20f-db19-4cbe-9f5c-05ea41a374c0",
-      "actuator_io"
-    ],
-    [
-      "de73f962-17e6-4239-8857-7990a4cf3949",
-      "esp32s3"
-    ],
-    [
-      "7900f9d3-bd64-4359-9298-7068f3270a89",
-      "aux"
-    ],
-    [
-      "29a7a03f-dd44-44ab-adeb-9b2c8ecf689a",
-      "fc_ldo"
-    ],
-    [
-      "5eb01b74-1a14-4da5-85cf-2e127058f032",
-      "esc_io"
-    ],
-    [
-      "22aa69dc-010b-4ef7-9708-61662eeb6e4c",
-      "imu"
-    ],
-    [
-      "741ce9a3-fcb2-4f85-b73f-550c4cfa127c",
-      "barometer"
-    ],
-    [
-      "06f10e75-ab55-40b5-b78a-385640ed59db",
-      "servo_out"
-    ],
-    [
-      "72179897-d6e6-486a-b05c-b111b61d42f8",
-      "microsd"
+      "ed589ab5-08b9-420f-ab6e-6b3456fbaeef",
+      "uwb-radio"
     ]
   ],
   "text_variables": {},

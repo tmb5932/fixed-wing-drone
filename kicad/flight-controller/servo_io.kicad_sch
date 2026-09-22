@@ -11,7 +11,7 @@
 		(company "Travis Brown")
 	)
 	(lib_symbols
-		(symbol "Connector:Conn_01x03_Pin"
+		(symbol "Connector:Conn_01x04_Pin"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -31,7 +31,7 @@
 					)
 				)
 			)
-			(property "Value" "Conn_01x03_Pin"
+			(property "Value" "Conn_01x04_Pin"
 				(at 0 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -63,7 +63,7 @@
 					)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x03, script generated"
+			(property "Description" "Generic connector, single row, 01x04, script generated"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -106,7 +106,7 @@
 					)
 				)
 			)
-			(symbol "Conn_01x03_Pin_1_1"
+			(symbol "Conn_01x04_Pin_1_1"
 				(rectangle
 					(start 0.8636 2.667)
 					(end 0 2.413)
@@ -132,6 +132,17 @@
 				(rectangle
 					(start 0.8636 -2.413)
 					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
 					(stroke
 						(width 0.1524)
 						(type default)
@@ -167,6 +178,18 @@
 				(polyline
 					(pts
 						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -5.08) (xy 0.8636 -5.08)
 					)
 					(stroke
 						(width 0.1524)
@@ -223,6 +246,24 @@
 						)
 					)
 					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -399,6 +440,146 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "SERVO_5V"
 		(exclude_from_sim no)
@@ -433,6 +614,12 @@
 		(uuid "58a5f03a-c312-4518-8cb7-eb747ae1f120")
 	)
 	(junction
+		(at 90.17 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "678992da-535c-49d8-afd4-605933f8d8b7")
+	)
+	(junction
 		(at 125.73 135.89)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -456,6 +643,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 105.41) (xy 92.71 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3474728b-33d5-42e2-bc73-21890d370fb4")
+	)
+	(wire
+		(pts
 			(xy 140.97 135.89) (xy 140.97 92.71)
 		)
 		(stroke
@@ -476,6 +673,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 99.06) (xy 99.06 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5869e492-c578-449f-bde2-8f4e3147b4ca")
+	)
+	(wire
+		(pts
 			(xy 99.06 91.44) (xy 99.06 92.71)
 		)
 		(stroke
@@ -483,6 +690,16 @@
 			(type default)
 		)
 		(uuid "5bcc7deb-5098-401f-ae70-ab975d326033")
+	)
+	(wire
+		(pts
+			(xy 100.33 105.41) (xy 105.41 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c7b08fd-0795-474d-ba95-0493e52a85d2")
 	)
 	(wire
 		(pts
@@ -513,6 +730,16 @@
 			(type default)
 		)
 		(uuid "62c7fe2e-511e-41e9-9ccb-95e3610d2afd")
+	)
+	(wire
+		(pts
+			(xy 90.17 99.06) (xy 90.17 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "774f5af8-e0e7-40e1-a4e3-215c094d1ff4")
 	)
 	(wire
 		(pts
@@ -556,6 +783,16 @@
 	)
 	(wire
 		(pts
+			(xy 82.55 107.95) (xy 76.2 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4c5d6e7-f8a9-4b0c-9d1e-3f4a5b6c7d8e")
+	)
+	(wire
+		(pts
 			(xy 85.09 78.74) (xy 86.36 78.74)
 		)
 		(stroke
@@ -596,6 +833,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 105.41) (xy 90.17 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df74727b-eee5-4495-9ecb-126362a3f78e")
+	)
+	(wire
+		(pts
 			(xy 118.11 135.89) (xy 125.73 135.89)
 		)
 		(stroke
@@ -603,6 +850,16 @@
 			(type default)
 		)
 		(uuid "e0ff5a50-aac4-4183-b23b-9a45720713c8")
+	)
+	(wire
+		(pts
+			(xy 99.06 93.98) (xy 99.06 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3f4a5b6-c7d8-4e9f-0a1b-2c3d4e5f6a7b")
 	)
 	(wire
 		(pts
@@ -623,6 +880,26 @@
 			(type default)
 		)
 		(uuid "fb86eb60-a406-4c39-894f-cbca0259a392")
+	)
+	(label "RC_SBUS_TVS"
+		(at 109.22 54.61 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c1c2c3c4-1111-4a11-8a11-111111111111")
+	)
+	(label "RC_SBUS_TVS"
+		(at 101.6 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e48ebe01-1216-420d-854f-10c2347ef8c2")
 	)
 	(hierarchical_label "ESC_OUT2"
 		(shape input)
@@ -657,18 +934,29 @@
 		)
 		(uuid "2de7e269-de8b-4ac4-8716-a105ab31193b")
 	)
-	(hierarchical_label "SERVO_OUT8"
+	(hierarchical_label "GND"
 		(shape input)
-		(at 151.13 85.09 180)
+		(at 76.2 107.95 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
+		(uuid "3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f")
+	)
+	(hierarchical_label "RC_TX"
+		(shape input)
+		(at 105.41 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
 		(uuid "728523fc-35b0-465d-9797-1c8bb613d196")
 	)
-	(hierarchical_label "SERVO_OUT6"
+	(hierarchical_label "SERVO_OUT_6"
 		(shape input)
 		(at 151.13 77.47 180)
 		(effects
@@ -690,7 +978,7 @@
 		)
 		(uuid "84c689fd-dddb-4aba-a738-a77e7e2063ae")
 	)
-	(hierarchical_label "SERVO_OUT4"
+	(hierarchical_label "SERVO_OUT_4"
 		(shape input)
 		(at 151.13 69.85 180)
 		(effects
@@ -701,7 +989,7 @@
 		)
 		(uuid "8c2eff49-ba9d-4565-b8dc-10f0cbc35c88")
 	)
-	(hierarchical_label "SERVO_OUT2"
+	(hierarchical_label "SERVO_OUT_2"
 		(shape input)
 		(at 151.13 62.23 180)
 		(effects
@@ -712,7 +1000,7 @@
 		)
 		(uuid "a086a7e2-2aad-48ce-82c7-fcf0f5cc373f")
 	)
-	(hierarchical_label "SERVO_OUT3"
+	(hierarchical_label "SERVO_OUT_3"
 		(shape input)
 		(at 151.13 66.04 180)
 		(effects
@@ -723,7 +1011,18 @@
 		)
 		(uuid "ac9325bb-2d8b-4936-9602-c82ec479188f")
 	)
-	(hierarchical_label "SERVO_OUT5"
+	(hierarchical_label "RC_SBUS"
+		(shape output)
+		(at 109.22 62.23 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c1c2c3c4-2222-4a22-8a22-222222222222")
+	)
+	(hierarchical_label "SERVO_OUT_5"
 		(shape input)
 		(at 151.13 73.66 180)
 		(effects
@@ -733,28 +1032,6 @@
 			(justify right)
 		)
 		(uuid "cbe9e56e-1e5c-4ed2-b7f7-5fc00d0d3dfe")
-	)
-	(hierarchical_label "SERVO_OUT7"
-		(shape input)
-		(at 151.13 81.28 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "debedf0c-6d2c-4e15-8158-48143dac41e9")
-	)
-	(hierarchical_label "RC_SBUS"
-		(shape output)
-		(at 101.6 86.36 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "e48ebe01-1216-420d-854f-10c2347ef8c2")
 	)
 	(hierarchical_label "ESC_OUT1"
 		(shape input)
@@ -767,7 +1044,7 @@
 		)
 		(uuid "fb114801-ac93-4023-9ecd-844bdeae8894")
 	)
-	(hierarchical_label "SERVO_OUT1"
+	(hierarchical_label "SERVO_OUT_1"
 		(shape input)
 		(at 151.13 58.42 180)
 		(effects
@@ -779,14 +1056,14 @@
 		(uuid "fe3a3068-21a3-4f08-86d8-096277f28443")
 	)
 	(symbol
-		(lib_id "Connector:Conn_01x03_Pin")
+		(lib_id "Connector:Conn_01x04_Pin")
 		(at 93.98 88.9 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
+		(in_pos_files no)
 		(dnp yes)
 		(uuid "6b8a0fa5-6504-41a1-b890-6d44c28f04bc")
 		(property "Reference" "J7"
@@ -809,7 +1086,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-04A_1x04_P2.54mm_Vertical"
 			(at 93.98 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -820,7 +1097,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/molex/0022232041/26671"
 			(at 93.98 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -831,7 +1108,29 @@
 				)
 			)
 		)
-		(property "Description" "Generic connector, single row, 01x03, script generated"
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 93.98 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0022232041"
+			(at 93.98 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Molex"
 			(at 93.98 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -851,6 +1150,9 @@
 		(pin "3"
 			(uuid "02f62ede-1943-41a9-ac47-76e61ce38b41")
 		)
+		(pin "4"
+			(uuid "d4f6f3f0-3e39-4d5b-9d9f-2f6f6f1ac7f4")
+		)
 		(instances
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
@@ -862,7 +1164,110 @@
 	)
 	(symbol
 		(lib_id "Device:D_TVS")
-		(at 90.17 78.74 0)
+		(at 86.36 107.95 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8f1a2c3d-4e5f-4a6b-9c7d-1e2f3a4b5c6d")
+		(property "Reference" "D7"
+			(at 85.344 104.902 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ESD5Z5.0T1G"
+			(at 83.312 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-523"
+			(at 86.36 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
+			(at 86.36 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
+			(at 86.36 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "RC_TX (CRSF/ELRS telemetry) signal ESD/surge protection"
+			(at 86.36 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C82044"
+			(at 86.36 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d")
+		)
+		(pin "2"
+			(uuid "2b3c4d5e-6f7a-4b8c-9d0e-1f2a3b4c5d6e")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(reference "D7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_TVS")
+		(at 90.17 78.74 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -958,6 +1363,164 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
 					(reference "D6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 109.22 58.42 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c1c2c3c4-3333-4a33-8a33-333333333333")
+		(property "Reference" "R27"
+			(at 111.506 58.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330R"
+			(at 109.22 58.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 109.22 56.642 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "RC_SBUS ESD/surge series resistor -- connector -> D6 (TVS) -> R27 -> ESP32 pin, matching RC_TX's D7/R26 topology"
+			(at 109.22 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c1c2c3c4-4444-4a44-8a44-444444444444")
+		)
+		(pin "2"
+			(uuid "c1c2c3c4-5555-4a55-8a55-555555555555")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(reference "R27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 96.52 105.41 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e89cde37-35b0-4037-bea7-9d655f62d48b")
+		(property "Reference" "R26"
+			(at 96.52 103.124 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330R"
+			(at 96.52 105.41 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 96.52 107.188 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 96.52 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 96.52 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "8d1409a9-1273-45ab-bb98-0dd04ff1890a")
+		)
+		(pin "2"
+			(uuid "be86b6bc-d95a-4547-b60f-28322a7fa97f")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/c5f0c20f-db19-4cbe-9f5c-05ea41a374c0"
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -1074,26 +1637,6 @@
 		(pin "SERVO_OUT_6" input
 			(at 151.13 77.47 180)
 			(uuid "47b5f64d-7f39-404a-8c94-be67ca95d509")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SERVO_OUT_7" input
-			(at 151.13 81.28 180)
-			(uuid "d8e50abe-776a-4631-af40-fedbb7b851dc")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SERVO_OUT_8" input
-			(at 151.13 85.09 180)
-			(uuid "4a0ddcf5-24cc-409d-8af0-3c47bd2b58f6")
 			(effects
 				(font
 					(size 1.27 1.27)

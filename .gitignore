@@ -45,11 +45,16 @@ sitl/.venv/
 .cache/
 **/*.lck
 .history/
-fixed-wing-drone-backups/
 
-kicad/gerber
-kicad/production
-
-# config-link ESP-NOW pre-shared keys / peer MACs -- device-specific, never committed
-main/config_link_secrets.h
-basestation/main/link_secrets.h
+# KiCad-generated noise, across every board project under kicad/ (not just
+# flight-controller) -- all regenerable from the tracked design files, none
+# of it meaningful to keep in git.
+kicad/**/*-backups/
+kicad/**/gerber
+kicad/**/production
+kicad/**/fp-info-cache
+kicad/**/drc*.json
+kicad/**/erc*.json
+kicad/**/_autosave-*
+kicad/**/*.kicad_sch-bak
+kicad/**/*.kicad_pcb-bak

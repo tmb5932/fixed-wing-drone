@@ -432,7 +432,7 @@
 						(type none)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 13.97 0)
 					(length 2.54)
 					(name "DAT2"
@@ -450,7 +450,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 11.43 0)
 					(length 2.54)
 					(name "CD/DAT3"
@@ -468,7 +468,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 8.89 0)
 					(length 2.54)
 					(name "CMD"
@@ -486,7 +486,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 6.35 0)
 					(length 2.54)
 					(name "VDD"
@@ -504,7 +504,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 3.81 0)
 					(length 2.54)
 					(name "CLK"
@@ -522,7 +522,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 1.27 0)
 					(length 2.54)
 					(name "VSS"
@@ -540,7 +540,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -1.27 0)
 					(length 2.54)
 					(name "DAT0"
@@ -558,7 +558,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -3.81 0)
 					(length 2.54)
 					(name "DAT1"
@@ -576,7 +576,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -6.35 0)
 					(length 2.54)
 					(name "CARD-DETECT"
@@ -594,7 +594,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -8.89 0)
 					(length 2.54)
 					(name "GND"
@@ -612,7 +612,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -11.43 0)
 					(length 2.54)
 					(name "SHELL"
@@ -630,7 +630,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -13.97 -13.97 0)
 					(length 2.54)
 					(name "SHELL"
@@ -663,6 +663,12 @@
 		(uuid "0097bd9b-5cec-48fb-907b-505e77fdf620")
 	)
 	(junction
+		(at 129.54 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a4a0c63-2132-49c1-acc0-cae9106798db")
+	)
+	(junction
 		(at 123.19 104.14)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -677,6 +683,16 @@
 			(type default)
 		)
 		(uuid "4d6dd4bc-0f36-402c-bb56-5070150f40c1")
+	)
+	(wire
+		(pts
+			(xy 129.54 91.44) (xy 121.92 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bec6eaf-1aae-4c8f-a83d-08bae0a2135a")
 	)
 	(wire
 		(pts
@@ -741,7 +757,7 @@
 	)
 	(hierarchical_label "ESP_3V3"
 		(shape input)
-		(at 129.54 83.82 180)
+		(at 121.92 91.44 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -837,6 +853,17 @@
 			(justify right)
 		)
 		(uuid "652445ec-3680-4a32-a919-03727b36173c")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 129.54 83.82 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cf9dc51b-8d36-49a5-bf71-fcb095b1a944")
 	)
 	(hierarchical_label "GND"
 		(shape input)

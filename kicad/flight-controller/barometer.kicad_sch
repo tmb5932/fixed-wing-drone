@@ -292,7 +292,7 @@
 						(type none)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at -11.43 3.81 0)
 					(length 2.54)
 					(name "GND"
@@ -310,7 +310,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at -11.43 1.27 0)
 					(length 2.54)
 					(name "CSB"
@@ -328,7 +328,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at -11.43 -1.27 0)
 					(length 2.54)
 					(name "SDI"
@@ -346,7 +346,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin input line
 					(at -11.43 -3.81 0)
 					(length 2.54)
 					(name "SCK"
@@ -364,7 +364,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin tri_state line
 					(at 11.43 -3.81 180)
 					(length 2.54)
 					(name "SDO"
@@ -382,7 +382,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at 11.43 -1.27 180)
 					(length 2.54)
 					(name "VDDIO"
@@ -400,7 +400,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at 11.43 1.27 180)
 					(length 2.54)
 					(name "GND"
@@ -418,7 +418,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin power_in line
 					(at 11.43 3.81 180)
 					(length 2.54)
 					(name "VDD"
