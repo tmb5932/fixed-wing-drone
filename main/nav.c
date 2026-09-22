@@ -25,10 +25,11 @@ static const char *TAG = "NAV";
 
 #define NAV_CONFIG_MUTEX_WAIT_MS (15)
 
-// Mutable mission (was a compile-time const array before the config-link
-// feature) -- guarded by nav_config_mutex since it's now written from
-// config_link_task (a different task) in response to a SET_MISSION packet,
-// while nav_task reads it every cycle regardless of autonomous mode.
+// Mutable mission (was a compile-time const array before waypoints became
+// settable at runtime) -- guarded by nav_config_mutex since it's now written
+// from the setup-mode HTTP server task (a different task) in response to a
+// POST /api/mission request, while nav_task reads it every cycle regardless
+// of autonomous mode.
 // Placeholder default, same "hardcoded until reconfigured" convention as the
 // PID gains in main.c -- overridden at boot by nav_init() if NVS has a
 // persisted mission.
@@ -212,13 +213,15 @@ void nav_reset(void)
 
 bool nav_set_mission(const waypoint_t *wps, size_t count, bool loop)
 {
-    if (count == 0 || count > NAV_MAX_WAYPOINTS || nav_config_mutex == NULL) {
+    if (count > NAV_MAX_WAYPOINTS || nav_config_mutex == NULL) {
         return false;
     }
     if (xSemaphoreTake(nav_config_mutex, pdMS_TO_TICKS(NAV_CONFIG_MUTEX_WAIT_MS)) != pdTRUE) {
         return false;
     }
-    memcpy(mission_waypoints, wps, count * sizeof(waypoint_t));
+    if (count > 0) {
+        memcpy(mission_waypoints, wps, count * sizeof(waypoint_t));
+    }
     num_waypoints = count;
     current_wp_idx = 0;
     mission_loop = loop;
@@ -227,7 +230,7 @@ bool nav_set_mission(const waypoint_t *wps, size_t count, bool loop)
     return config_store_save_mission(wps, count, loop) == ESP_OK;
 }
 
-bool nav_set_heading_pid_gains(uint8_t fields_present, const cl_pid_gains_t *gains)
+bool nav_set_heading_pid_gains(uint8_t fields_present, const pid_gains_t *gains)
 {
     if (nav_config_mutex == NULL) {
         return false;
@@ -235,14 +238,38 @@ bool nav_set_heading_pid_gains(uint8_t fields_present, const cl_pid_gains_t *gai
     if (xSemaphoreTake(nav_config_mutex, pdMS_TO_TICKS(NAV_CONFIG_MUTEX_WAIT_MS)) != pdTRUE) {
         return false;
     }
-    if (fields_present & CL_FIELD_KP)     HEADING_PID_CFG.k_p = gains->k_p;
-    if (fields_present & CL_FIELD_KI)     HEADING_PID_CFG.k_i = gains->k_i;
-    if (fields_present & CL_FIELD_KD)     HEADING_PID_CFG.k_d = gains->k_d;
-    if (fields_present & CL_FIELD_ILIMIT) HEADING_PID_CFG.i_limit = gains->i_limit;
-    cl_pid_gains_t merged = { HEADING_PID_CFG.k_p, HEADING_PID_CFG.k_i, HEADING_PID_CFG.k_d, HEADING_PID_CFG.i_limit };
+    if (fields_present & PID_FIELD_KP)     HEADING_PID_CFG.k_p = gains->k_p;
+    if (fields_present & PID_FIELD_KI)     HEADING_PID_CFG.k_i = gains->k_i;
+    if (fields_present & PID_FIELD_KD)     HEADING_PID_CFG.k_d = gains->k_d;
+    if (fields_present & PID_FIELD_ILIMIT) HEADING_PID_CFG.i_limit = gains->i_limit;
+    pid_gains_t merged = { HEADING_PID_CFG.k_p, HEADING_PID_CFG.k_i, HEADING_PID_CFG.k_d, HEADING_PID_CFG.i_limit };
     xSemaphoreGive(nav_config_mutex);
 
     return config_store_save_pid_gains("pid_hdg", &merged) == ESP_OK;
+}
+
+void nav_get_mission(waypoint_t *out, size_t max_count, size_t *out_count, bool *out_loop)
+{
+    if (nav_config_mutex == NULL || xSemaphoreTake(nav_config_mutex, pdMS_TO_TICKS(NAV_CONFIG_MUTEX_WAIT_MS)) != pdTRUE) {
+        *out_count = 0;
+        *out_loop = false;
+        return;
+    }
+    size_t n = (num_waypoints < max_count) ? num_waypoints : max_count;
+    memcpy(out, mission_waypoints, n * sizeof(waypoint_t));
+    *out_count = n;
+    *out_loop = mission_loop;
+    xSemaphoreGive(nav_config_mutex);
+}
+
+pid_gains_t nav_get_heading_pid_gains(void)
+{
+    pid_gains_t g = {0};
+    if (nav_config_mutex != NULL && xSemaphoreTake(nav_config_mutex, pdMS_TO_TICKS(NAV_CONFIG_MUTEX_WAIT_MS)) == pdTRUE) {
+        g = (pid_gains_t){ HEADING_PID_CFG.k_p, HEADING_PID_CFG.k_i, HEADING_PID_CFG.k_d, HEADING_PID_CFG.i_limit };
+        xSemaphoreGive(nav_config_mutex);
+    }
+    return g;
 }
 
 static void nav_task(void *pvParameters)
@@ -274,7 +301,7 @@ void nav_init(void)
         ESP_LOGI(TAG, "Loaded %d persisted waypoint(s) from NVS (loop=%d)", (int)loaded_count, loaded_loop);
     }
 
-    cl_pid_gains_t g;
+    pid_gains_t g;
     if (config_store_load_pid_gains("pid_hdg", &g)) {
         HEADING_PID_CFG.k_p = g.k_p;
         HEADING_PID_CFG.k_i = g.k_i;

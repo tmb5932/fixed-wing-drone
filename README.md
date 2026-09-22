@@ -31,7 +31,7 @@ Future hardware will hopefully include an airspeed sensor, lidar, and barometer.
 
 ### PCB
 
-The flight controller sits on a custom carrier PCB, designed in KiCad, included in [`kicad/`](kicad). Everything plugs into labeled connectors on the board rather than bare GPIO pins:
+The flight controller sits on a custom carrier PCB, designed in KiCad, included in [`kicad/flight-controller/`](kicad/flight-controller). Everything plugs into labeled connectors on the board rather than bare GPIO pins:
 
 - 6 labeled servo outputs, primary/secondary ESC signal outputs, and an RC signal input
 - Separate UBEC power inputs for the flight controller and the ESC, each with reverse-polarity protection
@@ -59,6 +59,17 @@ Set up ESP-IDF v5.5, then from the project root:
 idf.py build
 idf.py flash monitor
 ```
+
+### Setup mode
+
+Holding the board's BOOT button within 5 seconds of power-on boots into a
+setup mode instead of normal flight init: it hosts its own WiFi access point
+(`plane-fc-setup` by default) with a local web page for calibrating servo/ESC
+PWM ranges and direction, planning the GPS mission, tuning PID gains, and
+setting the airframe mixing mode and airspeed-hold target. Connect to the AP
+and browse to `http://192.168.4.1/`. Everything is saved to NVS immediately;
+a normal reset (BOOT not held) returns to flight mode with those settings
+applied.
 
 ## Author
 

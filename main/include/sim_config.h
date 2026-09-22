@@ -3,16 +3,15 @@
 
 // Independent per-sensor toggles between simulated (fake) data and real
 // hardware I/O -- lets the full system (nav waypoint/heading logic, the
-// roll/pitch/heading/airspeed PID loops, the ESP-NOW config link and its
-// ground/idle gating state machine, etc.) be exercised end-to-end without
-// every physical sensor wired up and calibrated.
+// roll/pitch/heading/airspeed PID loops, etc.) be exercised end-to-end
+// without every physical sensor wired up and calibrated.
 //
 // Comment one out to switch that sensor back to its real driver. Nothing
 // outside imu.c/gps.c/airspeed.c needs to change either way: the fake data
 // is written into the exact same shared structs (imu_data_t, gps_data_t,
 // airspeed_g) via the same mutex + volatile-bool-ready-flag pattern the
 // real drivers already use, so every downstream consumer (nav.c, main.c's
-// control_task, config_link.c) is none the wiser.
+// control_task) is none the wiser.
 // #define IMU_SIMULATED
 // #define GPS_SIMULATED
 // #define AIRSPEED_SIMULATED
@@ -25,8 +24,7 @@
 // --- Fake GPS (gps.c) ---
 // A simple circular "orbit" around a fixed home point, alternating with a
 // stationary "parked" phase (zero groundspeed) -- the orbit phase exercises
-// nav's waypoint-acceptance/heading-to-target math, and the parked phase
-// exercises the config-link gate's ground/idle detection (main/config_link.c).
+// nav's waypoint-acceptance/heading-to-target math.
 // Set GPS_SIM_HOME_LAT_DEG/_LON_DEG to somewhere near your actual mission
 // waypoints if you want the orbit to plausibly pass near/through them.
 #define GPS_SIM_HOME_LAT_DEG       (47.6062)

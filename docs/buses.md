@@ -1,289 +1,228 @@
 # Hardware Reference
 
-Everything a firmware developer needs to know about this board's hardware —
+Everything a firmware developer needs to know about this board's (v3.1) hardware —
 pinout, protocols, onboard parts, external connectors, power architecture —
-without opening KiCad. Pulled directly from the schematic/netlist as of the
-final pre-fabrication design; if GPIO assignments ever change in a future
-hardware revision, this file needs a re-pull (`kicad-cli sch export netlist`),
-it will drift otherwise.
-
-> ⚠️ **Known unresolved hardware bug:** `J14` (GPS/Compass connector) pin 5,
-> which should carry VCC power to the module, is not connected to anything —
-> it's a dangling wire that was drawn toward the `FC_5V` rail but never
-> reached it. Every other pin on that connector is correctly wired. Until
-> this is fixed in the schematic, **the GPS/compass module will not power
-> on** even though its data lines (SDA/SCL/UART) are correctly connected.
-> Don't spend time debugging a "dead" GPS in firmware before checking this.
+without opening KiCad. Pulled directly from the schematic netlist
+(`kicad-cli sch export netlist`) and cross-checked against manufacturer
+datasheets; if GPIO assignments ever change in a future hardware revision,
+this file needs a re-pull, it will drift otherwise.
 
 ## Board overview
 
 Custom flight controller for a fixed-wing RC plane, built around an
-ESP32-S3-WROOM-1-N16R8 (16MB flash, 8MB octal PSRAM). Onboard: dual IMU
-(primary + backup), barometer, microSD logging. External (cabled, not
-populated on this PCB): GPS+compass, airspeed sensor, lidar, UWB radio.
-Drives up to 8 servos and 2 ESCs, and passes through a standard RC receiver
-(SBUS).
+ESP32-S3-WROOM-1-N16R8 (16MB flash, 8MB octal PSRAM). Onboard: primary IMU,
+backup IMU, barometer, microSD logging. Potential (supported but may not always 
+be connected in a specific drone) external (cabled, not populated on
+this PCB): GPS+compass, airspeed sensor, LIDAR, UWB radio link, a second ESP
+board over UART. The airspeed and gps+compass will always be connected, the rest 
+are considered optional upgrades for a drone. Drives up to 6 servos and 2 ESCs, 
+and takes a standard RC receiver over SBUS (RX-only) or a bidirectional 
+link such as TBS Crossfire/ExpressLRS (CRSF, RX + telemetry TX). Has a USB-C 
+port for debug/programming.
 
 ## MCU: ESP32-S3-WROOM-1-N16R8
 
-- LCSC `C2913202`, Espressif, 16MB flash + 8MB octal PSRAM (both integrated
-  in the module package).
-- **GPIO33–37 are permanently reserved** for the octal PSRAM interface —
-  hard silicon fact for this exact module, not a schematic choice. Not
-  wired to anything on this board; never configure them as GPIO in firmware.
-- **GPIO19/GPIO20** are the native USB D-/D+ pins — fixed by silicon, not
-  routed through the GPIO matrix, not reassignable.
-- **GPIO43/GPIO44** are the chip's default UART0 TX/RX pins (only used by
-  the ROM bootloader for boot-time messages before firmware starts) —
-  repurposed on this board for `SERVO_OUT1`/`ESC_OUT2`. This is safe; see
-  the PWM section below for the one thing to know about it.
+LCSC `C2913202`, Espressif, 16MB flash + 8MB octal PSRAM (both integrated in
+the module package).
+
+- **GPIO35, GPIO36, GPIO37 are permanently reserved** for the octal PSRAM
+  interface (SPIIO6/SPIIO7/SPIDQS) — a hard silicon fact for any module with
+  8MB+ PSRAM (any "R8" or higher variant), not a schematic choice. Confirmed
+  unconnected on this board; never configure them as GPIO in firmware.
+  GPIO33/34 (also PSRAM-related on some variants) aren't even broken out on
+  this module's footprint.
+- **GPIO19 / GPIO20 are the native USB D− / D+ pins** — fixed by silicon
+  (`USB_D-` / `USB_D+` on the datasheet pin table), not routed through the
+  GPIO matrix, not reassignable to another peripheral.
 - **Strapping pins (GPIO0, GPIO3, GPIO45, GPIO46)** — all four are in use on
-  this board, all confirmed safe against the real ESP32-S3-WROOM-1-N16R8
-  datasheet:
-  - `GPIO0` = `BOOT` button — this is the pin's intended purpose (LOW =
-    download/flash mode, HIGH = normal boot).
-  - `GPIO45` = `SERVO_OUT8` — normally this pin selects flash voltage, but
-    this specific module has integrated PSRAM, which means Espressif burns
-    the `VDD_SPI_FORCE` eFuse at the factory, permanently disabling that
-    strapping function. Confirmed via the module's own reference schematic.
-    Free to use as a normal GPIO.
-  - `GPIO46` = `STATUS_LED` — this pin affects boot-mode entry (must be
-    LOW/floating to enter UART download mode), but a passive LED+resistor
-    load doesn't actively drive a level onto it before firmware runs, and
-    the pin's own internal weak pull-down (its documented default state)
-    already reads LOW, which is exactly what's needed. Safe.
-  - `GPIO3` = `GPS_RX` — this pin selects JTAG signal source only (not boot
-    success). It has no internal pull resistor and per the datasheet
-    *needs* an active external driver to avoid an undefined strap read —
-    the GPS module's UART TX output satisfies that requirement, and the
-    worst case if it reads "wrong" is JTAG selecting an unexpected source,
-    not a boot or flashing failure.
-
-## Complete GPIO pinout
-
-All 41 module pins. Fixed/silicon-level pins are marked; everything else is
-routed through the GPIO matrix and was a schematic-time choice (still
-correct as of this doc, but re-verify against the schematic if it's been a
-while since this was written).
-
-| Pin | GPIO | Net | Notes |
-|---|---|---|---|
-| 1 | — | GND | |
-| 2 | — | `ESP_3V3` | power |
-| 3 | — | `EN` | reset, RC delay circuit |
-| 4 | GPIO4 | `SD_CARD_DETECT` | microSD socket mechanical switch |
-| 5 | GPIO5 | `INTER_ESP_RX` | UART |
-| 6 | GPIO6 | `INTER_ESP_TX` | UART |
-| 7 | GPIO7 | `IMU2_GYRO_CS` | SPI |
-| 8 | GPIO15 | `IMU2_ACCEL_CS` | SPI |
-| 9 | GPIO16 | `UWB_CS` | SPI (external module, not populated) |
-| 10 | GPIO17 | `BAROMETER_CS` | SPI |
-| 11 | GPIO18 | `IMU1_CS` | SPI |
-| 12 | GPIO8 | `SD_CS` | SPI |
-| 13 | GPIO19 | USB D- | **fixed, native USB** |
-| 14 | GPIO20 | USB D+ | **fixed, native USB** |
-| 15 | GPIO3 | `GPS_RX` | UART, **strapping pin** (see above, safe) |
-| 16 | GPIO46 | `STATUS_LED` | **strapping pin** (see above, safe) |
-| 17 | GPIO9 | `GPS_TX` | UART |
-| 18 | GPIO10 | `SDA` | I2C |
-| 19 | GPIO11 | `SCL` | I2C |
-| 20 | GPIO12 | `IMU1_INT` | interrupt input |
-| 21 | GPIO13 | `UWB_INT` | interrupt input (external module) |
-| 22 | GPIO14 | `SCK` | SPI clock |
-| 23 | GPIO21 | `MISO` | SPI |
-| 24 | GPIO47 | `MOSI` | SPI |
-| 25 | GPIO48 | `SERVO_OUT5` | PWM |
-| 26 | GPIO45 | `SERVO_OUT8` | PWM, **strapping pin** (see above, safe) |
-| 27 | GPIO0 | `BOOT` | **strapping pin**, intended use |
-| 28 | GPIO35 | unconnected | **reserved, octal PSRAM — never use** |
-| 29 | GPIO36 | unconnected | **reserved, octal PSRAM — never use** |
-| 30 | GPIO37 | unconnected | **reserved, octal PSRAM — never use** |
-| 31 | GPIO38 | `SERVO_OUT4` | PWM |
-| 32 | GPIO39 | `SERVO_OUT7` | PWM |
-| 33 | GPIO40 | `SERVO_OUT3` | PWM |
-| 34 | GPIO41 | `SERVO_OUT6` | PWM |
-| 35 | GPIO42 | `SERVO_OUT2` | PWM |
-| 36 | GPIO44 | `SERVO_OUT1` | PWM — chip's default UART0 RX pin, repurposed |
-| 37 | GPIO43 | `RC_SBUS` | UART/serial input — chip's default UART0 TX pin, repurposed |
-| 38 | GPIO2 | `ESC_OUT1` | PWM |
-| 39 | GPIO1 | `ESC_OUT2` | PWM |
-| 40 | — | GND | |
-| 41 | — | GND | |
-
-## SPI bus (shared, one peripheral, independent chip-selects)
-
-`SCK`=GPIO14, `MOSI`=GPIO47, `MISO`=GPIO21.
-
-| Device | Part | CS net / GPIO | Notes |
-|---|---|---|---|
-| IMU1 (primary) | ICM-42688-P, LCSC `C1850418` | `IMU1_CS` / GPIO18 | interrupt on `IMU1_INT` / GPIO12 |
-| IMU2 (backup) | BMI088, LCSC `C194919` | `IMU2_ACCEL_CS` / GPIO15, `IMU2_GYRO_CS` / GPIO7 | one package, two independent sub-cores (accel + gyro), each with its own CS; both share one `MISO` line safely since only one CS is ever active |
-| Barometer | Infineon DPS368XTSA1, LCSC `C3232508` | `BAROMETER_CS` / GPIO17 | drop-in successor to DPS310 (discontinued) — same register map per Infineon, so existing DPS310 driver code should need little to no change |
-| microSD (SPI mode) | — | `SD_CS` / GPIO8 | see microSD section below |
-| UWB radio | — | `UWB_CS` / GPIO16 | external module via J10, not populated on this PCB; interrupt on `UWB_INT` / GPIO13 |
-
-### IMU2 (BMI088) — populated, but write the firmware to treat it as optional anyway
-
-IMU2 is populated on this board run (it was briefly marked DNP to save
-cost, then reinstated once the actual per-unit cost turned out lower than
-first estimated — worth knowing in case an older note or memory of this
-project says otherwise). Even so, it's worth writing the driver/fusion code
-as if it *might* be absent, rather than hardcoding an assumption it's
-always there — cheap insurance against a future board revision dropping it
-again, and against a single populated unit having a dead/DOA IMU2 at
-assembly. Two ways to structure this, and dynamic detection is the better
-one:
-
-- **Compile-time (`#ifdef`)**: simplest, but means a separate firmware build
-  per board variant — easy to accidentally flash the wrong build to the
-  wrong board.
-- **Runtime detection (preferred)**: at boot, attempt a SPI transaction with
-  `IMU2_ACCEL_CS`/`IMU2_GYRO_CS` and read BMI088's chip-ID register (`0x00`
-  on both the accel and gyro sub-core, expected values `0x1E`/`0x0F`
-  respectively per the BMI088 datasheet). If the read times out or returns
-  an unexpected value, treat IMU2 as absent and fall back to IMU1-only
-  operation — no separate firmware build needed, the same binary works on
-  both populated and unpopulated boards, and it's robust to a board being
-  populated later without a firmware change.
-
-Either way, whatever attitude/sensor-fusion code consumes IMU data should
-already be written against "IMU1, optionally IMU2" rather than "always
-exactly one IMU" or "always exactly two" — this avoids a rewrite whenever
-BMI088 does get populated (or not) on a future run.
-
-**Extend this to runtime fault tolerance, not just boot-time detection, and
-make it symmetric between the two IMUs.** Detecting absence at boot handles
-"not populated" — it doesn't handle a sensor that responds fine at boot but
-then stops mid-flight (bad solder joint working loose, ESD, physical shock
-from a hard landing, whatever). The driver/fusion layer should treat SPI
-comms failures or invalid data from *either* IMU as a live fault condition
-at any point during operation, not just something checked once at startup,
-and fall back to single-IMU operation using whichever one is still
-responding — this should work the same way regardless of which specific
-IMU (1 or 2) is the one that failed. Don't hardcode IMU1 as the assumed
-"always-good" one that IMU2 falls back to; either should be able to carry
-flight on its own if the other drops out.
-
-### microSD — SPI mode is native, not a workaround
-
-microSD cards have SPI mode built into their own controller as an official
-part of the SD spec — a simplified 4-wire mode any generic SPI peripheral
-can drive directly, no bridge chip involved. What turns raw SPI transfers
-into "write a file" is a software filesystem driver (FatFS via ESP-IDF's
-`esp_vfs_fat`) — a firmware concern, not a hardware one.
-
-**The SD card is the bus-timing risk on this shared bus, not the IMUs.**
-SD-in-SPI-mode runs comfortably at 20–25MHz, same ballpark as the IMUs —
-the actual bottleneck is that the card's internal flash write takes real
-time (commonly several hundred microseconds up to a few ms per 512-byte
-block) regardless of bus speed, and during that time the bus is tied up.
-Realistic sustained write throughput: roughly 200KB/s–800KB/s, card
-dependent. The risk isn't bandwidth, it's that **a single write can block
-the bus for a few ms**, which can cause missed samples if the IMU wants
-data faster than that.
-
-Firmware mitigation (scheduling, not hardware):
-1. Don't log at the IMU's raw output rate — downsample to 50–100Hz.
-2. Batch writes — accumulate samples in RAM (8MB PSRAM available) and flush
-   a larger chunk every few hundred ms rather than one transaction per cycle.
-3. Prioritize sensor reads over SD writes — sensor polling in a
-   higher-priority task/ISR than the SD write task.
-4. Flush right after a sensor read cycle completes, not mid-cycle.
-
-## I2C bus (external sensors only — nothing onboard uses I2C)
-
-`SDA`=GPIO10, `SCL`=GPIO11. Pull-ups: 6.8kΩ, to `ESP_3V3`.
-
-| Device | Connector | Pinout |
-|---|---|---|
-| GPS + compass (Beitian BN-880) | J14 (6-pin JST-GH) | 1=SDA, 2=GND, 3=RX←module TX (`GPS_RX`), 4=TX→module RX (`GPS_TX`), 5=VCC **(currently unwired — see known-bug notice above)**, 6=SCL |
-| Airspeed sensor | J15 (4-pin JST-GH) | 1=+5V (`FC_5V`, via ferrite bead L4), 2=SCL, 3=SDA, 4=GND |
-| Lidar | J8 (4-pin Molex PicoBlade) | 1=+5V (`FC_5V`, via ferrite bead L2), 2=SCL, 3=SDA, 4=GND |
-
-### I2C address map — verify before assuming no conflicts
-
-| Device | 7-bit address | Notes |
-|---|---|---|
-| HMC5883L (compass, if this chip variant) | `0x1E` | fixed |
-| QMC5883L (compass, if this chip variant) | `0x0D` (or `0x0C`) | fixed; BN-880 units carry either chip depending on manufacturing batch — check which one you actually have |
-| MS4525DO (airspeed, if used) | `0x28` commonly | configurable via a separate Honeywell/TE app note if it conflicts |
-| DLVR series (airspeed, if used) | order-code dependent | check the datasheet's ordering guide |
-| Lidar | model-dependent | e.g. Garmin LIDAR-Lite `0x62`, Benewake TFmini/TF-Luna `0x10`, ST VL53L0X/L1X `0x29` |
-
-None of the likely combinations collide, but the fully reliable way to know
-for sure once hardware is in hand: run an I2C bus scanner (probe every
-address 0x08–0x77, log ACKs) rather than trust datasheets alone.
-
-## UART
-
-| Signal | GPIO | Notes |
-|---|---|---|
-| `GPS_RX` (host receives) | GPIO3 | NMEA in from GPS module |
-| `GPS_TX` (host transmits) | GPIO9 | |
-| `INTER_ESP_RX` | GPIO5 | to a second ESP32 board via J11 (3-pin JST-GH) |
-| `INTER_ESP_TX` | GPIO6 | |
-| `RC_SBUS` | GPIO43 | from RC receiver via J7 (3-pin Molex KK-254). **SBUS is inverted UART** — configure via the ESP32 UART peripheral's RX-invert option, or verify your specific receiver's actual output polarity before assuming standard inverted SBUS |
-
-GPIO43/44 (native UART0 default pins, used here for `RC_SBUS` and
-`SERVO_OUT1`) briefly carry ROM bootloader boot-log traffic for a moment at
-power-on before firmware takes over — harmless, just don't be surprised by
-a flicker of activity on those lines in the first instant after reset.
-
-## USB
-
-Native USB (not a UART-bridge chip) on the chip's dedicated USB pins,
-routed to `J13` (USB-C receptacle, GCT USB4105-xx-A). This is the primary
-flashing and serial-console path for this board — GPIO43/44 (UART0) are
-free for other use specifically because flashing doesn't depend on them.
-
-## PWM outputs (8 servos + 2 ESCs)
-
-All ten have a 330Ω series resistor between the GPIO and the connector pin
-— fault-current protection in case a signal pin ever shorts to the adjacent
-power or ground pin at the connector (a real, plausible failure mode with
-these small connectors, not just theoretical).
-
-| Output | GPIO | Connector |
-|---|---|---|
-| Servo 1 | GPIO44 | J1 |
-| Servo 2 | GPIO42 | J2 |
-| Servo 3 | GPIO40 | J3 |
-| Servo 4 | GPIO38 | J4 |
-| Servo 5 | GPIO48 | J5 |
-| Servo 6 | GPIO41 | J6 |
-| Servo 7 | GPIO39 | J9 |
-| Servo 8 | GPIO45 | J16 |
-| ESC 1 | GPIO2 | J22 |
-| ESC 2 | GPIO43 | J19 |
-
-All servo/ESC/RC connectors (J1-J7,J9,J16,J19,J20,J22) are through-hole
-Molex KK-254 parts marked **DNP** (not JLCPCB-assembled) — hand-soldered.
+  this board:
+  - `GPIO0` = `BOOT` button. This is the pin's intended purpose: it and
+    GPIO46 together select boot mode at reset (GPIO0=1 → SPI Boot from
+    flash, the default; GPIO0=0 with GPIO46=0 → Joint Download Boot, i.e.
+    UART/USB flashing mode). GPIO0 defaults to an internal weak pull-up
+    (reads 1) when nothing external drives it.
+  - `GPIO46` = `STATUS_LED`, driven through a series resistor and LED to
+    ground (GPIO → resistor → LED anode → LED cathode → GND). GPIO46
+    defaults to an internal weak pull-down (reads 0) at reset. The LED
+    string doesn't fight this: nothing on that path can source current
+    into the pin, so the strap still reads its correct default level
+    during boot-mode sampling.
+  - `GPIO45` selects VDD_SPI voltage (1.8V vs 3.3V) *only on modules without
+    integrated PSRAM*. Per Espressif's own module datasheet: "for modules
+    with PSRAM, the VDD_SPI voltage is fixed via eFuse, so their VDD_SPI
+    voltage will not be affected by the GPIO45 level" — this module has
+    PSRAM, so GPIO45's strapping function is permanently disabled at the
+    factory. It's used here as a plain GPIO (`RC_TX`) with no boot
+    implications.
+  - `GPIO3` selects JTAG signal source at boot (USB-Serial-JTAG controller
+    vs. dedicated JTAG pins vs. disabled, depending on eFuse state). It has
+    **no internal pull resistor** and must not be left floating — it's
+    wired here to `GPS_RX`, driven by the external GPS module's UART TX
+    output, which satisfies that requirement. Worst case if a boot-time
+    read goes "wrong" is JTAG selecting an unexpected signal source, not a
+    boot or flashing failure.
+- **ROM boot messages print to UART0 by default** (both UART0 *and* the
+  USB-Serial-JTAG controller, unless disabled via eFuse). UART0's default
+  TX pin (silicon-labeled `TXD0`) is wired on this board to `RC_SBUS` — the
+  same wire the RC receiver actively drives with SBUS frames. During the
+  brief ROM-bootloader window before your firmware takes over, both the
+  chip and the receiver are trying to drive that line at once. There's no
+  series resistor isolating them. This doesn't damage anything (both are
+  low-current CMOS push-pull drivers), but expect boot-log output and
+  early SBUS frames to both be garbled during that window — don't try to
+  read SBUS data before your firmware has taken ownership of the pin, and
+  if clean boot logs matter, disable ROM UART0 printing via eFuse.
 
 ## Power architecture
 
-Two independent 3.3V LDOs and a split 5V power plane, both for noise
-isolation between "ESP32/digital" and "sensor/analog" domains:
+```
+Battery/BEC ──> J20 "FC UBEC Input" ──> Q1 (reverse-polarity FET) ──> D5 (Schottky) ──┐
+                                                                                       ├──> FC_5V
+USB-C VBUS (J13) ─────────────────────────────────> D3 (Schottky, one-way) ──────────┘       │
+                                                                              ┌────────────────┴───────────────┐
+                                                                              ▼                                ▼
+                                                                      U4 (XC6220B331PR-G)              U6 (AP2112K-3.3)
+                                                                      5V → ESP_3V3                     5V → SENSOR_3V3
+                                                                      powers U1 only                   powers IMUs/baro/
+                                                                                                         UWB header
 
-| Rail | Source | Feeds |
+ESC1 connector (J22) BEC ──> Q2 (reverse-polarity FET) ──> SERVO_5V ──> servo/ESC connectors (J1-J6,J9,J19,J22), RC receiver (J7)
+```
+
+VBUS and the battery both feed `FC_5V` in parallel, each through their own
+one-way diode — either can power the board's flight-computer rail on its
+own (e.g. bench-testing over USB with no battery connected), and neither
+can push current back out through the other's path.
+
+- **Two independent 5V-ish domains, deliberately isolated.** `FC_5V`
+  (flight-computer power) and `SERVO_5V` (actuator power) are separate nets
+  with their own copper pours, enforced by a custom DRC rule
+  (`fixed-wing-drone.kicad_dru`) requiring ≥2mm clearance between them —
+  so servo/ESC current transients or brownouts can't couple into the
+  flight computer's own supply. Don't assume these are the same rail.
+- **Reverse-polarity protection on both power inputs.** `J20` (main
+  UBEC/battery input) and `J22` (ESC1's BEC output, used as the SERVO_5V
+  source) each go through a P-channel MOSFET (AO3407A, Q1/Q2) with its
+  gate pulled to true ground through a 100kΩ resistor and source at the
+  raw input. Correct polarity turns the FET on; reversed polarity leaves
+  it off, blocking current. If a connector is ever wired backwards in the
+  field, nothing downstream sees power — it just won't turn on, not smoke.
+- **U4 (Torex XC6220B331PR-G, SOT-89-5)** regulates `FC_5V` → `ESP_3V3` and
+  powers the ESP32-S3 module exclusively. Its thermal tab is tied to GND
+  (not VOUT) and stitched to the ground plane with dedicated vias.
+- **U6 (Diodes Inc AP2112K-3.3, SOT-23-5)** regulates `FC_5V` → `SENSOR_3V3`
+  and powers both IMUs, the barometer, and the external UWB radio header
+  (`J10`). Separate LDO from the MCU's own supply, so a noisy/loaded
+  sensor rail can't sag the processor's power.
+- **Only one ESC connector's BEC is actually used for power.** `J22`
+  ("ESC1")'s power pin feeds `SERVO_5V` through Q2. `J19` ("ESC2")'s
+  equivalent pin is intentionally left unconnected — if you plug an ESC
+  with its own BEC into J19, that BEC's output goes nowhere; only J22's
+  BEC (or lack of one, if you're powering servos from elsewhere) matters.
+  Don't feed BEC power into both ESC connectors expecting redundancy.
+- **USB-C VBUS cannot back-feed the board's main power.** `D3` (Schottky,
+  anode on VBUS) only conducts VBUS → FC_5V, so if the plane's battery is
+  connected while a USB cable is also plugged in, the battery can't push
+  current out through the USB port toward a host device.
+
+## Protected external interfaces
+
+Three signal paths have TVS (transient-voltage-suppression) diodes for ESD
+protection; nothing else does:
+
+- **USB-C VBUS** (`J13`) — a TVS diode plus a 10µF bulk cap, placed ahead
+  of the D3 blocking diode, right at the connector.
+- **RC receiver SBUS line** (`J7` pin 1, `RC_SBUS`) — D6, the same TVS
+  part, since it's an externally-exposed signal input to the flight
+  computer (vs. the PWM/ESC lines, which are outputs).
+- **RC receiver telemetry TX line** (`J7` pin 4, `RC_TX`) — D7, matching
+  TVS part. This line is an FC output, but it's exposed on the same
+  external cable as `RC_SBUS`, so it gets the same protection.
+
+Every other external connector (servo outputs, ESC signal lines, the I2C
+sensor headers, GPS/compass, inter-ESP UART, UWB SPI header) has no ESD
+protection beyond what's inherent to the MCU's own I/O pins.
+
+## Sensor buses
+
+**SPI — one shared bus, six independent chip-selects.** `SCK` / `MOSI` /
+`MISO` are common to all SPI devices on the board:
+
+| Device | CS net | Notes |
 |---|---|---|
-| `ESP_3V3` | U5 (AP2112K-3.3, LCSC `C51118`) | ESP32-S3 module, I2C pull-ups |
-| `SENSOR_3V3` | U6 (AP2112K-3.3, LCSC `C51118`) | IMU1, IMU2, Barometer |
-| `FC_5V` | USB VBUS (via D3) or ESC1 BEC (via Q1 + D5), power-OR'd | feeds both LDOs |
-| `SERVO_5V` | ESC1 BEC (via Q2), separate plane from `FC_5V` on the same inner layer | all 8 servo connectors + RC receiver connector (J7) |
+| Primary IMU (`U2`, ICM-42688-P) | `IMU1_CS` | `INT1` wired to `IMU1_INT` (GPIO12); `INT2/FSYNC/CLKIN` and both reserved pins left unconnected |
+| Backup IMU (`U3`, BMI088) | `IMU2_ACCEL_CS` + `IMU2_GYRO_CS` (two separate CS lines — the accelerometer and gyroscope are independently addressable dies in one package) | **All four interrupt pins (INT1–INT4) are unconnected.** No data-ready interrupt available from this sensor — poll it. |
+| Barometer (`U7`, DPS368) | `BAROMETER_CS` | |
+| MicroSD (`Card1`) | `SD_CS` (GPIO8) | Card-detect switch wired to GPIO4 (`SD_CARD_DETECT`) |
+| UWB radio (external, via `J10`) | `UWB_CS` | Interrupt wired to `UWB_INT` (GPIO13) |
 
-D3/D5 are B5819W SL Schottky diodes (LCSC `C8598`, 40V/1A). `FC_5V` and
-`SERVO_5V` are deliberately isolated (2mm clearance rule) so servo/ESC
-current transients don't couple into the flight-critical logic supply —
-this is intentional, not something to "fix" if you ever see them as
-separate rails in firmware/telemetry.
+**I2C — one shared external bus, 6.8kΩ pull-ups (`R20`/`R21`) to
+`SENSOR_3V3`.** Only external, cabled sensors are on this bus — no onboard
+sensor uses I2C:
 
-## Status/Power LEDs
+| Connector | Purpose |
+|---|---|
+| `J8` | LIDAR |
+| `J14` | GPS/Compass (also carries GPS UART, see below) |
+| `J15` | Airspeed sensor |
 
-| LED | GPIO / net | Part |
+All three connectors' VCC pins are filtered through a ferrite bead (L2, L1,
+L4 respectively) in series from `FC_5V` before reaching the connector —
+this shows up as a separate auto-named net on the connector side of each
+bead in netlist output, which is expected and doesn't mean anything is
+disconnected.
+
+**UART:**
+
+| Net | Pins | Purpose |
 |---|---|---|
-| D1 (Status) | GPIO46 (`STATUS_LED`) | KT-0603YG, yellow-green, LCSC `C2289` |
-| D2 (Power) | passive (power-on indicator, not GPIO-driven) | — |
+| `GPS_RX` / `GPS_TX` | GPIO3 / GPIO9 | GPS module UART, via `J14` |
+| `INTER_ESP_RX` / `INTER_ESP_TX` | GPIO5 / GPIO6 | Link to a second ESP board, via `J11` |
+| `RC_SBUS` | GPIO43 (silicon `TXD0`) | RC receiver input (SBUS, or the RX half of a CRSF/ExpressLRS link), via `J7` — see the strapping-pin note above about ROM boot-time contention on this pin |
+| `RC_TX` | GPIO45 | RC receiver telemetry output (unused for plain SBUS; the TX half of a CRSF/ExpressLRS link), via `J7` |
 
-D1 is GPIO-driven through a 220Ω resistor (R5) — firmware controls it
-directly. Expect roughly 5-6mA drive current given the LED's ~2.0-2.2V
-forward voltage on the 3.3V rail.
+`J7` is now a 4-pin connector: pin 1 `RC_SBUS` (signal in), pin 2 `SERVO_5V`,
+pin 3 `GND`, pin 4 `RC_TX` (signal out). It was a 3-pin connector (no pin 4)
+before this net was added — GPIO45 previously drove an 8th PWM servo channel
+(`SERVO_OUT8`, via connector `J16`), which was removed to free the pin. See
+the PWM outputs section below.
+
+## PWM outputs
+
+7 servo channels + 2 ESC channels, each through its own 330Ω series
+resistor before reaching its connector:
+
+| Signal | GPIO | Connector |
+|---|---|---|
+| `SERVO_OUT1` | 44 (silicon `RXD0`) | `J1` |
+| `SERVO_OUT2` | 42 | `J2` |
+| `SERVO_OUT3` | 40 | `J3` |
+| `SERVO_OUT4` | 38 | `J4` |
+| `SERVO_OUT5` | 48 | `J5` |
+| `SERVO_OUT6` | 41 | `J6` |
+| `SERVO_OUT7` | 39 | `J9` |
+| `ESC_OUT1` | 2 | `J22` ("ESC1" — also the SERVO_5V power source, see above) |
+| `ESC_OUT2` | 1 | `J19` ("ESC2") |
+
+`J16` (formerly `SERVO_OUT8`'s connector) and its series resistor `R16` have
+been removed from the schematic — GPIO45 now drives `RC_TX` instead (see
+UART section above).
+
+## USB-C debug port (`J13`)
+
+16-pin GCT USB4105-GF-A receptacle, USB 2.0 only (no SuperSpeed pins).
+`CC1`/`CC2` each have a 5.1kΩ pull-down (`R3`/`R4`) to GND — correct UFP
+(sink) termination so a compliant USB-C source will present VBUS. Native
+USB D+/D− go directly to the MCU's GPIO19/GPIO20 (no series resistors, no
+protection beyond the VBUS TVS above). Populated for field use, not DNP.
+
+## Other onboard parts
+
+- **`D1`/`D2`** — status and power indicator LEDs (yellow-green and red
+  respectively), each with its own current-limiting resistor.
+- **`SW1`** — reset button. Pulls `EN` (chip enable/reset) to GND when
+  pressed; `EN` has its own 10kΩ pull-up to `ESP_3V3` (`R7`) so it reads
+  high otherwise.
+- **`SW2`** — BOOT button. Pulls GPIO0 to GND through a 100Ω series
+  resistor (`R9`) when pressed — hold this while tapping reset to enter
+  UART/USB download mode (see the GPIO0/GPIO46 boot-mode note above).

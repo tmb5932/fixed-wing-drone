@@ -1,0 +1,2799 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "3c2d59a7-2630-4960-9e06-c91fd9ee8058")
+	(paper "A4")
+	(title_block
+		(title "Flight Mission PCB")
+		(date "2026-09-12")
+		(rev "v1.0")
+	)
+	(lib_symbols)
+	(label "BATT_ISENSE"
+		(at 162.56 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "00469e89-d30e-4a59-90fd-d7b1540c50ad")
+	)
+	(label "INTER_ESP_UART_RX"
+		(at 31.75 30.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "00928f47-8f65-4a5d-b578-73f35aafb6b3")
+	)
+	(label "MOSFET1_GATE"
+		(at 208.28 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "01c9f29f-c463-440b-b098-11095d130feb")
+	)
+	(label "MOSFET3_ISENSE"
+		(at 248.92 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "020be7d8-611c-4239-bdec-50133b684088")
+	)
+	(label "MOSFET1_ISENSE"
+		(at 248.92 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "02cb7cbe-7ae1-4e7e-a352-84b000c038d8")
+	)
+	(label "HBRIDGE_AISENSE"
+		(at 31.75 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "034d9b56-4888-4485-8977-af72f07657d9")
+	)
+	(label "MOSFET3_GATE"
+		(at 208.28 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0726c23a-96e6-4967-8b64-2de19724c459")
+	)
+	(label "HBRIDGE_AIN2"
+		(at 95.25 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "072d6a8b-98f8-4842-baad-86257267c6a7")
+	)
+	(label "I2C_SCL"
+		(at 181.61 125.73 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0b717482-5ba2-415e-9a64-9d1bb1a01c7b")
+	)
+	(label "BATT_ISENSE"
+		(at 31.75 99.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0b99561c-2b9a-465e-86b1-110094641cec")
+	)
+	(label "SPI_CS"
+		(at 181.61 133.35 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0c9ae2d6-5a6e-47cc-aa89-c4a04d28d271")
+	)
+	(label "GND"
+		(at 41.91 152.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "15740ae8-63f0-4eab-ae53-668af02c1988")
+	)
+	(label "GND"
+		(at 181.61 113.03 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "15b5f23b-6a90-4de6-a36c-b6e4f62396a9")
+	)
+	(label "CAM_D3"
+		(at 31.75 55.88 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1670f0a7-5c26-4677-ad4e-14d0c82b0095")
+	)
+	(label "CAM_D7"
+		(at 105.41 177.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "177022b1-7829-4912-9642-ebed5df954e8")
+	)
+	(label "USB_DP"
+		(at 31.75 22.86 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "17fe83fd-6525-4cef-b84d-eabede966a58")
+	)
+	(label "ACT_PWR"
+		(at 162.56 64.77 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1e465ee0-c5bc-4db4-92e4-e247b171d863")
+	)
+	(label "MOSFET2_GATE"
+		(at 95.25 96.52 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "201d33eb-e00c-4b4e-8ead-570151f8aa8b")
+	)
+	(label "MOSFET2_GATE"
+		(at 208.28 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "208e40d7-1c09-4254-be2b-af794e634b4e")
+	)
+	(label "ESP_3V3"
+		(at 181.61 115.57 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "21d3e01a-814e-47e7-b9fc-b44a870c9337")
+	)
+	(label "CAM_PCLK"
+		(at 31.75 40.64 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "22964255-029e-4425-a7fb-bb15d4f3e26c")
+	)
+	(label "CAM_D5"
+		(at 105.41 172.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "24850293-a1f0-45d2-aa2f-ea2f157b4ed0")
+	)
+	(label "CAM_VSYNC"
+		(at 105.41 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "279d597b-9941-4da6-8fee-3b80b3ca8b50")
+	)
+	(label "EXP_GPIO2"
+		(at 95.25 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "28e9b5bf-f130-49ef-8b2d-5afb4d8e96a6")
+	)
+	(label "ESP_3V3"
+		(at 162.56 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "295168ae-159b-4652-9a35-84d8108ed987")
+	)
+	(label "HBRIDGE_NFAULT"
+		(at 242.57 22.86 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2b9229a8-2bf9-4511-986e-f2653a2a7fd3")
+	)
+	(label "MOSFET4_ISENSE"
+		(at 31.75 116.84 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2efd6509-d4fc-4d09-93ef-4b2311d33cd6")
+	)
+	(label "SPI_MISO"
+		(at 245.11 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3168f93c-2081-4279-bcac-16a75375c27a")
+	)
+	(label "HBRIDGE_BIN2"
+		(at 191.77 38.1 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "31898a4e-0d3d-4e2e-b7fb-87ac96e3f73e")
+	)
+	(label "MCP_INT"
+		(at 31.75 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "32c73548-48e3-4d98-8ae8-fc460f89619c")
+	)
+	(label "I2C_SDA"
+		(at 41.91 157.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "33101448-9b09-4dbb-8c75-6ddeed296be7")
+	)
+	(label "GND"
+		(at 31.75 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "349d3155-d973-4047-9d60-c1947a703b7a")
+	)
+	(label "CAM_RESET"
+		(at 41.91 165.1 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3969c4f3-fd99-47e1-ac95-25a5d1dc3fbb")
+	)
+	(label "DEBUG_UART_TX"
+		(at 181.61 120.65 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3d1daadf-e695-4c5d-950e-95ef59ad6a0f")
+	)
+	(label "HBRIDGE_BISENSE"
+		(at 31.75 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4334b81a-dddb-480e-9a91-f42bf875cb76")
+	)
+	(label "ESP_3V3"
+		(at 208.28 63.5 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "43ac5aa1-e335-4cd0-b20a-0bb9cd62c610")
+	)
+	(label "SPI_MOSI"
+		(at 95.25 45.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "43bc1519-13bb-4a5c-ae8d-b3bc39544ba3")
+	)
+	(label "DEBUG_UART_RX"
+		(at 31.75 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "44bad649-33ab-46b0-a8bc-30342fc47bef")
+	)
+	(label "I2C_SCL"
+		(at 41.91 160.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "45f0975d-8a4a-4bbb-a633-5eec5a113173")
+	)
+	(label "MOSFET4_GATE"
+		(at 95.25 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "46a1dbc9-bd0d-4f73-9c7c-f4fb49ddb2e1")
+	)
+	(label "I2C_SCL"
+		(at 31.75 121.92 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "470b1f67-29d4-4d1b-bd41-d6d04b8a7165")
+	)
+	(label "GND"
+		(at 31.75 17.78 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "47dd5a31-8349-4ad1-8135-57a8c23a186e")
+	)
+	(label "SPI_MOSI"
+		(at 181.61 128.27 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "510a7b16-0a35-4074-8c0e-61e22f25f36f")
+	)
+	(label "USB_DM"
+		(at 162.56 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5ab985b0-182a-4421-8e6f-4c2213865096")
+	)
+	(label "SENSE_MUX_OUT"
+		(at 31.75 27.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5bd3fa32-36d7-48c0-8ca0-21c4e5e1aa18")
+	)
+	(label "CAM_HREF"
+		(at 31.75 45.72 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "606b5b54-2719-4f4a-aa4c-e1ee658aaabf")
+	)
+	(label "I2C_SDA"
+		(at 31.75 119.38 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6519f4f9-bc10-41a5-b11a-d7a1e550161b")
+	)
+	(label "INTER_ESP_UART_TX"
+		(at 95.25 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "663d0b0f-c41a-4167-ac3c-5e14b271db61")
+	)
+	(label "CAM_VSYNC"
+		(at 31.75 43.18 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "69efeaf4-1098-490d-86b1-4891e0ad5d4b")
+	)
+	(label "USB_DM"
+		(at 31.75 25.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6ba0d6b8-74a7-4bf1-82a2-3fa7cdca19c6")
+	)
+	(label "EXP_GPIO1"
+		(at 95.25 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6c0f9b2c-6e63-46b6-a7b8-ded451447449")
+	)
+	(label "ACT_PWR"
+		(at 208.28 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6c5c1621-c22c-44e9-b5cb-a6ae4618837c")
+	)
+	(label "DEBUG_UART_RX"
+		(at 245.11 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6e511bb7-ccd5-4e9b-a78c-fa8d6d56a8d9")
+	)
+	(label "CAM_PWDN"
+		(at 95.25 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "702b8892-b0d1-4fa2-8538-3c2b736a3206")
+	)
+	(label "SPI_SCK"
+		(at 95.25 48.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "72a29732-49ec-49ff-ae4e-f5f3f97052b1")
+	)
+	(label "SPI_MISO"
+		(at 31.75 38.1 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "776302f6-7f91-4e00-8f72-336f584c1c41")
+	)
+	(label "MOSFET4_ISENSE"
+		(at 248.92 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "78dc79e8-60a7-4dfc-9981-3665fd58e8c5")
+	)
+	(label "BATT_VSENSE"
+		(at 31.75 96.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7aead237-0ce7-4a49-be19-96af2747ba50")
+	)
+	(label "EXP_GPIO1"
+		(at 181.61 135.89 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7b404b94-0d83-4643-9301-61be736a90bf")
+	)
+	(label "ESP_3V3"
+		(at 191.77 25.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "80c08226-b309-4134-b952-91948d62167a")
+	)
+	(label "DEBUG_UART_TX"
+		(at 95.25 40.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "80c45b08-dd0a-4c31-bca5-1a413de1cbe7")
+	)
+	(label "ESP_3V3"
+		(at 31.75 20.32 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "810ba710-c54a-4b67-92bb-2b69b493c424")
+	)
+	(label "I2C_SDA"
+		(at 181.61 123.19 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "826e0f39-46bb-419b-b580-ff94a97aaba4")
+	)
+	(label "EXP_ADC"
+		(at 31.75 124.46 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8655380b-3738-4bf1-ad7d-9b07da2d1c21")
+	)
+	(label "CAM_D2"
+		(at 105.41 165.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8b0f58c0-a8b0-4520-97a3-cfe38cf020c1")
+	)
+	(label "SPI_CS"
+		(at 95.25 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8b6671ee-b1c9-48f1-b16d-8cd018c70431")
+	)
+	(label "HBRIDGE_NFAULT"
+		(at 31.75 101.6 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "90c9e832-4f7b-4b3e-8a58-888ef5cd1dbf")
+	)
+	(label "HBRIDGE_NSLEEP"
+		(at 95.25 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9378821c-9f6e-4884-9163-27f0d325f51e")
+	)
+	(label "EXP_GPIO3"
+		(at 181.61 140.97 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "957c6125-a860-429f-80a0-e4c01843c8dc")
+	)
+	(label "BATT_VSENSE"
+		(at 162.56 72.39 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "99950619-6f78-426e-a6b9-f819495b5dc5")
+	)
+	(label "CAM_D1"
+		(at 105.41 162.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "99f75162-79fd-4946-9b2c-bec8d2047f0c")
+	)
+	(label "HBRIDGE_AIN1"
+		(at 191.77 30.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9f5c95f1-f69c-4b62-b899-2dd434652a9d")
+	)
+	(label "CAM_RESET"
+		(at 95.25 111.76 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9fa10028-7fda-4c52-b3b2-4c7e42a66f9d")
+	)
+	(label "GND"
+		(at 120.65 62.23 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9fd8c436-c560-4525-af57-05cbb8f1c07c")
+	)
+	(label "CAM_D3"
+		(at 105.41 167.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a78e0ec1-442f-4080-87ff-69beb3a5761f")
+	)
+	(label "MCP_INT"
+		(at 95.25 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ac8c7adf-805f-49dd-9dd9-d16555190450")
+	)
+	(label "CAM_D0"
+		(at 31.75 48.26 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ae716a77-3d7d-4ab2-b486-fd77ce48e5cb")
+	)
+	(label "I2C_SCL"
+		(at 95.25 43.18 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b084e13f-572c-4440-920b-1a35aa205ff5")
+	)
+	(label "CAM_D6"
+		(at 31.75 63.5 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b0b38618-9e4b-4c15-aa87-05787eea31cb")
+	)
+	(label "ESP_3V3"
+		(at 41.91 154.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b20d077d-4652-46f2-a75c-b2a22f404964")
+	)
+	(label "CAM_D4"
+		(at 105.41 170.18 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b30043f1-3ef1-42c2-9522-bad59edc2edf")
+	)
+	(label "CAM_PCLK"
+		(at 105.41 152.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b9743094-9bbd-473b-a31c-4e109deb2807")
+	)
+	(label "MOSFET2_ISENSE"
+		(at 31.75 111.76 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b99de587-9bf3-49ae-abe9-8197ab6456f9")
+	)
+	(label "HBRIDGE_AIN1"
+		(at 95.25 27.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "baa42a7b-024c-49ae-8cc1-008e47368aff")
+	)
+	(label "INTER_ESP_UART_TX"
+		(at 181.61 118.11 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bbef03cb-f127-4924-aabe-031f42da53be")
+	)
+	(label "CAM_D6"
+		(at 105.41 175.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bc98b11b-9ef0-4af4-b8c0-ec401f2a8188")
+	)
+	(label "CAM_D7"
+		(at 31.75 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bd0cf1aa-6348-4eb5-ab2f-4d84d720db87")
+	)
+	(label "HBRIDGE_AIN2"
+		(at 191.77 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bee3b312-3dd2-4d72-bec4-a97dda749cec")
+	)
+	(label "CAM_D1"
+		(at 31.75 50.8 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c0d2216f-ccf3-49f8-a62d-76d0f5b52866")
+	)
+	(label "HBRIDGE_BIN2"
+		(at 95.25 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c76a9c66-eb46-4d8c-bf5d-b5b308864bf6")
+	)
+	(label "CAM_PWDN"
+		(at 41.91 162.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cafff08d-f3f3-4846-bb38-fd1873850940")
+	)
+	(label "HBRIDGE_AISENSE"
+		(at 242.57 25.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ce856c6b-9f02-4495-b523-d1a44ff81f6a")
+	)
+	(label "ACT_PWR"
+		(at 128.27 25.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ceb503b9-96ed-415a-a359-888f24ac1b38")
+	)
+	(label "SPI_SCK"
+		(at 181.61 130.81 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d0e624de-1600-48d6-aa5e-6236c0175b9b")
+	)
+	(label "HBRIDGE_NSLEEP"
+		(at 191.77 40.64 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d39690ff-3488-410c-a530-7db66e0d18ff")
+	)
+	(label "MOSFET3_ISENSE"
+		(at 31.75 114.3 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d6011485-81e8-490a-b48d-16dddd09de5f")
+	)
+	(label "GND"
+		(at 208.28 60.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d7239fca-bae6-4ee9-8d9e-868d9be703e3")
+	)
+	(label "HBRIDGE_BIN1"
+		(at 191.77 35.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d72e431e-abbb-445a-bc8e-c11a71031172")
+	)
+	(label "CAM_D2"
+		(at 31.75 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "db7e371d-4fc4-47e5-bec2-5d6eeff716d8")
+	)
+	(label "I2C_SDA"
+		(at 31.75 35.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dc4adbf8-8a65-4a27-8bc6-62b226daca6d")
+	)
+	(label "SENSE_MUX_OUT"
+		(at 95.25 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dc7bfdce-b440-47c5-8046-95fbb8351c72")
+	)
+	(label "ACT_PWR"
+		(at 191.77 27.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "de73bba6-1b70-4e51-8dee-1ddec4ef9895")
+	)
+	(label "INTER_ESP_UART_RX"
+		(at 245.11 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "df566605-da97-4c46-a4f5-43b617ce2f5e")
+	)
+	(label "MOSFET1_GATE"
+		(at 95.25 93.98 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e2f65b3d-dfbe-40e7-87ed-b99f614b7ccb")
+	)
+	(label "MOSFET3_GATE"
+		(at 95.25 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e5a71c0a-37c2-4eff-81d9-1558bb6c3a7a")
+	)
+	(label "GND"
+		(at 128.27 22.86 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e5e5e5b9-2722-4ee4-bf3d-1aa6b21d4301")
+	)
+	(label "HBRIDGE_BISENSE"
+		(at 242.57 27.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e62a0f6a-ff44-41ae-b7f0-2335781344e2")
+	)
+	(label "EXP_GPIO2"
+		(at 181.61 138.43 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e7059f88-e3b8-49c6-9afe-da2da0b4ba4a")
+	)
+	(label "MOSFET4_GATE"
+		(at 208.28 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e77e3bf8-54b1-4cf1-9636-f2ba21b04746")
+	)
+	(label "USB_DP"
+		(at 162.56 67.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e8dab5bc-1a02-42de-89b6-7703896b64bf")
+	)
+	(label "CAM_D0"
+		(at 105.41 160.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ea595838-df2f-4e36-a25b-38b500bc889d")
+	)
+	(label "GND"
+		(at 191.77 22.86 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ed27d332-dff3-4c7b-8af4-79874f972940")
+	)
+	(label "EXP_ADC"
+		(at 245.11 120.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "eea09c53-2b15-4ebd-ab0b-84424fea4d68")
+	)
+	(label "MOSFET2_ISENSE"
+		(at 248.92 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "eea7c7b3-fc2f-4009-904a-63672bee3a0d")
+	)
+	(label "ESP_3V3"
+		(at 31.75 93.98 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f16ab56b-2fa4-4904-ab34-bc1be83680df")
+	)
+	(label "MOSFET1_ISENSE"
+		(at 31.75 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f5cbff06-79fe-4c01-978b-9cd97ac1882a")
+	)
+	(label "HBRIDGE_BIN1"
+		(at 95.25 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f634afae-9823-404c-bb6c-0e59d0a4d488")
+	)
+	(label "CAM_D4"
+		(at 31.75 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f7249026-6ff3-48e2-a1e2-4e8a4c89f650")
+	)
+	(label "CAM_HREF"
+		(at 105.41 157.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f984c048-a4f4-430e-8134-e49e72f3db01")
+	)
+	(label "CAM_D5"
+		(at 31.75 60.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fa46031c-4b8c-4842-8686-51fc405b0d68")
+	)
+	(label "EXP_GPIO3"
+		(at 95.25 119.38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fbdceffd-2790-478b-a4c9-316e1f79aa8c")
+	)
+	(sheet
+		(at 31.75 15.24)
+		(size 63.5 53.34)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "08898e1b-494d-4f39-822d-33cc0cca8c53")
+		(property "Sheetname" "esp32_core"
+			(at 31.75 14.74 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "esp32_core.kicad_sch"
+			(at 31.75 69.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 31.75 17.78 180)
+			(uuid "c2adc1bf-828f-42af-924d-e4291f141929")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 31.75 20.32 180)
+			(uuid "3ee5d9e5-5ddd-4da4-ac02-58f380fb8768")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "USB_DP" input
+			(at 31.75 22.86 180)
+			(uuid "6daf1c2e-329d-43fa-b7a1-d73a347559d2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "USB_DM" input
+			(at 31.75 25.4 180)
+			(uuid "83864acc-635f-4634-8a62-cf1a3db9d0d9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SENSE_MUX_OUT" input
+			(at 31.75 27.94 180)
+			(uuid "a9aa4b2e-c40d-48d2-9539-4f870d47dc6a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INTER_ESP_UART_RX" input
+			(at 31.75 30.48 180)
+			(uuid "c27c0797-91d7-4cfa-a65d-b55137b4263d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "DEBUG_UART_RX" input
+			(at 31.75 33.02 180)
+			(uuid "fbdaa994-cecc-4a98-97f8-1d2164904517")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 31.75 35.56 180)
+			(uuid "d49e8a2c-0d71-49ed-b6a6-7e3742a9642b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPI_MISO" input
+			(at 31.75 38.1 180)
+			(uuid "46132afb-4481-4230-9abb-b096959a4013")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_PCLK" input
+			(at 31.75 40.64 180)
+			(uuid "dfe1c8f0-dfc2-4f9c-a780-90f0fb733113")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_VSYNC" input
+			(at 31.75 43.18 180)
+			(uuid "6c123a81-36d4-46c1-94aa-f218ca0be79b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_HREF" input
+			(at 31.75 45.72 180)
+			(uuid "d7e327da-1bab-446e-a30e-b4c50d106da6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D0" input
+			(at 31.75 48.26 180)
+			(uuid "5f157f1a-ca0f-4e82-86c7-0013e9e799dd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D1" input
+			(at 31.75 50.8 180)
+			(uuid "ec7fc13d-6ee5-4f00-81f0-22c0f8db46f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D2" input
+			(at 31.75 53.34 180)
+			(uuid "56504188-929f-4e0d-aa7e-af3dbaca65f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D3" input
+			(at 31.75 55.88 180)
+			(uuid "9d966e43-7fe2-4c94-a898-767b0a0e4f88")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D4" input
+			(at 31.75 58.42 180)
+			(uuid "bc291ada-b1f5-43da-bf59-5adbceca6ce6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D5" input
+			(at 31.75 60.96 180)
+			(uuid "8c97a346-4a76-47d6-8e66-d43a417aa236")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D6" input
+			(at 31.75 63.5 180)
+			(uuid "9b2f1e46-70c9-46bf-9b8e-e0b67112ab7d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_D7" input
+			(at 31.75 66.04 180)
+			(uuid "8b15e83c-2051-461a-9cdb-26189ff642cb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MCP_INT" input
+			(at 31.75 68.58 180)
+			(uuid "9f8e7d6c-5b4a-4392-8180-716253e4d3c2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_AIN1" output
+			(at 95.25 27.94 0)
+			(uuid "ec6e0815-381c-4363-ae25-4842f7ee2d79")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE_AIN2" output
+			(at 95.25 30.48 0)
+			(uuid "e7ab8665-fddf-47de-a40f-4b49bace6701")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE_BIN1" output
+			(at 95.25 33.02 0)
+			(uuid "11b32206-73ea-4b87-b47c-ea41b300d517")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE_BIN2" output
+			(at 95.25 35.56 0)
+			(uuid "f52b8054-97e8-4779-8ded-6a2515da7ad2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "INTER_ESP_UART_TX" output
+			(at 95.25 38.1 0)
+			(uuid "1cbddc48-675e-4fbe-8e0f-e1a72d98939a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "DEBUG_UART_TX" output
+			(at 95.25 40.64 0)
+			(uuid "d9efa10b-3ecd-4f96-b90e-6f7ab92ec1f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "I2C_SCL" output
+			(at 95.25 43.18 0)
+			(uuid "274ff183-7f13-41be-abaa-ca6bca437f41")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MOSI" output
+			(at 95.25 45.72 0)
+			(uuid "7716cb7a-a4c1-40a2-9236-ad339153749b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_SCK" output
+			(at 95.25 48.26 0)
+			(uuid "fe0d1d92-8e9e-43e5-9a5f-1358fd540e3b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 41.91 149.86)
+		(size 63.5 30.48)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "23c46559-2708-499f-8561-038b2cd4b1c1")
+		(property "Sheetname" "camera"
+			(at 41.91 149.36 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "camera.kicad_sch"
+			(at 41.91 180.84 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 41.91 152.4 180)
+			(uuid "ade5ebab-8d0c-4c11-859b-1146bd9939fd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 41.91 154.94 180)
+			(uuid "42c3ee62-f0c0-4bad-a13c-3b68700a02a6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 41.91 157.48 180)
+			(uuid "4def0508-08fc-46a8-a93f-85d890b50668")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SCL" input
+			(at 41.91 160.02 180)
+			(uuid "06b84359-1faf-45ae-a3eb-e9888013fdb8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_PWDN" input
+			(at 41.91 162.56 180)
+			(uuid "e2a48655-4d20-4e8e-a2d6-a038c98391dc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_RESET" input
+			(at 41.91 165.1 180)
+			(uuid "b44ef745-e1c4-4287-9194-10a65e5369c1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CAM_PCLK" output
+			(at 105.41 152.4 0)
+			(uuid "a4a9f2d6-5d18-417b-a4a5-e13700535e96")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_VSYNC" output
+			(at 105.41 154.94 0)
+			(uuid "5a3b088d-7b28-4d17-8e1c-0ca6a7a2df73")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_HREF" output
+			(at 105.41 157.48 0)
+			(uuid "0ff6b7eb-0497-4eff-a1a5-da8cd4ce5dea")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D0" output
+			(at 105.41 160.02 0)
+			(uuid "676916ba-75ba-4048-a889-bbf3369bbb26")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D1" output
+			(at 105.41 162.56 0)
+			(uuid "45214fe3-45a9-40fc-a137-268439818d89")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D2" output
+			(at 105.41 165.1 0)
+			(uuid "6a990ade-8503-42b6-a577-f9d08d004019")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D3" output
+			(at 105.41 167.64 0)
+			(uuid "a483ba43-66ef-461a-88a4-d91c1dfbe001")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D4" output
+			(at 105.41 170.18 0)
+			(uuid "63f653fd-1a55-4fd4-ac19-9ed4f190c2f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D5" output
+			(at 105.41 172.72 0)
+			(uuid "b1d8b5f6-a373-4d70-b550-1de1382a01c8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D6" output
+			(at 105.41 175.26 0)
+			(uuid "a2006a8e-3bbe-40ff-abe3-9b609a3dded4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_D7" output
+			(at 105.41 177.8 0)
+			(uuid "0f9cc9b9-c9fd-4a9e-8617-8d6b20d657b5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 191.77 20.32)
+		(size 50.8 22.86)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "350c07be-86d8-4797-bfe1-493e323992ab")
+		(property "Sheetname" "h_bridge"
+			(at 191.77 19.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "h_bridge.kicad_sch"
+			(at 191.77 43.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 191.77 22.86 180)
+			(uuid "adaaa1de-1070-44d2-b478-707bd21a74ff")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 191.77 25.4 180)
+			(uuid "06953ad1-a26e-47e3-97d3-4f305343f7f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ACT_PWR" input
+			(at 191.77 27.94 180)
+			(uuid "65f070d9-33b8-4420-b0f3-d36798b8f9e7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_AIN1" input
+			(at 191.77 30.48 180)
+			(uuid "dba58a1f-f13f-49ad-b417-c038269f6130")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_AIN2" input
+			(at 191.77 33.02 180)
+			(uuid "79e03226-4e66-4fdb-bcef-7d09e98656a3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_BIN1" input
+			(at 191.77 35.56 180)
+			(uuid "a924f2d5-193b-4b90-97fa-8fe43f07348e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_BIN2" input
+			(at 191.77 38.1 180)
+			(uuid "e2a67626-dfc8-4dfe-b127-0f092723d3fe")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_NSLEEP" input
+			(at 191.77 40.64 180)
+			(uuid "75cfc53f-f948-41fc-9334-e7bf65dab300")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_NFAULT" output
+			(at 242.57 22.86 0)
+			(uuid "aeb52cca-8e42-48f1-96fb-eafc94528ccc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE_AISENSE" output
+			(at 242.57 25.4 0)
+			(uuid "5a0c5270-3010-44a0-9567-d100e7c44066")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE_BISENSE" output
+			(at 242.57 27.94 0)
+			(uuid "64914097-bf30-453a-96ad-926ddffbc4a3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 31.75 88.9)
+		(size 63.5 38.1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "6ee8624e-b48f-4d4c-9cbb-96fb55ac0c14")
+		(property "Sheetname" "expander_mux"
+			(at 31.75 88.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "expander_mux.kicad_sch"
+			(at 31.75 127.5 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 31.75 91.44 180)
+			(uuid "87996b1c-0251-4572-8e7e-5d3cb0f5eca5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 31.75 93.98 180)
+			(uuid "42afa3ab-a655-4ab9-91ee-21427bf76ab3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BATT_VSENSE" input
+			(at 31.75 96.52 180)
+			(uuid "441068e3-16b9-4c91-b840-867b87c5e917")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "BATT_ISENSE" input
+			(at 31.75 99.06 180)
+			(uuid "ba7a58ba-63e1-4639-8f94-2e8e17712368")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_NFAULT" input
+			(at 31.75 101.6 180)
+			(uuid "61111ed9-8645-4ca0-88bc-655457213813")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_AISENSE" input
+			(at 31.75 104.14 180)
+			(uuid "86070f9d-bd91-4a91-bbfc-56815138b483")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_BISENSE" input
+			(at 31.75 106.68 180)
+			(uuid "6237f194-f721-4663-b281-11665fc5cc13")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET1_ISENSE" input
+			(at 31.75 109.22 180)
+			(uuid "502a6508-b389-4fce-87e8-8c09d7595794")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET2_ISENSE" input
+			(at 31.75 111.76 180)
+			(uuid "ad00cdb5-4a30-42a3-b63f-7077eead0c66")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET3_ISENSE" input
+			(at 31.75 114.3 180)
+			(uuid "4e55d523-da51-4338-b918-db9f781f5204")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET4_ISENSE" input
+			(at 31.75 116.84 180)
+			(uuid "f8b2a65c-8b34-44c7-8dc7-3f1643cc7a10")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 31.75 119.38 180)
+			(uuid "ea5c7002-1877-4ff2-8b1f-a872ba5a2ff8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SCL" input
+			(at 31.75 121.92 180)
+			(uuid "1a988515-59f7-49a7-bde0-64ea4a616dbd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EXP_ADC" input
+			(at 31.75 124.46 180)
+			(uuid "c2fb3f0b-dffa-4167-a456-4574a7c1b054")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE_NSLEEP" output
+			(at 95.25 91.44 0)
+			(uuid "07c56733-02a8-42d5-8674-bc098e1c798a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET1_GATE" output
+			(at 95.25 93.98 0)
+			(uuid "36b7b34c-92e2-4133-ba13-95b90dad17e6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET2_GATE" output
+			(at 95.25 96.52 0)
+			(uuid "5d07c413-b4a0-4b43-a943-f1a330d59cee")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET3_GATE" output
+			(at 95.25 99.06 0)
+			(uuid "6899dd61-2746-4d17-86fd-c35fb0856ba7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET4_GATE" output
+			(at 95.25 101.6 0)
+			(uuid "5279f4f6-6a42-4a39-b882-14bfa4195be2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SENSE_MUX_OUT" output
+			(at 95.25 104.14 0)
+			(uuid "f7ddd21e-928e-44f7-b995-d73a4a01a2f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_CS" output
+			(at 95.25 106.68 0)
+			(uuid "dd82cf35-13f9-4c05-9bae-001d52916201")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_PWDN" output
+			(at 95.25 109.22 0)
+			(uuid "d352b978-9d49-4daf-acc0-aac1dabae203")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "CAM_RESET" output
+			(at 95.25 111.76 0)
+			(uuid "02d5ed5c-ccb1-47d8-9612-4c5c3a922a88")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "EXP_GPIO1" output
+			(at 95.25 114.3 0)
+			(uuid "d008096a-ac13-4029-971c-3700becbf7f2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "EXP_GPIO2" output
+			(at 95.25 116.84 0)
+			(uuid "0778954e-820a-4415-8fee-0849c3a3907a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "EXP_GPIO3" output
+			(at 95.25 119.38 0)
+			(uuid "f17c8e32-1ab0-4fa9-b90a-c1898ae8720e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MCP_INT" output
+			(at 95.25 121.92 0)
+			(uuid "1a2b3c4d-5e6f-4789-a0b1-c2d3e4f5a6b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 128.27 20.32)
+		(size 38.1 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "80afbfec-a648-4c5d-a809-8c40dc309699")
+		(property "Sheetname" "servo_out"
+			(at 128.27 19.82 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "servo_out.kicad_sch"
+			(at 128.27 38.6 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 128.27 22.86 180)
+			(uuid "c1155114-b60d-4ef7-8ca0-3ae333d5796b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ACT_PWR" input
+			(at 128.27 25.4 180)
+			(uuid "07bfef9e-9269-4a2b-afa2-51e7896888db")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 181.61 110.49)
+		(size 63.5 33.02)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "be2b88e7-186f-4dad-a753-1e9e423eef4a")
+		(property "Sheetname" "expansion_io"
+			(at 181.61 109.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "expansion_io.kicad_sch"
+			(at 181.61 144.01 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 181.61 113.03 180)
+			(uuid "fe2503b2-3971-49d7-8096-b706ba21bfd9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 181.61 115.57 180)
+			(uuid "176f270f-f8ef-496d-a360-86c0e48353bb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INTER_ESP_UART_TX" input
+			(at 181.61 118.11 180)
+			(uuid "974274e3-d58d-4c2f-baf6-0d5abd59eb02")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "DEBUG_UART_TX" input
+			(at 181.61 120.65 180)
+			(uuid "2d692842-ae82-4226-a76f-6a10cfd50d5c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 181.61 123.19 180)
+			(uuid "c4a9479b-d182-4cbd-ac48-2e7f8b9d10ce")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SCL" input
+			(at 181.61 125.73 180)
+			(uuid "1dddd079-f1a2-469f-9b00-1da2ce77274a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPI_MOSI" input
+			(at 181.61 128.27 180)
+			(uuid "5171e58e-f57b-4bb4-b5d1-d42f50bf6d2b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPI_SCK" input
+			(at 181.61 130.81 180)
+			(uuid "a8b96e2f-9387-4d32-a240-00f69ce95232")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPI_CS" input
+			(at 181.61 133.35 180)
+			(uuid "b02ae6e0-25e0-4247-a730-46355aae9629")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EXP_GPIO1" input
+			(at 181.61 135.89 180)
+			(uuid "ddb91bf6-3480-4e59-a774-cccac9324182")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EXP_GPIO2" input
+			(at 181.61 138.43 180)
+			(uuid "d7a9623b-6ab7-486c-9dc7-34d5d4d48eb0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EXP_GPIO3" input
+			(at 181.61 140.97 180)
+			(uuid "08e8988b-fdce-4589-8911-446f1a85728f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INTER_ESP_UART_RX" output
+			(at 245.11 113.03 0)
+			(uuid "1c71af1b-9236-4508-93e9-fd1abf196493")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "DEBUG_UART_RX" output
+			(at 245.11 115.57 0)
+			(uuid "c9322af2-3920-41db-9f03-0c1e06fd59c6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SPI_MISO" output
+			(at 245.11 118.11 0)
+			(uuid "30ed6738-20fb-4e25-9e7a-5ad43d9a904e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "EXP_ADC" output
+			(at 245.11 120.65 0)
+			(uuid "b945ba1b-9684-4dac-8e39-5b7159ac008a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 208.28 58.42)
+		(size 40.64 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "ca3295f0-7526-49ed-b072-f2e29641c93a")
+		(property "Sheetname" "mosfet_bank"
+			(at 208.28 57.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet_bank.kicad_sch"
+			(at 208.28 79.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 208.28 60.96 180)
+			(uuid "fd2a645f-9acf-4af5-b5ee-d8c298e01779")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 208.28 63.5 180)
+			(uuid "48176ff0-587d-46cc-9a00-eea735bba0ca")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ACT_PWR" input
+			(at 208.28 66.04 180)
+			(uuid "f6d51be4-3dd0-4187-8e97-4a191c27cabe")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET1_GATE" input
+			(at 208.28 68.58 180)
+			(uuid "25c177d4-cb58-4210-8ec4-ac31efba83aa")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET2_GATE" input
+			(at 208.28 71.12 180)
+			(uuid "5b5db642-db8f-4b77-ae2c-0d7eb5b44641")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET3_GATE" input
+			(at 208.28 73.66 180)
+			(uuid "59e53477-3c37-4be9-b180-0af764ca0cbf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET4_GATE" input
+			(at 208.28 76.2 180)
+			(uuid "33e20f4b-a01c-4435-92fc-6ae1b16e25d4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MOSFET1_ISENSE" output
+			(at 248.92 60.96 0)
+			(uuid "3d4c8dab-1a36-426b-9777-b2a5cedd3e83")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET2_ISENSE" output
+			(at 248.92 63.5 0)
+			(uuid "b2d2a645-5e2e-4ffa-a961-cac010bfc0dc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET3_ISENSE" output
+			(at 248.92 66.04 0)
+			(uuid "9d7598b7-5cb5-458a-964f-ac1b6d6e46b8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MOSFET4_ISENSE" output
+			(at 248.92 68.58 0)
+			(uuid "8ad89160-1790-4cfd-8f5e-7694af36234f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 120.65 59.69)
+		(size 41.91 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "f9d77898-32ae-4531-b6b2-21120aa4dda1")
+		(property "Sheetname" "power"
+			(at 120.65 59.19 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 120.65 77.97 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GND" input
+			(at 120.65 62.23 180)
+			(uuid "9e0fe716-d668-4715-a1bd-8d62e15b04f4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ESP_3V3" output
+			(at 162.56 62.23 0)
+			(uuid "da035e09-893f-4fd0-a16e-9e1070312361")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ACT_PWR" output
+			(at 162.56 64.77 0)
+			(uuid "3011c7a8-89fe-46fb-9175-88c32e77e1bc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "USB_DP" output
+			(at 162.56 67.31 0)
+			(uuid "f5b3ad1f-da2f-418f-8098-4eed5b2a33ac")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "USB_DM" output
+			(at 162.56 69.85 0)
+			(uuid "b71a99d8-886d-47dd-9683-2847e772339e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BATT_VSENSE" output
+			(at 162.56 72.39 0)
+			(uuid "bb3f9b08-3890-4978-b32e-57c6838ff62a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BATT_ISENSE" output
+			(at 162.56 74.93 0)
+			(uuid "b3ed122f-61a1-402f-85bc-c3f7831d5bdb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>FC Setup</title>
+<link rel="stylesheet" href="/leaflet.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>FC Setup</h1>
+</header>
+
+<main>
+  <section class="card map-card">
+    <div class="card-head">
+      <h2>Mission</h2>
+    </div>
+    <div id="map"></div>
+    <p class="hint">Tap the map to add a waypoint. Drag a marker to move it.</p>
+    <ol id="waypoint-list" class="waypoint-list"></ol>
+    <label class="loop-toggle">
+      <input type="checkbox" id="loop-toggle">
+      <span>Loop mission &mdash; wrap back to the first waypoint after the last</span>
+    </label>
+    <button id="clear-mission-btn" class="secondary-btn" type="button">Clear all waypoints</button>
+  </section>
+
+  <section class="card">
+    <h2>Outputs</h2>
+    <p class="hint">Live pulse width updates as the RC receiver moves. "Set as Min/Max" fills in the field from the current live value; Save commits it.</p>
+    <div id="output-channels"></div>
+  </section>
+
+  <section class="card">
+    <h2>Motors</h2>
+    <p class="hint">ESC1/ESC2 always receive the identical throttle command today -- there's no differential-thrust mixing yet, so Left/Right is just a label for later.</p>
+    <div class="radio-row">
+      <label><input type="radio" name="motor-count" value="1"> Single motor (ESC1 only, ESC2 held off)</label>
+      <label><input type="radio" name="motor-count" value="2"> Twin motor (both ESCs mirrored)</label>
+    </div>
+    <label class="loop-toggle" id="motor-side-row">
+      <input type="checkbox" id="esc1-is-left">
+      <span>ESC1 is the left motor (unchecked = ESC1 is right)</span>
+    </label>
+  </section>
+
+  <section class="card">
+    <h2>Airframe</h2>
+    <div class="radio-row">
+      <label><input type="radio" name="airframe" value="conventional"> Conventional (independent aileron/elevator)</label>
+      <label><input type="radio" name="airframe" value="ailevon"> Ailevon (combined surfaces)</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Airspeed</h2>
+    <p class="hint">Fallback throttle is used whenever no airspeed sensor reading is available.</p>
+    <div class="airspeed-fields">
+      <label class="pid-field">
+        <span class="pid-field-label">Target (cm/s)</span>
+        <input type="number" step="any" inputmode="decimal" id="airspeed-target">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">Fallback throttle (%)</span>
+        <input type="number" step="any" min="0" max="100" inputmode="decimal" id="airspeed-fallback">
+      </label>
+    </div>
+    <button id="airspeed-save-btn" class="save-btn" type="button" disabled>Save changes</button>
+  </section>
+
+  <section class="card">
+    <h2>PID gains</h2>
+    <p class="hint">Only fields you change are sent &mdash; edits apply and persist immediately.</p>
+    <div id="pid-targets"></div>
+  </section>
+</main>
+
+<template id="output-row-template">
+  <div class="output-row">
+    <div class="card-head">
+      <h3 class="output-title"></h3>
+      <span class="live-us"></span>
+    </div>
+    <div class="output-fields">
+      <label class="pid-field">
+        <span class="pid-field-label">Min (&micro;s)</span>
+        <input type="number" step="1" inputmode="numeric" data-field="min_us">
+      </label>
+      <button class="secondary-btn set-min-btn" type="button">Set as Min</button>
+      <label class="pid-field">
+        <span class="pid-field-label">Max (&micro;s)</span>
+        <input type="number" step="1" inputmode="numeric" data-field="max_us">
+      </label>
+      <button class="secondary-btn set-max-btn" type="button">Set as Max</button>
+    </div>
+    <label class="loop-toggle">
+      <input type="checkbox" data-field="reversed">
+      <span>Reversed</span>
+    </label>
+    <div class="pid-card-footer">
+      <span class="fail-reason"></span>
+      <button class="save-btn" type="button" disabled>Save changes</button>
+    </div>
+  </div>
+</template>
+
+<template id="pid-card-template">
+  <div class="pid-card">
+    <div class="card-head">
+      <h3 class="pid-title"></h3>
+    </div>
+    <div class="pid-fields">
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>p</sub></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_p">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>i</sub></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_i">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">K<sub>d</sub></span>
+        <input type="number" step="any" inputmode="decimal" data-field="k_d">
+      </label>
+      <label class="pid-field">
+        <span class="pid-field-label">I-limit</span>
+        <input type="number" step="any" inputmode="decimal" data-field="i_limit">
+      </label>
+    </div>
+    <div class="pid-card-footer">
+      <span class="fail-reason"></span>
+      <button class="save-btn" type="button" disabled>Save changes</button>
+    </div>
+  </div>
+</template>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="/leaflet.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

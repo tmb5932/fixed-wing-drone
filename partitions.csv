@@ -1,0 +1,16 @@
+# Name,   Type, SubType, Offset,  Size, Flags
+# Custom single-factory-app table (no OTA needed yet): matches
+# partitions_singleapp.csv's layout/offsets exactly, just with a bigger
+# factory partition to fit the setup-mode web UI (embedded HTML/JS/CSS +
+# vendored Leaflet) on top of the flight firmware. The chip is an N16R8
+# (16MB flash), so there's plenty of room to spare.
+#
+# Deliberately NOT using the stock "large" single-app table
+# (partitions_singleapp_large.csv): the basestation/ sub-project hit a
+# bootloader IRAM overflow on this same toolchain when it tried that choice,
+# for reasons unrelated to app partition size. An explicit custom table at
+# the same 0x8000 offset avoids whatever in that specific Kconfig choice
+# triggers it, while still getting the extra room.
+nvs,      data, nvs,     ,        0x6000,
+phy_init, data, phy,     ,        0x1000,
+factory,  app,  factory, ,        4M,
