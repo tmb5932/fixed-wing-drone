@@ -51,6 +51,7 @@ sitl/.venv/
 # of it meaningful to keep in git.
 kicad/**/*-backups/
 kicad/**/gerber
+kicad/**/analysis/*
 kicad/**/production
 kicad/**/fp-info-cache
 kicad/**/drc*.json
