@@ -2501,8 +2501,8 @@
 		(uuid "3cf592af-cec2-4e6f-9688-6dee6604db86")
 	)
 	(rectangle
-		(start 143.51 100.33)
-		(end 222.25 148.59)
+		(start 143.51 96.52)
+		(end 228.6 148.59)
 		(stroke
 			(width 0)
 			(type default)
@@ -2546,7 +2546,7 @@
 	)
 	(text "USB-C"
 		(exclude_from_sim no)
-		(at 205.232 103.886 0)
+		(at 193.294 100.33 0)
 		(effects
 			(font
 				(size 1.905 1.905)
@@ -2710,6 +2710,16 @@
 	)
 	(wire
 		(pts
+			(xy 217.17 114.22) (xy 220.36 114.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "400ad596-dcc4-4c86-b337-c13049517ec9")
+	)
+	(wire
+		(pts
 			(xy 252.73 116.84) (xy 252.73 120.65)
 		)
 		(stroke
@@ -2747,6 +2757,16 @@
 			(type default)
 		)
 		(uuid "5a5de0f9-6aa4-4f93-9c0d-f0a6ef93529a")
+	)
+	(wire
+		(pts
+			(xy 209.55 106.68) (xy 206.36 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b85fc61-638b-420e-bd84-61b4b67656c6")
 	)
 	(wire
 		(pts
@@ -2827,6 +2847,16 @@
 			(type default)
 		)
 		(uuid "82706bf2-e5c6-4498-b5d4-2847effd3039")
+	)
+	(wire
+		(pts
+			(xy 217.17 106.68) (xy 220.36 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "861a48c3-50de-429b-8ed6-4859a80b4207")
 	)
 	(wire
 		(pts
@@ -2950,6 +2980,16 @@
 	)
 	(wire
 		(pts
+			(xy 209.55 114.22) (xy 206.36 114.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ddb41207-0eb6-46bd-bfce-11d79e6ad682")
+	)
+	(wire
+		(pts
 			(xy 252.73 116.84) (xy 255.27 116.84)
 		)
 		(stroke
@@ -2988,6 +3028,16 @@
 		)
 		(uuid "0b684ae0-d5e7-4f0b-aad1-444b0d1a8464")
 	)
+	(label "GND"
+		(at 206.36 114.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "111f7169-30ef-4e44-b61d-b11fcd848323")
+	)
 	(label "DATA+"
 		(at 191.77 116.84 90)
 		(effects
@@ -3008,6 +3058,16 @@
 		)
 		(uuid "166c6b71-4eca-4b6e-a199-9428271fa1f9")
 	)
+	(label "GND"
+		(at 206.36 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "207cefdb-5c07-4d40-88ef-736dbe5c5d27")
+	)
 	(label "EN"
 		(at 269.24 116.84 0)
 		(effects
@@ -3027,6 +3087,16 @@
 			(justify left bottom)
 		)
 		(uuid "46e73ea5-8a30-41ba-a9d6-fb677de23643")
+	)
+	(label "DATA-"
+		(at 220.36 114.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4ce7788f-12e1-495c-b732-7637578e526e")
 	)
 	(label "BOOT"
 		(at 250.19 144.78 180)
@@ -3057,6 +3127,16 @@
 			(justify right bottom)
 		)
 		(uuid "98cfe299-62c5-4ab8-91af-5c5878fbefc5")
+	)
+	(label "DATA+"
+		(at 220.36 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a67fb8ec-9253-41a1-855e-1edffd0c68bd")
 	)
 	(label "DATA-"
 		(at 186.69 116.84 90)
@@ -4271,6 +4351,109 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:D_TVS")
+		(at 213.36 114.22 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "83774824-6d36-4ec1-a9d8-33df48b6c3fc")
+		(property "Reference" "D9"
+			(at 214.376 111.76 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ESD5Z5.0T1G"
+			(at 218.948 117.094 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-523"
+			(at 213.36 114.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
+			(at 213.36 114.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
+			(at 213.36 114.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "USB DATA- ESD/surge protection (matches mission-board D1/D2)"
+			(at 213.36 114.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C82044"
+			(at 213.36 114.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "41b7d4a0-a21a-44e7-8f62-605bfc4d030f")
+		)
+		(pin "2"
+			(uuid "40add6b0-6dde-44cf-9d25-7114a203ad17")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/de73f962-17e6-4239-8857-7990a4cf3949"
+					(reference "D9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "easyeda2kicad:ESP32-S3-WROOM-1")
 		(at 96.52 69.85 0)
 		(unit 1)
@@ -5078,6 +5261,109 @@
 			(project "fixed-wing-drone"
 				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/de73f962-17e6-4239-8857-7990a4cf3949"
 					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_TVS")
+		(at 213.36 106.68 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c2abb634-bd1d-4dd7-a393-c452a102f84e")
+		(property "Reference" "D8"
+			(at 214.63 103.886 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ESD5Z5.0T1G"
+			(at 219.456 109.474 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-523"
+			(at 213.36 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C82044.pdf"
+			(at 213.36 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "TVS diode, onsemi, 5V standoff / 6.2V breakdown, unidirectional"
+			(at 213.36 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Notes" "USB DATA+ ESD/surge protection (matches mission-board D1/D2)"
+			(at 213.36 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C82044"
+			(at 213.36 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9459b9d6-c19f-4490-8e52-c1b51188518c")
+		)
+		(pin "2"
+			(uuid "c3739793-eed0-4f56-b9c8-fdcf6bc1da14")
+		)
+		(instances
+			(project "fixed-wing-drone"
+				(path "/6fbedc8c-8b3e-4075-8dcf-52085fc3223b/de73f962-17e6-4239-8857-7990a4cf3949"
+					(reference "D8")
 					(unit 1)
 				)
 			)

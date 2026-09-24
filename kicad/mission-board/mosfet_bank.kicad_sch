@@ -1022,7 +1022,7 @@
 	)
 	(wire
 		(pts
-			(xy 193.04 99.06) (xy 193.04 104.14)
+			(xy 187.96 130.81) (xy 187.96 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1062,16 +1062,6 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 78.74) (xy 35.56 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "13d33602-8405-453a-be93-96834922e3d2")
-	)
-	(wire
-		(pts
 			(xy 139.7 46.99) (xy 139.7 52.07)
 		)
 		(stroke
@@ -1082,7 +1072,7 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 78.74) (xy 86.36 73.66)
+			(xy 96.52 113.03) (xy 96.52 107.95)
 		)
 		(stroke
 			(width 0)
@@ -1122,7 +1112,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 78.74) (xy 40.64 73.66)
+			(xy 41.91 107.95) (xy 41.91 102.87)
 		)
 		(stroke
 			(width 0)
@@ -1142,7 +1132,7 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 78.74) (xy 137.16 73.66)
+			(xy 133.35 111.76) (xy 133.35 106.68)
 		)
 		(stroke
 			(width 0)
@@ -1192,7 +1182,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 99.06) (xy 139.7 104.14)
+			(xy 135.89 132.08) (xy 135.89 137.16)
 		)
 		(stroke
 			(width 0)
@@ -1212,7 +1202,7 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 99.06) (xy 137.16 104.14)
+			(xy 133.35 132.08) (xy 133.35 137.16)
 		)
 		(stroke
 			(width 0)
@@ -1262,7 +1252,7 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 99.06) (xy 88.9 104.14)
+			(xy 99.06 133.35) (xy 99.06 138.43)
 		)
 		(stroke
 			(width 0)
@@ -1272,7 +1262,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 99.06) (xy 40.64 104.14)
+			(xy 41.91 128.27) (xy 41.91 133.35)
 		)
 		(stroke
 			(width 0)
@@ -1292,7 +1282,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 99.06) (xy 91.44 104.14)
+			(xy 101.6 133.35) (xy 101.6 138.43)
 		)
 		(stroke
 			(width 0)
@@ -1312,7 +1302,7 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 99.06) (xy 187.96 104.14)
+			(xy 182.88 130.81) (xy 182.88 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1322,7 +1312,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 99.06) (xy 190.5 104.14)
+			(xy 185.42 130.81) (xy 185.42 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1332,7 +1322,7 @@
 	)
 	(wire
 		(pts
-			(xy 38.1 99.06) (xy 38.1 104.14)
+			(xy 39.37 128.27) (xy 39.37 133.35)
 		)
 		(stroke
 			(width 0)
@@ -1412,7 +1402,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 78.74) (xy 142.24 73.66)
+			(xy 138.43 111.76) (xy 138.43 106.68)
 		)
 		(stroke
 			(width 0)
@@ -1512,7 +1502,7 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 78.74) (xy 187.96 73.66)
+			(xy 182.88 110.49) (xy 182.88 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1522,7 +1512,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 99.06) (xy 142.24 104.14)
+			(xy 138.43 132.08) (xy 138.43 137.16)
 		)
 		(stroke
 			(width 0)
@@ -1572,7 +1562,7 @@
 	)
 	(wire
 		(pts
-			(xy 193.04 78.74) (xy 193.04 73.66)
+			(xy 187.96 110.49) (xy 187.96 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1662,7 +1652,7 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 99.06) (xy 86.36 104.14)
+			(xy 96.52 133.35) (xy 96.52 138.43)
 		)
 		(stroke
 			(width 0)
@@ -1682,7 +1672,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 78.74) (xy 91.44 73.66)
+			(xy 101.6 113.03) (xy 101.6 107.95)
 		)
 		(stroke
 			(width 0)
@@ -1702,7 +1692,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 99.06) (xy 35.56 104.14)
+			(xy 36.83 128.27) (xy 36.83 133.35)
 		)
 		(stroke
 			(width 0)
@@ -1781,7 +1771,7 @@
 		(uuid "247ef77e-1c6c-46d3-9d11-ce2d4dded407")
 	)
 	(label "GND"
-		(at 193.04 73.66 0)
+		(at 187.96 105.41 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1909,17 +1899,17 @@
 		(uuid "4c3a5bf6-1404-4b48-b72f-41aaa6c08ed1")
 	)
 	(label "MOSFET4_SRC"
-		(at 193.04 104.14 0)
+		(at 187.96 135.89 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "4e4e5c81-fe17-431f-a841-84db58dfbb27")
 	)
 	(label "GND"
-		(at 91.44 73.66 0)
+		(at 101.6 107.95 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1939,12 +1929,12 @@
 		(uuid "53c1678b-cbe2-4fdf-87b6-fdd6b8a3062c")
 	)
 	(label "ESP_3V3"
-		(at 86.36 73.66 0)
+		(at 96.52 107.95 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify left bottom)
 		)
 		(uuid "563eaeca-8a6d-44a1-b293-4b022900af4a")
 	)
@@ -1958,12 +1948,12 @@
 		(uuid "6316500f-29f2-4cf6-ab00-4237365011b3")
 	)
 	(label "ESP_3V3"
-		(at 137.16 73.66 0)
+		(at 133.35 106.68 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify left bottom)
 		)
 		(uuid "680f5953-46d3-4d70-88ea-589d4d5e6280")
 	)
@@ -1987,7 +1977,7 @@
 		(uuid "70240d46-21e9-4d15-b88e-c91b8cbb49a9")
 	)
 	(label "GND"
-		(at 40.64 73.66 0)
+		(at 41.91 102.87 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1997,22 +1987,22 @@
 		(uuid "76ae2dac-a267-4c64-8bc8-19b450dd78b9")
 	)
 	(label "MOSFET3_SRC"
-		(at 142.24 104.14 0)
+		(at 138.43 137.16 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "7e9b3e9c-1efb-4140-b4ce-b400857274cd")
 	)
 	(label "ESP_3V3"
-		(at 187.96 73.66 0)
+		(at 182.88 105.41 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify left bottom)
 		)
 		(uuid "7f1e43a0-42f6-410c-b204-933b8db508fd")
 	)
@@ -2094,12 +2084,12 @@
 		(uuid "a25d229f-99a2-476c-bd2c-fdd81172b1ed")
 	)
 	(label "GND"
-		(at 139.7 104.14 0)
+		(at 135.89 137.16 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "a3cfd72d-e77d-4aa9-a30e-393743e6a670")
 	)
@@ -2134,12 +2124,12 @@
 		(uuid "a6f3f9a2-a72d-4ba9-ada1-7ca08d8c367b")
 	)
 	(label "GND"
-		(at 38.1 104.14 0)
+		(at 39.37 133.35 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "a96bae7f-0da0-4a63-b226-1ce90a3fa8a7")
 	)
@@ -2153,12 +2143,12 @@
 		(uuid "ade1fe66-306e-4054-8d1d-317d0b1ff58b")
 	)
 	(label "GND"
-		(at 88.9 104.14 0)
+		(at 99.06 138.43 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "c3721aee-5c4c-43f8-ad33-5d808eeee3f0")
 	)
@@ -2193,12 +2183,12 @@
 		(uuid "d5b4214e-b981-49b5-82a9-d38973268061")
 	)
 	(label "MOSFET2_SRC"
-		(at 91.44 104.14 0)
+		(at 101.6 138.43 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "d65aa873-2e9c-4a7f-9292-427a185e5e0a")
 	)
@@ -2231,12 +2221,12 @@
 		(uuid "dc7c88aa-a6e2-47ab-b28f-07077dd29093")
 	)
 	(label "MOSFET1_SRC"
-		(at 40.64 104.14 0)
+		(at 41.91 133.35 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "dc930809-3206-41ee-bf76-4b6f8c7b6609")
 	)
@@ -2270,17 +2260,17 @@
 		(uuid "ed9ee87e-bf1a-41b8-9a58-9e0c421dc0e1")
 	)
 	(label "GND"
-		(at 190.5 104.14 0)
+		(at 185.42 135.89 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify top)
+			(justify right bottom)
 		)
 		(uuid "edf15ad8-247a-4733-8047-8a436cbd99e9")
 	)
 	(label "GND"
-		(at 142.24 73.66 0)
+		(at 138.43 106.68 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2330,34 +2320,34 @@
 	)
 	(hierarchical_label "MOSFET4_ISENSE"
 		(shape output)
-		(at 187.96 104.14 0)
+		(at 182.88 135.89 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify right)
 		)
 		(uuid "040aba8a-5655-438d-ab17-a087f6757b4b")
 	)
 	(hierarchical_label "MOSFET2_ISENSE"
 		(shape output)
-		(at 86.36 104.14 0)
+		(at 96.52 138.43 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify right)
 		)
 		(uuid "18083bba-5dfd-4aee-ae23-d74dcbc8d8c2")
 	)
 	(hierarchical_label "MOSFET1_ISENSE"
 		(shape output)
-		(at 35.56 104.14 0)
+		(at 36.83 133.35 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify right)
 		)
 		(uuid "217b737b-1d8e-471b-95e6-2c89f1633451")
 	)
@@ -2374,12 +2364,12 @@
 	)
 	(hierarchical_label "MOSFET3_ISENSE"
 		(shape output)
-		(at 137.16 104.14 0)
+		(at 133.35 137.16 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify right)
 		)
 		(uuid "45249c1a-d30e-409a-ac55-6753e8f773f5")
 	)
@@ -2407,12 +2397,12 @@
 	)
 	(hierarchical_label "ESP_3V3"
 		(shape input)
-		(at 35.56 83.82 0)
+		(at 36.83 107.95 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify bottom)
+			(justify left)
 		)
 		(uuid "6f20b387-1534-4b32-8c0f-5e353233dbc1")
 	)
@@ -2659,7 +2649,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TerminalBlock_CUI:TerminalBlock_CUI_TB007-508-02_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 152.4 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2681,7 +2671,7 @@
 				)
 			)
 		)
-		(property "Description" "Switched output channel 3, 2-pin 5.08mm THT screw terminal"
+		(property "Description" "Switched output channel 3, 2-pin 2.50mm JST-XH"
 			(at 152.4 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2798,7 +2788,7 @@
 	)
 	(symbol
 		(lib_id "easyeda2kicad:INA180A2IDBVR")
-		(at 139.7 88.9 0)
+		(at 135.89 121.92 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2808,7 +2798,7 @@
 		(dnp no)
 		(uuid "39e5c904-e62f-4c5d-be70-97117f5dc0e9")
 		(property "Reference" "U6"
-			(at 134.62 86.36 0)
+			(at 135.636 121.158 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2818,7 +2808,7 @@
 			)
 		)
 		(property "Value" "INA180A2IDBVR"
-			(at 134.62 91.44 0)
+			(at 122.428 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2828,7 +2818,7 @@
 			)
 		)
 		(property "Footprint" "easyeda2kicad:SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL"
-			(at 139.7 88.9 0)
+			(at 135.89 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2839,7 +2829,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 139.7 88.9 0)
+			(at 135.89 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2850,7 +2840,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 139.7 88.9 0)
+			(at 135.89 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2860,7 +2850,7 @@
 			)
 		)
 		(property "LCSC Part" "C192764"
-			(at 139.7 88.9 0)
+			(at 135.89 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2985,7 +2975,7 @@
 	)
 	(symbol
 		(lib_id "easyeda2kicad:INA180A2IDBVR")
-		(at 190.5 88.9 0)
+		(at 185.42 120.65 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2995,7 +2985,7 @@
 		(dnp no)
 		(uuid "47ae501c-d79a-45cd-a6be-a709b4bec8fe")
 		(property "Reference" "U7"
-			(at 185.42 86.36 0)
+			(at 185.928 119.38 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3005,7 +2995,7 @@
 			)
 		)
 		(property "Value" "INA180A2IDBVR"
-			(at 185.42 91.44 0)
+			(at 198.374 122.428 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3015,7 +3005,7 @@
 			)
 		)
 		(property "Footprint" "easyeda2kicad:SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL"
-			(at 190.5 88.9 0)
+			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3026,7 +3016,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 88.9 0)
+			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3037,7 +3027,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 190.5 88.9 0)
+			(at 185.42 120.65 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3047,7 +3037,7 @@
 			)
 		)
 		(property "LCSC Part" "C192764"
-			(at 190.5 88.9 0)
+			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3388,7 +3378,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TerminalBlock_CUI:TerminalBlock_CUI_TB007-508-02_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 203.2 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -3410,7 +3400,7 @@
 				)
 			)
 		)
-		(property "Description" "Switched output channel 4, 2-pin 5.08mm THT screw terminal"
+		(property "Description" "Switched output channel 4, 2-pin 2.50mm JST-XH"
 			(at 203.2 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -3645,7 +3635,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TerminalBlock_CUI:TerminalBlock_CUI_TB007-508-02_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 101.6 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -3667,7 +3657,7 @@
 				)
 			)
 		)
-		(property "Description" "Switched output channel 2, 2-pin 5.08mm THT screw terminal"
+		(property "Description" "Switched output channel 2, 2-pin 2.50mm JST-XH"
 			(at 101.6 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -3695,7 +3685,7 @@
 	)
 	(symbol
 		(lib_id "easyeda2kicad:INA180A2IDBVR")
-		(at 38.1 88.9 0)
+		(at 39.37 118.11 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3705,7 +3695,7 @@
 		(dnp no)
 		(uuid "a9ffb3c6-0a68-4110-90a9-737f60ac0bdc")
 		(property "Reference" "U4"
-			(at 33.02 86.36 0)
+			(at 38.862 117.602 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3715,7 +3705,7 @@
 			)
 		)
 		(property "Value" "INA180A2IDBVR"
-			(at 33.02 91.44 0)
+			(at 25.908 120.142 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3725,7 +3715,7 @@
 			)
 		)
 		(property "Footprint" "easyeda2kicad:SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL"
-			(at 38.1 88.9 0)
+			(at 39.37 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3736,7 +3726,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 38.1 88.9 0)
+			(at 39.37 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3747,7 +3737,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 38.1 88.9 0)
+			(at 39.37 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3757,7 +3747,7 @@
 			)
 		)
 		(property "LCSC Part" "C192764"
-			(at 38.1 88.9 0)
+			(at 39.37 118.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4539,7 +4529,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TerminalBlock_CUI:TerminalBlock_CUI_TB007-508-02_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
 			(at 50.8 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -4561,7 +4551,7 @@
 				)
 			)
 		)
-		(property "Description" "Switched output channel 1, 2-pin 5.08mm THT screw terminal"
+		(property "Description" "Switched output channel 1, 2-pin 2.50mm JST-XH"
 			(at 50.8 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -4772,7 +4762,7 @@
 	)
 	(symbol
 		(lib_id "easyeda2kicad:INA180A2IDBVR")
-		(at 88.9 88.9 0)
+		(at 99.06 123.19 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4782,7 +4772,7 @@
 		(dnp no)
 		(uuid "fd806876-c498-41f5-971c-f822e852bb06")
 		(property "Reference" "U5"
-			(at 83.82 86.36 0)
+			(at 99.568 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4792,7 +4782,7 @@
 			)
 		)
 		(property "Value" "INA180A2IDBVR"
-			(at 83.82 91.44 0)
+			(at 86.106 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4802,7 +4792,7 @@
 			)
 		)
 		(property "Footprint" "easyeda2kicad:SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BL"
-			(at 88.9 88.9 0)
+			(at 99.06 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4813,7 +4803,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 88.9 88.9 0)
+			(at 99.06 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4824,7 +4814,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 88.9 88.9 0)
+			(at 99.06 123.19 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4834,7 +4824,7 @@
 			)
 		)
 		(property "LCSC Part" "C192764"
-			(at 88.9 88.9 0)
+			(at 99.06 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

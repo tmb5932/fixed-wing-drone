@@ -843,7 +843,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 40.64) (xy 101.6 40.64)
+			(xy 138.43 64.77) (xy 133.35 64.77)
 		)
 		(stroke
 			(width 0)
@@ -853,7 +853,7 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 38.1) (xy 25.4 38.1)
+			(xy 49.53 38.1) (xy 44.45 38.1)
 		)
 		(stroke
 			(width 0)
@@ -863,7 +863,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 35.56) (xy 86.36 35.56)
+			(xy 107.95 80.01) (xy 113.03 80.01)
 		)
 		(stroke
 			(width 0)
@@ -873,7 +873,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 40.64) (xy 60.96 40.64)
+			(xy 55.88 85.09) (xy 60.96 85.09)
 		)
 		(stroke
 			(width 0)
@@ -883,7 +883,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 43.18) (xy 50.8 43.18)
+			(xy 55.88 87.63) (xy 50.8 87.63)
 		)
 		(stroke
 			(width 0)
@@ -893,7 +893,7 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 43.18) (xy 25.4 43.18)
+			(xy 49.53 43.18) (xy 44.45 43.18)
 		)
 		(stroke
 			(width 0)
@@ -903,17 +903,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 40.64) (xy 76.2 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2afeb35a-e32d-4976-b076-3e6dcec1ffa5")
-	)
-	(wire
-		(pts
-			(xy 81.28 45.72) (xy 86.36 45.72)
+			(xy 107.95 90.17) (xy 113.03 90.17)
 		)
 		(stroke
 			(width 0)
@@ -923,17 +913,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 43.18) (xy 76.2 43.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "392d4e60-e0b1-4987-911b-07eebf39ac38")
-	)
-	(wire
-		(pts
-			(xy 106.68 35.56) (xy 111.76 35.56)
+			(xy 138.43 59.69) (xy 143.51 59.69)
 		)
 		(stroke
 			(width 0)
@@ -943,7 +923,7 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 40.64) (xy 137.16 40.64)
+			(xy 121.92 40.64) (xy 127 40.64)
 		)
 		(stroke
 			(width 0)
@@ -953,7 +933,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 38.1) (xy 50.8 38.1)
+			(xy 55.88 82.55) (xy 50.8 82.55)
 		)
 		(stroke
 			(width 0)
@@ -963,7 +943,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 43.18) (xy 111.76 43.18)
+			(xy 138.43 67.31) (xy 143.51 67.31)
 		)
 		(stroke
 			(width 0)
@@ -973,7 +953,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 33.02) (xy 86.36 33.02)
+			(xy 107.95 77.47) (xy 113.03 77.47)
 		)
 		(stroke
 			(width 0)
@@ -983,7 +963,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 35.56) (xy 60.96 35.56)
+			(xy 55.88 80.01) (xy 60.96 80.01)
 		)
 		(stroke
 			(width 0)
@@ -993,7 +973,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 38.1) (xy 111.76 38.1)
+			(xy 138.43 62.23) (xy 143.51 62.23)
 		)
 		(stroke
 			(width 0)
@@ -1003,7 +983,7 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 38.1) (xy 137.16 38.1)
+			(xy 121.92 38.1) (xy 127 38.1)
 		)
 		(stroke
 			(width 0)
@@ -1013,7 +993,7 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 38.1) (xy 76.2 38.1)
+			(xy 107.95 82.55) (xy 102.87 82.55)
 		)
 		(stroke
 			(width 0)
@@ -1023,7 +1003,7 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 35.56) (xy 25.4 35.56)
+			(xy 49.53 35.56) (xy 44.45 35.56)
 		)
 		(stroke
 			(width 0)
@@ -1033,7 +1013,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 45.72) (xy 50.8 45.72)
+			(xy 55.88 90.17) (xy 50.8 90.17)
 		)
 		(stroke
 			(width 0)
@@ -1043,7 +1023,7 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 35.56) (xy 127 35.56)
+			(xy 121.92 35.56) (xy 116.84 35.56)
 		)
 		(stroke
 			(width 0)
@@ -1053,7 +1033,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 33.02) (xy 60.96 33.02)
+			(xy 55.88 77.47) (xy 60.96 77.47)
 		)
 		(stroke
 			(width 0)
@@ -1063,7 +1043,7 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 40.64) (xy 25.4 40.64)
+			(xy 49.53 40.64) (xy 44.45 40.64)
 		)
 		(stroke
 			(width 0)
@@ -1072,7 +1052,7 @@
 		(uuid "e62590a6-65d2-4f2f-9d85-c106fd3d0f49")
 	)
 	(label "GND"
-		(at 86.36 35.56 0)
+		(at 113.03 80.01 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1081,7 +1061,7 @@
 		(uuid "0482d7dd-629c-4e47-9432-c04bff387303")
 	)
 	(label "GND"
-		(at 111.76 38.1 0)
+		(at 143.51 62.23 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1090,7 +1070,7 @@
 		(uuid "4bb6eefc-9789-4f42-bc3d-ec1073f97da4")
 	)
 	(label "ESP_3V3"
-		(at 60.96 33.02 0)
+		(at 60.96 77.47 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1099,7 +1079,7 @@
 		(uuid "bfeb7e3e-34fb-4a7c-a6f5-ef2f5e2515bf")
 	)
 	(label "ESP_3V3"
-		(at 111.76 35.56 0)
+		(at 143.51 59.69 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1108,7 +1088,7 @@
 		(uuid "cab032cc-6cff-4beb-b107-045e7dad4c8d")
 	)
 	(label "GND"
-		(at 137.16 40.64 0)
+		(at 127 40.64 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1117,7 +1097,7 @@
 		(uuid "cab30425-2685-43d8-bca2-29ce2309f93f")
 	)
 	(label "GND"
-		(at 60.96 35.56 0)
+		(at 60.96 80.01 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1126,7 +1106,7 @@
 		(uuid "edbc0e9b-a204-4fe1-a836-abaf33c917e7")
 	)
 	(label "ESP_3V3"
-		(at 86.36 33.02 0)
+		(at 113.03 77.47 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1136,7 +1116,7 @@
 	)
 	(hierarchical_label "EXP_GPIO1"
 		(shape input)
-		(at 76.2 38.1 180)
+		(at 102.87 82.55 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1147,7 +1127,7 @@
 	)
 	(hierarchical_label "INTER_ESP_UART_RX"
 		(shape output)
-		(at 137.16 38.1 0)
+		(at 127 38.1 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1157,7 +1137,7 @@
 	)
 	(hierarchical_label "DEBUG_UART_TX"
 		(shape input)
-		(at 101.6 40.64 180)
+		(at 133.35 64.77 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1168,7 +1148,7 @@
 	)
 	(hierarchical_label "INTER_ESP_UART_TX"
 		(shape input)
-		(at 127 35.56 180)
+		(at 116.84 35.56 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1179,7 +1159,7 @@
 	)
 	(hierarchical_label "ESP_3V3"
 		(shape input)
-		(at 25.4 35.56 180)
+		(at 44.45 35.56 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1190,7 +1170,7 @@
 	)
 	(hierarchical_label "I2C_SCL"
 		(shape input)
-		(at 25.4 43.18 180)
+		(at 44.45 43.18 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1199,20 +1179,9 @@
 		)
 		(uuid "44bd15f2-babc-427b-b110-079b7979347b")
 	)
-	(hierarchical_label "EXP_GPIO3"
-		(shape input)
-		(at 76.2 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "49ba2f51-cd6c-409b-a1c2-4d639de3bf1b")
-	)
 	(hierarchical_label "SPI_CS"
 		(shape input)
-		(at 50.8 45.72 180)
+		(at 50.8 90.17 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1223,7 +1192,7 @@
 	)
 	(hierarchical_label "SPI_MOSI"
 		(shape input)
-		(at 50.8 38.1 180)
+		(at 50.8 82.55 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1234,7 +1203,7 @@
 	)
 	(hierarchical_label "SPI_SCK"
 		(shape input)
-		(at 50.8 43.18 180)
+		(at 50.8 87.63 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1243,20 +1212,9 @@
 		)
 		(uuid "8c2fcccd-2c65-4618-ae44-47d0b0e13f64")
 	)
-	(hierarchical_label "EXP_GPIO2"
-		(shape input)
-		(at 76.2 40.64 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a6e0e52e-032c-4eb9-9fb9-05d036ace2a3")
-	)
 	(hierarchical_label "DEBUG_UART_RX"
 		(shape output)
-		(at 111.76 43.18 0)
+		(at 143.51 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1266,7 +1224,7 @@
 	)
 	(hierarchical_label "GND"
 		(shape input)
-		(at 25.4 38.1 180)
+		(at 44.45 38.1 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1277,7 +1235,7 @@
 	)
 	(hierarchical_label "EXP_ADC"
 		(shape output)
-		(at 86.36 45.72 0)
+		(at 113.03 90.17 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1287,7 +1245,7 @@
 	)
 	(hierarchical_label "SPI_MISO"
 		(shape output)
-		(at 60.96 40.64 0)
+		(at 60.96 85.09 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1297,7 +1255,7 @@
 	)
 	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
-		(at 25.4 40.64 180)
+		(at 44.45 40.64 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1308,7 +1266,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x06_Pin")
-		(at 76.2 38.1 0)
+		(at 102.87 82.55 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1318,7 +1276,7 @@
 		(dnp no)
 		(uuid "388e765a-97fb-4f66-bd17-8bd58ed98899")
 		(property "Reference" "J16"
-			(at 71.12 35.56 0)
+			(at 97.79 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1328,7 +1286,7 @@
 			)
 		)
 		(property "Value" "GPIO/ADC Expansion"
-			(at 71.12 40.64 0)
+			(at 97.79 85.09 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1338,7 +1296,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
-			(at 76.2 38.1 0)
+			(at 102.87 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1349,7 +1307,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 38.1 0)
+			(at 102.87 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1360,7 +1318,7 @@
 			)
 		)
 		(property "Description" "Spare GPIO/ADC expansion: 3V3, GND, GPIO1-3, ADC"
-			(at 76.2 38.1 0)
+			(at 102.87 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1399,7 +1357,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x04_Pin")
-		(at 101.6 38.1 0)
+		(at 133.35 62.23 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1409,7 +1367,7 @@
 		(dnp no)
 		(uuid "63bced84-ab36-4422-aa89-6c48a9ee707b")
 		(property "Reference" "J17"
-			(at 96.52 35.56 0)
+			(at 128.27 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1419,7 +1377,7 @@
 			)
 		)
 		(property "Value" "Debug UART"
-			(at 96.52 40.64 0)
+			(at 128.27 64.77 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1429,7 +1387,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 101.6 38.1 0)
+			(at 133.35 62.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1440,7 +1398,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 101.6 38.1 0)
+			(at 133.35 62.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1451,7 +1409,7 @@
 			)
 		)
 		(property "Description" "Fallback flashing/debug UART: 3V3, GND, TX, RX"
-			(at 101.6 38.1 0)
+			(at 133.35 62.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1484,7 +1442,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x04_Pin")
-		(at 25.4 38.1 0)
+		(at 44.45 38.1 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1494,7 +1452,7 @@
 		(dnp no)
 		(uuid "ce694724-c3b8-4a02-9802-8e773ada598a")
 		(property "Reference" "J14"
-			(at 20.32 35.56 0)
+			(at 39.37 35.56 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1504,7 +1462,7 @@
 			)
 		)
 		(property "Value" "I2C Expansion"
-			(at 20.32 40.64 0)
+			(at 39.37 40.64 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1514,7 +1472,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 25.4 38.1 0)
+			(at 44.45 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1525,7 +1483,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 25.4 38.1 0)
+			(at 44.45 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1536,7 +1494,7 @@
 			)
 		)
 		(property "Description" "I2C expansion: 3V3, GND, SDA, SCL"
-			(at 25.4 38.1 0)
+			(at 44.45 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1569,7 +1527,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x03_Pin")
-		(at 127 38.1 0)
+		(at 116.84 38.1 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1579,7 +1537,7 @@
 		(dnp no)
 		(uuid "e46894ab-06c7-4ed7-bb57-dc35593e8879")
 		(property "Reference" "J18"
-			(at 121.92 35.56 0)
+			(at 111.76 35.56 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1589,7 +1547,7 @@
 			)
 		)
 		(property "Value" "Inter-ESP UART"
-			(at 121.92 40.64 0)
+			(at 111.76 40.64 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1599,7 +1557,7 @@
 			)
 		)
 		(property "Footprint" "Connector_JST:JST_GH_BM03B-GHS-TBT_1x03-1MP_P1.25mm_Vertical"
-			(at 127 38.1 0)
+			(at 116.84 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1610,7 +1568,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 127 38.1 0)
+			(at 116.84 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1621,7 +1579,7 @@
 			)
 		)
 		(property "Description" "Straight-through cable to flight controller's Inter ESP UART header"
-			(at 127 38.1 0)
+			(at 116.84 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1632,7 +1590,7 @@
 			)
 		)
 		(property "LCSC Part" "C161691"
-			(at 127 38.1 0)
+			(at 116.84 38.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1662,7 +1620,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x06_Pin")
-		(at 50.8 38.1 0)
+		(at 50.8 82.55 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -1672,7 +1630,7 @@
 		(dnp no)
 		(uuid "fe9e5564-7fbe-4b80-ab1c-8d18f3c1e927")
 		(property "Reference" "J15"
-			(at 45.72 35.56 0)
+			(at 45.72 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1682,7 +1640,7 @@
 			)
 		)
 		(property "Value" "SPI Expansion"
-			(at 45.72 40.64 0)
+			(at 45.72 85.09 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1692,7 +1650,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
-			(at 50.8 38.1 0)
+			(at 50.8 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1703,7 +1661,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 50.8 38.1 0)
+			(at 50.8 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1714,7 +1672,7 @@
 			)
 		)
 		(property "Description" "SPI expansion: 3V3, GND, MOSI, MISO, SCK, CS"
-			(at 50.8 38.1 0)
+			(at 50.8 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

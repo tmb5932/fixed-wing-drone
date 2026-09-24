@@ -3248,7 +3248,7 @@
 			)
 		)
 		(property "Value" "Fast IO Expansion"
-			(at 214.92 147.62 0)
+			(at 208.788 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3257,7 +3257,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
 			(at 220 140 0)
 			(hide yes)
 			(show_name no)

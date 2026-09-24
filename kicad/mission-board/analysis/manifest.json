@@ -44,7 +44,7 @@
     },
     "2026-09-20_1332": {
       "source_hashes": {
-        "mission-board.kicad_sch": "sha256:e598c58af269dd4cf2c60b411f2246bab9782187069dc47de19b8d41eb986955"
+        "mission-board.kicad_sch": "sha256:0af6300c3b8328e15250898064befc527f8263e139253afec0ed57c10e359a5d"
       },
       "outputs": {
         "schematic": "schematic.json"
@@ -52,7 +52,7 @@
       "scripts": {
         "schematic": "analyze_schematic.py mission-board.kicad_sch"
       },
-      "generated": "2026-09-20T13:32:37-04:00",
+      "generated": "2026-09-22T23:06:11-04:00",
       "pinned": false
     }
   }

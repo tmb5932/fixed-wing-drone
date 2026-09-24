@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "project": "fixed-wing-drone.kicad_pro",
+  "current": "2026-09-24_1752",
+  "runs": {
+    "2026-09-24_1752": {
+      "source_hashes": {
+        "fixed-wing-drone.kicad_sch": "sha256:b48032ae2a82e211d3e3d5a43c575783a53f2e92692f59a8d05ee3dce2e10283",
+        "fixed-wing-drone.kicad_pcb": "sha256:5b820e11084b29b21f9be5a52c3d77971fcb532af58ad92269f91ec873483f94"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py fixed-wing-drone.kicad_sch"
+      },
+      "generated": "2026-09-24T17:52:55-04:00",
+      "pinned": false
+    }
+  }
+}

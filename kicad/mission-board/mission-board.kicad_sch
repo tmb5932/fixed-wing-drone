@@ -31,7 +31,7 @@
 		(uuid "00928f47-8f65-4a5d-b578-73f35aafb6b3")
 	)
 	(label "MOSFET1_GATE"
-		(at 208.28 68.58 180)
+		(at 209.55 81.28 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -41,7 +41,7 @@
 		(uuid "01c9f29f-c463-440b-b098-11095d130feb")
 	)
 	(label "MOSFET3_ISENSE"
-		(at 248.92 66.04 0)
+		(at 250.19 78.74 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -51,7 +51,7 @@
 		(uuid "020be7d8-611c-4239-bdec-50133b684088")
 	)
 	(label "MOSFET1_ISENSE"
-		(at 248.92 60.96 0)
+		(at 250.19 73.66 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -70,8 +70,28 @@
 		)
 		(uuid "034d9b56-4888-4485-8977-af72f07657d9")
 	)
+	(label "HBRIDGE3_BIN2"
+		(at 205.74 60.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0688a805-1739-46eb-abec-895fb68c04e6")
+	)
+	(label "HBRIDGE2_BISENSE"
+		(at 31.75 129.54 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "06ddb5fb-b4fa-4498-8e17-afb40cd63a40")
+	)
 	(label "MOSFET3_GATE"
-		(at 208.28 73.66 180)
+		(at 209.55 86.36 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -89,6 +109,16 @@
 			(justify left bottom)
 		)
 		(uuid "072d6a8b-98f8-4842-baad-86257267c6a7")
+	)
+	(label "HBRIDGE2_AIN2"
+		(at 205.74 45.72 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "094b3c31-7f2c-4b2e-8050-4709e25572ef")
 	)
 	(label "I2C_SCL"
 		(at 181.61 125.73 180)
@@ -191,7 +221,7 @@
 		(uuid "201d33eb-e00c-4b4e-8ead-570151f8aa8b")
 	)
 	(label "MOSFET2_GATE"
-		(at 208.28 71.12 180)
+		(at 209.55 83.82 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -209,6 +239,16 @@
 			(justify right)
 		)
 		(uuid "21d3e01a-814e-47e7-b9fc-b44a870c9337")
+	)
+	(label "HBRIDGE3_AIN1"
+		(at 205.74 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2224ce94-e90c-4b2c-87f0-41ecf885548e")
 	)
 	(label "CAM_PCLK"
 		(at 31.75 40.64 180)
@@ -240,16 +280,6 @@
 		)
 		(uuid "279d597b-9941-4da6-8fee-3b80b3ca8b50")
 	)
-	(label "EXP_GPIO2"
-		(at 95.25 116.84 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "28e9b5bf-f130-49ef-8b2d-5afb4d8e96a6")
-	)
 	(label "ESP_3V3"
 		(at 162.56 62.23 0)
 		(effects
@@ -261,7 +291,7 @@
 		(uuid "295168ae-159b-4652-9a35-84d8108ed987")
 	)
 	(label "HBRIDGE_NFAULT"
-		(at 242.57 22.86 0)
+		(at 256.54 22.86 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -291,7 +321,7 @@
 		(uuid "3168f93c-2081-4279-bcac-16a75375c27a")
 	)
 	(label "HBRIDGE_BIN2"
-		(at 191.77 38.1 180)
+		(at 205.74 38.1 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -309,6 +339,16 @@
 			(justify right)
 		)
 		(uuid "32c73548-48e3-4d98-8ae8-fc460f89619c")
+	)
+	(label "HBRIDGE2_BIN2"
+		(at 166.37 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "32fa3791-c18d-488b-bc5e-07e4a35f27cc")
 	)
 	(label "I2C_SDA"
 		(at 41.91 157.48 180)
@@ -329,6 +369,16 @@
 			(justify right)
 		)
 		(uuid "349d3155-d973-4047-9d60-c1947a703b7a")
+	)
+	(label "HBRIDGE2_BIN1"
+		(at 205.74 48.26 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "34c88c54-6a16-433f-adbb-ad25d2e0f2cb")
 	)
 	(label "CAM_RESET"
 		(at 41.91 165.1 180)
@@ -361,7 +411,7 @@
 		(uuid "4334b81a-dddb-480e-9a91-f42bf875cb76")
 	)
 	(label "ESP_3V3"
-		(at 208.28 63.5 180)
+		(at 209.55 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -430,6 +480,16 @@
 		)
 		(uuid "47dd5a31-8349-4ad1-8135-57a8c23a186e")
 	)
+	(label "HBRIDGE2_AIN1"
+		(at 205.74 43.18 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "496992cd-09e6-4093-ba4b-a9dfcbec05b3")
+	)
 	(label "SPI_MOSI"
 		(at 181.61 128.27 180)
 		(effects
@@ -439,6 +499,16 @@
 			(justify right)
 		)
 		(uuid "510a7b16-0a35-4074-8c0e-61e22f25f36f")
+	)
+	(label "HBRIDGE2_BIN1"
+		(at 166.37 27.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5244f760-8774-4e36-9333-8a75867fc11c")
 	)
 	(label "USB_DM"
 		(at 162.56 69.85 0)
@@ -460,6 +530,16 @@
 		)
 		(uuid "5bd3fa32-36d7-48c0-8ca0-21c4e5e1aa18")
 	)
+	(label "HBRIDGE3_BIN1"
+		(at 205.74 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5ee0fe45-5e10-4d21-89f5-778d54c31c80")
+	)
 	(label "CAM_HREF"
 		(at 31.75 45.72 180)
 		(effects
@@ -479,6 +559,16 @@
 			(justify right)
 		)
 		(uuid "6519f4f9-bc10-41a5-b11a-d7a1e550161b")
+	)
+	(label "HBRIDGE2_AIN1"
+		(at 166.37 22.86 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "65fbfdfb-0050-4221-81ff-55a75d218e09")
 	)
 	(label "INTER_ESP_UART_TX"
 		(at 95.25 38.1 0)
@@ -510,6 +600,16 @@
 		)
 		(uuid "6ba0d6b8-74a7-4bf1-82a2-3fa7cdca19c6")
 	)
+	(label "I2C_SDA"
+		(at 128.27 30.48 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6be55a8a-9c7a-4495-93b8-a849e2fa40a0")
+	)
 	(label "EXP_GPIO1"
 		(at 95.25 114.3 0)
 		(effects
@@ -521,7 +621,7 @@
 		(uuid "6c0f9b2c-6e63-46b6-a7b8-ded451447449")
 	)
 	(label "ACT_PWR"
-		(at 208.28 66.04 180)
+		(at 209.55 78.74 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -529,6 +629,16 @@
 			(justify right)
 		)
 		(uuid "6c5c1621-c22c-44e9-b5cb-a6ae4618837c")
+	)
+	(label "HBRIDGE2_AISENSE"
+		(at 31.75 127 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6ccc38d5-b370-4ba7-b937-3be4d5e6d244")
 	)
 	(label "DEBUG_UART_RX"
 		(at 245.11 115.57 0)
@@ -571,7 +681,7 @@
 		(uuid "776302f6-7f91-4e00-8f72-336f584c1c41")
 	)
 	(label "MOSFET4_ISENSE"
-		(at 248.92 68.58 0)
+		(at 250.19 81.28 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -579,16 +689,6 @@
 			(justify left)
 		)
 		(uuid "78dc79e8-60a7-4dfc-9981-3665fd58e8c5")
-	)
-	(label "BATT_VSENSE"
-		(at 31.75 96.52 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "7aead237-0ce7-4a49-be19-96af2747ba50")
 	)
 	(label "EXP_GPIO1"
 		(at 181.61 135.89 180)
@@ -601,7 +701,7 @@
 		(uuid "7b404b94-0d83-4643-9301-61be736a90bf")
 	)
 	(label "ESP_3V3"
-		(at 191.77 25.4 180)
+		(at 205.74 25.4 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -639,6 +739,16 @@
 			(justify right)
 		)
 		(uuid "826e0f39-46bb-419b-b580-ff94a97aaba4")
+	)
+	(label "I2C_SCL"
+		(at 128.27 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "82f55d54-5aa9-407f-a52f-96ebec744079")
 	)
 	(label "EXP_ADC"
 		(at 31.75 124.46 180)
@@ -690,25 +800,15 @@
 		)
 		(uuid "9378821c-9f6e-4884-9163-27f0d325f51e")
 	)
-	(label "EXP_GPIO3"
-		(at 181.61 140.97 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "957c6125-a860-429f-80a0-e4c01843c8dc")
-	)
-	(label "BATT_VSENSE"
-		(at 162.56 72.39 0)
+	(label "HBRIDGE3_BIN2"
+		(at 166.37 40.64 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "99950619-6f78-426e-a6b9-f819495b5dc5")
+		(uuid "9873116f-06ca-4d7a-b3a5-5afab082f519")
 	)
 	(label "CAM_D1"
 		(at 105.41 162.56 0)
@@ -721,7 +821,7 @@
 		(uuid "99f75162-79fd-4946-9b2c-bec8d2047f0c")
 	)
 	(label "HBRIDGE_AIN1"
-		(at 191.77 30.48 180)
+		(at 205.74 30.48 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -759,6 +859,16 @@
 			(justify left bottom)
 		)
 		(uuid "a78e0ec1-442f-4080-87ff-69beb3a5761f")
+	)
+	(label "HBRIDGE3_AISENSE"
+		(at 31.75 132.08 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a9c16dec-cdf3-439a-9c90-6756221dd319")
 	)
 	(label "MCP_INT"
 		(at 95.25 121.92 0)
@@ -819,6 +929,46 @@
 			(justify left bottom)
 		)
 		(uuid "b30043f1-3ef1-42c2-9522-bad59edc2edf")
+	)
+	(label "ESP_3V3"
+		(at 128.27 27.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b4c5d6e7-5566-4f5e-8a5e-ccddeeff0011")
+	)
+	(label "HBRIDGE3_BISENSE"
+		(at 256.54 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b7bc67e7-27ab-4950-9f4b-fdeb6b0dc074")
+	)
+	(label "HBRIDGE2_BIN2"
+		(at 205.74 50.8 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b81d4565-24e8-41bc-bcce-02afe10884a4")
+	)
+	(label "HBRIDGE3_BIN1"
+		(at 166.37 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b92fc912-126f-480e-849c-8af51d5f8ae5")
 	)
 	(label "CAM_PCLK"
 		(at 105.41 152.4 0)
@@ -881,7 +1031,7 @@
 		(uuid "bd0cf1aa-6348-4eb5-ab2f-4d84d720db87")
 	)
 	(label "HBRIDGE_AIN2"
-		(at 191.77 33.02 180)
+		(at 205.74 33.02 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -899,6 +1049,16 @@
 			(justify right)
 		)
 		(uuid "c0d2216f-ccf3-49f8-a62d-76d0f5b52866")
+	)
+	(label "HBRIDGE3_AIN2"
+		(at 205.74 55.88 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c3636b83-a21a-4289-baa7-3146c5f69416")
 	)
 	(label "HBRIDGE_BIN2"
 		(at 95.25 35.56 0)
@@ -920,8 +1080,18 @@
 		)
 		(uuid "cafff08d-f3f3-4846-bb38-fd1873850940")
 	)
+	(label "HBRIDGE2_BISENSE"
+		(at 256.54 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cd9dc3e4-a1ca-4613-a9f3-4b8512bd5c6b")
+	)
 	(label "HBRIDGE_AISENSE"
-		(at 242.57 25.4 0)
+		(at 256.54 25.4 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -951,7 +1121,7 @@
 		(uuid "d0e624de-1600-48d6-aa5e-6236c0175b9b")
 	)
 	(label "HBRIDGE_NSLEEP"
-		(at 191.77 40.64 180)
+		(at 205.74 40.64 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -959,6 +1129,16 @@
 			(justify right)
 		)
 		(uuid "d39690ff-3488-410c-a530-7db66e0d18ff")
+	)
+	(label "HBRIDGE3_AISENSE"
+		(at 256.54 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d447925b-345f-49f6-9686-6912151de15f")
 	)
 	(label "MOSFET3_ISENSE"
 		(at 31.75 114.3 180)
@@ -970,8 +1150,18 @@
 		)
 		(uuid "d6011485-81e8-490a-b48d-16dddd09de5f")
 	)
+	(label "HBRIDGE3_AIN1"
+		(at 166.37 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d66e36c0-bb0a-448e-973d-48bd8b518b99")
+	)
 	(label "GND"
-		(at 208.28 60.96 180)
+		(at 209.55 73.66 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -981,7 +1171,7 @@
 		(uuid "d7239fca-bae6-4ee9-8d9e-868d9be703e3")
 	)
 	(label "HBRIDGE_BIN1"
-		(at 191.77 35.56 180)
+		(at 205.74 35.56 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1021,7 +1211,7 @@
 		(uuid "dc7bfdce-b440-47c5-8046-95fbb8351c72")
 	)
 	(label "ACT_PWR"
-		(at 191.77 27.94 180)
+		(at 205.74 27.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1060,6 +1250,16 @@
 		)
 		(uuid "e5a71c0a-37c2-4eff-81d9-1558bb6c3a7a")
 	)
+	(label "HBRIDGE3_AIN2"
+		(at 166.37 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e5a8c58c-8117-4e51-95fa-d9b8e4529af7")
+	)
 	(label "GND"
 		(at 128.27 22.86 180)
 		(effects
@@ -1071,7 +1271,7 @@
 		(uuid "e5e5e5b9-2722-4ee4-bf3d-1aa6b21d4301")
 	)
 	(label "HBRIDGE_BISENSE"
-		(at 242.57 27.94 0)
+		(at 256.54 27.94 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1080,18 +1280,8 @@
 		)
 		(uuid "e62a0f6a-ff44-41ae-b7f0-2335781344e2")
 	)
-	(label "EXP_GPIO2"
-		(at 181.61 138.43 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e7059f88-e3b8-49c6-9afe-da2da0b4ba4a")
-	)
 	(label "MOSFET4_GATE"
-		(at 208.28 76.2 180)
+		(at 209.55 88.9 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1121,7 +1311,7 @@
 		(uuid "ea595838-df2f-4e36-a25b-38b500bc889d")
 	)
 	(label "GND"
-		(at 191.77 22.86 180)
+		(at 205.74 22.86 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1141,7 +1331,7 @@
 		(uuid "eea09c53-2b15-4ebd-ab0b-84424fea4d68")
 	)
 	(label "MOSFET2_ISENSE"
-		(at 248.92 63.5 0)
+		(at 250.19 76.2 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1149,6 +1339,16 @@
 			(justify left)
 		)
 		(uuid "eea7c7b3-fc2f-4009-904a-63672bee3a0d")
+	)
+	(label "HBRIDGE2_AIN2"
+		(at 166.37 25.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f056756f-56f9-4cb2-944a-26a28cd1ef97")
 	)
 	(label "ESP_3V3"
 		(at 31.75 93.98 180)
@@ -1190,6 +1390,16 @@
 		)
 		(uuid "f7249026-6ff3-48e2-a1e2-4e8a4c89f650")
 	)
+	(label "HBRIDGE2_AISENSE"
+		(at 256.54 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f7fdb017-3c21-4ceb-bb86-50d9e6e0dc18")
+	)
 	(label "CAM_HREF"
 		(at 105.41 157.48 0)
 		(effects
@@ -1210,15 +1420,15 @@
 		)
 		(uuid "fa46031c-4b8c-4842-8686-51fc405b0d68")
 	)
-	(label "EXP_GPIO3"
-		(at 95.25 119.38 0)
+	(label "HBRIDGE3_BISENSE"
+		(at 31.75 134.62 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right)
 		)
-		(uuid "fbdceffd-2790-478b-a4c9-316e1f79aa8c")
+		(uuid "fa97dee8-5735-4cac-a00f-e981a0d6f732")
 	)
 	(sheet
 		(at 31.75 15.24)
@@ -1781,8 +1991,8 @@
 		)
 	)
 	(sheet
-		(at 191.77 20.32)
-		(size 50.8 22.86)
+		(at 205.74 20.32)
+		(size 50.8 43.18)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -1796,7 +2006,7 @@
 		)
 		(uuid "350c07be-86d8-4797-bfe1-493e323992ab")
 		(property "Sheetname" "h_bridge"
-			(at 191.77 19.82 0)
+			(at 205.74 19.82 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1807,7 +2017,7 @@
 			)
 		)
 		(property "Sheetfile" "h_bridge.kicad_sch"
-			(at 191.77 43.68 0)
+			(at 206.248 64.008 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1818,7 +2028,7 @@
 			)
 		)
 		(pin "GND" input
-			(at 191.77 22.86 180)
+			(at 205.74 22.86 180)
 			(uuid "adaaa1de-1070-44d2-b478-707bd21a74ff")
 			(effects
 				(font
@@ -1828,7 +2038,7 @@
 			)
 		)
 		(pin "ESP_3V3" input
-			(at 191.77 25.4 180)
+			(at 205.74 25.4 180)
 			(uuid "06953ad1-a26e-47e3-97d3-4f305343f7f9")
 			(effects
 				(font
@@ -1838,7 +2048,7 @@
 			)
 		)
 		(pin "ACT_PWR" input
-			(at 191.77 27.94 180)
+			(at 205.74 27.94 180)
 			(uuid "65f070d9-33b8-4420-b0f3-d36798b8f9e7")
 			(effects
 				(font
@@ -1848,7 +2058,7 @@
 			)
 		)
 		(pin "HBRIDGE_AIN1" input
-			(at 191.77 30.48 180)
+			(at 205.74 30.48 180)
 			(uuid "dba58a1f-f13f-49ad-b417-c038269f6130")
 			(effects
 				(font
@@ -1858,7 +2068,7 @@
 			)
 		)
 		(pin "HBRIDGE_AIN2" input
-			(at 191.77 33.02 180)
+			(at 205.74 33.02 180)
 			(uuid "79e03226-4e66-4fdb-bcef-7d09e98656a3")
 			(effects
 				(font
@@ -1868,7 +2078,7 @@
 			)
 		)
 		(pin "HBRIDGE_BIN1" input
-			(at 191.77 35.56 180)
+			(at 205.74 35.56 180)
 			(uuid "a924f2d5-193b-4b90-97fa-8fe43f07348e")
 			(effects
 				(font
@@ -1878,7 +2088,7 @@
 			)
 		)
 		(pin "HBRIDGE_BIN2" input
-			(at 191.77 38.1 180)
+			(at 205.74 38.1 180)
 			(uuid "e2a67626-dfc8-4dfe-b127-0f092723d3fe")
 			(effects
 				(font
@@ -1888,7 +2098,7 @@
 			)
 		)
 		(pin "HBRIDGE_NSLEEP" input
-			(at 191.77 40.64 180)
+			(at 205.74 40.64 180)
 			(uuid "75cfc53f-f948-41fc-9334-e7bf65dab300")
 			(effects
 				(font
@@ -1897,8 +2107,88 @@
 				(justify left)
 			)
 		)
+		(pin "HBRIDGE2_AIN1" input
+			(at 205.74 43.18 180)
+			(uuid "5ec59fdb-bd30-40b8-9894-5470b9d4b315")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE2_AIN2" input
+			(at 205.74 45.72 180)
+			(uuid "e5806ced-2522-4393-aea0-377424403598")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE2_BIN1" input
+			(at 205.74 48.26 180)
+			(uuid "7ba8a7a3-dc19-4a6a-87dc-36087f88fb52")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE2_BIN2" input
+			(at 205.74 50.8 180)
+			(uuid "304337c5-7988-4a2f-a30f-ffe844e69054")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_AIN1" input
+			(at 205.74 53.34 180)
+			(uuid "01002817-af94-4186-9809-5f5175f833af")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_AIN2" input
+			(at 205.74 55.88 180)
+			(uuid "9a1b66f0-88bb-43f9-9366-c506a413b970")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_BIN1" input
+			(at 205.74 58.42 180)
+			(uuid "28aabc7d-a3a2-4b1e-90e2-3f8faba70b43")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_BIN2" input
+			(at 205.74 60.96 180)
+			(uuid "7a83ad04-009f-4d78-aa14-281c4ddafb7c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(pin "HBRIDGE_NFAULT" output
-			(at 242.57 22.86 0)
+			(at 256.54 22.86 0)
 			(uuid "aeb52cca-8e42-48f1-96fb-eafc94528ccc")
 			(effects
 				(font
@@ -1908,7 +2198,7 @@
 			)
 		)
 		(pin "HBRIDGE_AISENSE" output
-			(at 242.57 25.4 0)
+			(at 256.54 25.4 0)
 			(uuid "5a0c5270-3010-44a0-9567-d100e7c44066")
 			(effects
 				(font
@@ -1918,8 +2208,48 @@
 			)
 		)
 		(pin "HBRIDGE_BISENSE" output
-			(at 242.57 27.94 0)
+			(at 256.54 27.94 0)
 			(uuid "64914097-bf30-453a-96ad-926ddffbc4a3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE2_AISENSE" output
+			(at 256.54 30.48 0)
+			(uuid "2e9250f5-a07c-4b6c-82f0-2bb564f1702b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE2_BISENSE" output
+			(at 256.54 33.02 0)
+			(uuid "76efb982-c334-4014-83be-361333b3d7bf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_AISENSE" output
+			(at 256.54 35.56 0)
+			(uuid "9a4ec839-c7ad-4d92-9cac-19be47a42277")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_BISENSE" output
+			(at 256.54 38.1 0)
+			(uuid "e292145d-b019-4868-80f1-5c75394c6352")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1937,7 +2267,7 @@
 	)
 	(sheet
 		(at 31.75 88.9)
-		(size 63.5 38.1)
+		(size 63.5 48.26)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -1985,16 +2315,6 @@
 		(pin "ESP_3V3" input
 			(at 31.75 93.98 180)
 			(uuid "42afa3ab-a655-4ab9-91ee-21427bf76ab3")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "BATT_VSENSE" input
-			(at 31.75 96.52 180)
-			(uuid "441068e3-16b9-4c91-b840-867b87c5e917")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2112,6 +2432,46 @@
 				(justify left)
 			)
 		)
+		(pin "HBRIDGE2_AISENSE" input
+			(at 31.75 127 180)
+			(uuid "00706ddb-ead3-400a-9b0a-9ef4dd31d163")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE2_BISENSE" input
+			(at 31.75 129.54 180)
+			(uuid "09bcab25-93d9-49aa-bf51-538a94020c37")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_AISENSE" input
+			(at 31.75 132.08 180)
+			(uuid "aeb024d3-7db8-4d9e-ad3b-f18be5d3938d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE3_BISENSE" input
+			(at 31.75 134.62 180)
+			(uuid "02c29a7f-2b3a-4ea0-bd29-3d2e3fc06746")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(pin "HBRIDGE_NSLEEP" output
 			(at 95.25 91.44 0)
 			(uuid "07c56733-02a8-42d5-8674-bc098e1c798a")
@@ -2212,26 +2572,6 @@
 				(justify right)
 			)
 		)
-		(pin "EXP_GPIO2" output
-			(at 95.25 116.84 0)
-			(uuid "0778954e-820a-4415-8fee-0849c3a3907a")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "EXP_GPIO3" output
-			(at 95.25 119.38 0)
-			(uuid "f17c8e32-1ab0-4fa9-b90a-c1898ae8720e")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "MCP_INT" output
 			(at 95.25 121.92 0)
 			(uuid "1a2b3c4d-5e6f-4789-a0b1-c2d3e4f5a6b7")
@@ -2252,7 +2592,7 @@
 	)
 	(sheet
 		(at 128.27 20.32)
-		(size 38.1 17.78)
+		(size 38.1 22.86)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -2305,6 +2645,116 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+		(pin "ESP_3V3" input
+			(at 128.27 27.94 180)
+			(uuid "a3b4c5d6-4455-4e4d-9f4d-bbccddeeff00")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SDA" bidirectional
+			(at 128.27 30.48 180)
+			(uuid "e5f6a7b8-2233-4c2b-9d2b-99aabbccddee")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_SCL" input
+			(at 128.27 33.02 180)
+			(uuid "f6a7b8c9-3344-4d3c-9e3c-aabbccddeeff")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HBRIDGE2_AIN1" output
+			(at 166.37 22.86 0)
+			(uuid "2a1ec9e1-ecf9-4e80-9c81-dadd501b3137")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE2_AIN2" output
+			(at 166.37 25.4 0)
+			(uuid "73487df6-3fe6-43e6-ac56-364dcc71a9f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE2_BIN1" output
+			(at 166.37 27.94 0)
+			(uuid "48ef15da-b79f-406f-9dc3-3b4ad44a6556")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE2_BIN2" output
+			(at 166.37 30.48 0)
+			(uuid "5350ef89-48e3-47ab-a078-4369a6bfd499")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_AIN1" output
+			(at 166.37 33.02 0)
+			(uuid "3963c3cc-f9fa-4254-a842-d10e0f83b107")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_AIN2" output
+			(at 166.37 35.56 0)
+			(uuid "9e8cf14a-9b5f-48e4-ae0b-810a44789ad7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_BIN1" output
+			(at 166.37 38.1 0)
+			(uuid "ed575552-f59c-4fd0-b90b-f2d0dc5527a0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "HBRIDGE3_BIN2" output
+			(at 166.37 40.64 0)
+			(uuid "6f1ea2e5-139c-44bd-8f68-a16359dfea8c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 		(instances
@@ -2452,26 +2902,6 @@
 				(justify left)
 			)
 		)
-		(pin "EXP_GPIO2" input
-			(at 181.61 138.43 180)
-			(uuid "d7a9623b-6ab7-486c-9dc7-34d5d4d48eb0")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "EXP_GPIO3" input
-			(at 181.61 140.97 180)
-			(uuid "08e8988b-fdce-4589-8911-446f1a85728f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "INTER_ESP_UART_RX" output
 			(at 245.11 113.03 0)
 			(uuid "1c71af1b-9236-4508-93e9-fd1abf196493")
@@ -2521,7 +2951,7 @@
 		)
 	)
 	(sheet
-		(at 208.28 58.42)
+		(at 209.55 71.12)
 		(size 40.64 20.32)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2536,7 +2966,7 @@
 		)
 		(uuid "ca3295f0-7526-49ed-b072-f2e29641c93a")
 		(property "Sheetname" "mosfet_bank"
-			(at 208.28 57.92 0)
+			(at 209.55 70.62 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2547,7 +2977,7 @@
 			)
 		)
 		(property "Sheetfile" "mosfet_bank.kicad_sch"
-			(at 208.28 79.24 0)
+			(at 209.55 91.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2558,7 +2988,7 @@
 			)
 		)
 		(pin "GND" input
-			(at 208.28 60.96 180)
+			(at 209.55 73.66 180)
 			(uuid "fd2a645f-9acf-4af5-b5ee-d8c298e01779")
 			(effects
 				(font
@@ -2568,7 +2998,7 @@
 			)
 		)
 		(pin "ESP_3V3" input
-			(at 208.28 63.5 180)
+			(at 209.55 76.2 180)
 			(uuid "48176ff0-587d-46cc-9a00-eea735bba0ca")
 			(effects
 				(font
@@ -2578,7 +3008,7 @@
 			)
 		)
 		(pin "ACT_PWR" input
-			(at 208.28 66.04 180)
+			(at 209.55 78.74 180)
 			(uuid "f6d51be4-3dd0-4187-8e97-4a191c27cabe")
 			(effects
 				(font
@@ -2588,7 +3018,7 @@
 			)
 		)
 		(pin "MOSFET1_GATE" input
-			(at 208.28 68.58 180)
+			(at 209.55 81.28 180)
 			(uuid "25c177d4-cb58-4210-8ec4-ac31efba83aa")
 			(effects
 				(font
@@ -2598,7 +3028,7 @@
 			)
 		)
 		(pin "MOSFET2_GATE" input
-			(at 208.28 71.12 180)
+			(at 209.55 83.82 180)
 			(uuid "5b5db642-db8f-4b77-ae2c-0d7eb5b44641")
 			(effects
 				(font
@@ -2608,7 +3038,7 @@
 			)
 		)
 		(pin "MOSFET3_GATE" input
-			(at 208.28 73.66 180)
+			(at 209.55 86.36 180)
 			(uuid "59e53477-3c37-4be9-b180-0af764ca0cbf")
 			(effects
 				(font
@@ -2618,7 +3048,7 @@
 			)
 		)
 		(pin "MOSFET4_GATE" input
-			(at 208.28 76.2 180)
+			(at 209.55 88.9 180)
 			(uuid "33e20f4b-a01c-4435-92fc-6ae1b16e25d4")
 			(effects
 				(font
@@ -2628,7 +3058,7 @@
 			)
 		)
 		(pin "MOSFET1_ISENSE" output
-			(at 248.92 60.96 0)
+			(at 250.19 73.66 0)
 			(uuid "3d4c8dab-1a36-426b-9777-b2a5cedd3e83")
 			(effects
 				(font
@@ -2638,7 +3068,7 @@
 			)
 		)
 		(pin "MOSFET2_ISENSE" output
-			(at 248.92 63.5 0)
+			(at 250.19 76.2 0)
 			(uuid "b2d2a645-5e2e-4ffa-a961-cac010bfc0dc")
 			(effects
 				(font
@@ -2648,7 +3078,7 @@
 			)
 		)
 		(pin "MOSFET3_ISENSE" output
-			(at 248.92 66.04 0)
+			(at 250.19 78.74 0)
 			(uuid "9d7598b7-5cb5-458a-964f-ac1b6d6e46b8")
 			(effects
 				(font
@@ -2658,7 +3088,7 @@
 			)
 		)
 		(pin "MOSFET4_ISENSE" output
-			(at 248.92 68.58 0)
+			(at 250.19 81.28 0)
 			(uuid "8ad89160-1790-4cfd-8f5e-7694af36234f")
 			(effects
 				(font
@@ -2755,16 +3185,6 @@
 		(pin "USB_DM" output
 			(at 162.56 69.85 0)
 			(uuid "b71a99d8-886d-47dd-9683-2847e772339e")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "BATT_VSENSE" output
-			(at 162.56 72.39 0)
-			(uuid "bb3f9b08-3890-4978-b32e-57c6838ff62a")
 			(effects
 				(font
 					(size 1.27 1.27)
