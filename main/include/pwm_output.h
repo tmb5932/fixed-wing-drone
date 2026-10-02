@@ -3,11 +3,12 @@
 
 #include "driver/mcpwm_prelude.h"
 
-#define SERVO_MIN_PULSEWIDTH_US 1000  // Minimum pulse width in microsecond for servo
-#define SERVO_MAX_PULSEWIDTH_US 2000  // Maximum pulse width in microsecond for servo
+#define PULSEWIDTH_DEFAULT_MIN_US 1000
+#define PULSEWIDTH_DEFAULT_MAX_US 2000
 
-#define MOTOR_MIN_PULSEWIDTH_US 1000  // Minimum pulse width in microsecond for ESC input
-#define MOTOR_MAX_PULSEWIDTH_US 2000  // Maximum pulse width in microsecond for ESC input
+// The hard floor/ceiling setup-mode calibration can never be pushed past
+#define PULSEWIDTH_ABS_MIN_US 750
+#define PULSEWIDTH_ABS_MAX_US 2250
 
 #define SERVO_MIN_DEGREE        -90   // Minimum angle
 #define SERVO_MAX_DEGREE        90    // Maximum angle

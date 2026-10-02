@@ -51,7 +51,12 @@ sitl/.venv/
 # of it meaningful to keep in git.
 kicad/**/*-backups/
 kicad/**/gerber
-kicad/**/analysis/*
+# Trailing slash matters: a directory-level match keeps git from descending
+# into analysis/ at all, so a regenerated analysis/.gitignore's own
+# "!manifest.json" override (kicad-happy's own convention) can't re-track
+# it -- a glob like "analysis/*" doesn't have this property, since git still
+# evaluates the nested .gitignore for paths inside a glob-excluded dir.
+kicad/**/analysis/
 kicad/**/production
 kicad/**/fp-info-cache
 kicad/**/drc*.json
@@ -59,3 +64,7 @@ kicad/**/erc*.json
 kicad/**/_autosave-*
 kicad/**/*.kicad_sch-bak
 kicad/**/*.kicad_pcb-bak
+
+# Datasheet-sync tracking cache (which parts were fetched, pass/fail,
+# timestamps) -- not part of the design; keep the actual datasheet PDFs.
+kicad/**/datasheets/manifest.json

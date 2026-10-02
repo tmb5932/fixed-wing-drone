@@ -1,20 +1,486 @@
 {
+  "schematic": "mission-board.kicad_sch",
+  "last_sync": "2026-10-01T03:16:22.304461+00:00",
   "parts": {
-    "PCA9685PW,118": {
-      "file": "PCA9685PW_118_16-channel_12-bit_PWM_Fm+_I2C-bus_LED_controller.pdf",
-      "manufacturer": "NXP",
-      "description": "16-channel, 12-bit PWM Fm+ I2C-bus LED controller",
+    "C1691": {
+      "manufacturer": "",
+      "description": "",
+      "value": "10uF",
+      "references": [
+        "C1",
+        "C2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:10.677715+00:00"
+    },
+    "C47339": {
+      "manufacturer": "",
+      "description": "",
+      "value": "470nF",
+      "references": [
+        "C5",
+        "C14",
+        "C12"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:11.540893+00:00"
+    },
+    "C1525": {
+      "manufacturer": "",
+      "description": "",
+      "value": "100nF",
+      "references": [
+        "C7",
+        "C8",
+        "C6",
+        "C10"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:12.247015+00:00"
+    },
+    "C45783": {
+      "manufacturer": "",
+      "description": "",
+      "value": "10uF",
+      "references": [
+        "C9",
+        "C3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:12.966263+00:00"
+    },
+    "C8598": {
+      "manufacturer": "",
+      "description": "",
+      "value": "B5819W",
+      "references": [
+        "D3",
+        "D4"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:13.685762+00:00"
+    },
+    "C8678": {
+      "manufacturer": "",
+      "description": "",
+      "value": "SS34",
+      "references": [
+        "D8",
+        "D6",
+        "D5",
+        "D7"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:14.468903+00:00"
+    },
+    "C2289": {
+      "manufacturer": "",
+      "description": "",
+      "value": "Status LED",
+      "references": [
+        "D9"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:15.184210+00:00"
+    },
+    "Servo 1": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 1",
+      "references": [
+        "J1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:15.951195+00:00"
+    },
+    "MOSFET Ch2 Out": {
+      "manufacturer": "",
+      "description": "Switched output channel 2, 2-pin 2.50mm JST-XH",
+      "value": "MOSFET Ch2 Out",
+      "references": [
+        "J10"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:16.772138+00:00"
+    },
+    "MOSFET Ch3 Out": {
+      "manufacturer": "",
+      "description": "Switched output channel 3, 2-pin 2.50mm JST-XH",
+      "value": "MOSFET Ch3 Out",
+      "references": [
+        "J11"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:17.493312+00:00"
+    },
+    "MOSFET Ch4 Out": {
+      "manufacturer": "",
+      "description": "Switched output channel 4, 2-pin 2.50mm JST-XH",
+      "value": "MOSFET Ch4 Out",
+      "references": [
+        "J12"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:18.238441+00:00"
+    },
+    "C2856805": {
+      "manufacturer": "",
+      "description": "24-pin 0.5mm FPC, bottom contact, hinged lid -- OV2640/OV5640-style module",
+      "value": "Camera FPC",
+      "references": [
+        "J13"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:18.995683+00:00"
+    },
+    "I2C Expansion": {
+      "manufacturer": "",
+      "description": "I2C expansion: 3V3, GND, SDA, SCL",
+      "value": "I2C Expansion",
+      "references": [
+        "J14"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:19.769435+00:00"
+    },
+    "C161691": {
+      "manufacturer": "",
+      "description": "Straight-through cable to flight controller's Inter ESP UART header",
+      "value": "Inter-ESP UART",
+      "references": [
+        "J18"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:20.500086+00:00"
+    },
+    "Servo 5": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 5",
+      "references": [
+        "J19"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:21.291681+00:00"
+    },
+    "Servo 2": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 2",
+      "references": [
+        "J2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:22.091172+00:00"
+    },
+    "Servo 6": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 6",
+      "references": [
+        "J20"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:22.820564+00:00"
+    },
+    "Servo 3": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 3",
+      "references": [
+        "J3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:23.588247+00:00"
+    },
+    "Servo 4": {
+      "manufacturer": "",
+      "description": "3-pin 0.1in servo header (signal/+/GND), Molex KK254 MPN 1718561003",
+      "value": "Servo 4",
+      "references": [
+        "J4"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:24.393937+00:00"
+    },
+    "C3020560": {
+      "manufacturer": "",
+      "description": "",
+      "value": "USB-C",
+      "references": [
+        "J5"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:25.119238+00:00"
+    },
+    "MOSFET Ch1 Out": {
+      "manufacturer": "",
+      "description": "Switched output channel 1, 2-pin 2.50mm JST-XH",
+      "value": "MOSFET Ch1 Out",
+      "references": [
+        "J9"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:25.890306+00:00"
+    },
+    "C15155": {
+      "manufacturer": "",
+      "description": "",
+      "value": "reverse polarity protection",
+      "references": [
+        "Q1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:26.608843+00:00"
+    },
+    "C20917": {
+      "manufacturer": "",
+      "description": "Logic-level N-MOSFET, low-side switch",
+      "value": "AO3400A",
+      "references": [
+        "Q5",
+        "Q4",
+        "Q2",
+        "Q3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:27.358726+00:00"
+    },
+    "C25741": {
+      "manufacturer": "",
+      "description": "",
+      "value": "100K",
+      "references": [
+        "R15",
+        "R24",
+        "R18",
+        "R21",
+        "R7"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:28.097361+00:00"
+    },
+    "C25091": {
+      "manufacturer": "",
+      "description": "",
+      "value": "220R",
+      "references": [
+        "R20",
+        "R23",
+        "R14",
+        "R17"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:28.845167+00:00"
+    },
+    "C127691": {
+      "manufacturer": "",
+      "description": "Channel 3 current shunt",
+      "value": "0.05R",
+      "references": [
+        "R22",
+        "R25",
+        "R19",
+        "R16"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:29.609867+00:00"
+    },
+    "C25531": {
+      "manufacturer": "",
+      "description": "",
+      "value": "10K",
+      "references": [
+        "R26",
+        "R27",
+        "R13"
+      ],
+      "status": "not_found",
+      "error": "No LCSC results for 'C25531'",
+      "last_attempt": "2026-10-01T03:15:30.418224+00:00"
+    },
+    "C25104": {
+      "manufacturer": "",
+      "description": "",
+      "value": "330R",
+      "references": [
+        "R28",
+        "R3",
+        "R4",
+        "R29",
+        "R1",
+        "R2",
+        "R30"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:31.130939+00:00"
+    },
+    "C25905": {
+      "manufacturer": "",
+      "description": "",
+      "value": "5.1K",
+      "references": [
+        "R6",
+        "R5"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:31.885799+00:00"
+    },
+    "C105360": {
+      "manufacturer": "",
+      "description": "Actuator-rail current shunt",
+      "value": "0.02R",
+      "references": [
+        "R8"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:32.646260+00:00"
+    },
+    "C720477": {
+      "manufacturer": "",
+      "description": "",
+      "value": "TS-1088",
+      "references": [
+        "SW1",
+        "SW2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:33.378696+00:00"
+    },
+    "C717686": {
+      "manufacturer": "",
+      "description": "Dedicated camera XCLK source",
+      "value": "24MHz Oscillator",
+      "references": [
+        "U10"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:34.089430+00:00"
+    },
+    "C2913202": {
+      "manufacturer": "",
+      "description": "",
+      "value": "ESP32-S3-WROOM-1",
+      "references": [
+        "U11"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:34.872367+00:00"
+    },
+    "C2678753": {
+      "manufacturer": "",
+      "description": "16-channel 12-bit PWM I2C servo/LED driver -- UNWIRED, connect A0-A5/OE/EXTCLK to GND, VDD to ESP_3V3+decoupling cap, SCL/SDA to I2C bus, LED0-5 to SERVO1-6",
       "value": "PCA9685PW",
-      "datasheet_url": "https://www.lcsc.com/datasheet/C2678753.pdf",
-      "downloaded_date": "2026-09-19T00:59:48.705196+00:00",
-      "source": "user_provided",
-      "status": "ok",
       "references": [
         "U12"
       ],
-      "size_bytes": 408783,
-      "verification": "confirmed"
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:35.596232+00:00"
+    },
+    "C50506": {
+      "manufacturer": "",
+      "description": "Dual H-bridge motor/solenoid driver -- UNWIRED, second/third H-bridge IC for PCA9685-driven channels",
+      "value": "DRV8833",
+      "references": [
+        "U14",
+        "U13",
+        "U3"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:37.459155+00:00"
+    },
+    "USBLC6-2SC6": {
+      "manufacturer": "STMicroelectronics",
+      "description": "Very low capacitance ESD protection, 2 data lines + VBUS, SOT-23-6 (3.5pF max I/O-GND)",
+      "value": "USBLC6-2SC6",
+      "references": [
+        "U15"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:15:38.231800+00:00"
+    },
+    "C3013658": {
+      "manufacturer": "",
+      "description": "",
+      "value": "XC6220B331PR-G",
+      "references": [
+        "U2"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:16:19.334012+00:00"
+    },
+    "C192764": {
+      "manufacturer": "",
+      "description": "",
+      "value": "INA180A2IDBVR",
+      "references": [
+        "U6",
+        "U7",
+        "U4",
+        "U5",
+        "U1"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:16:20.115269+00:00"
+    },
+    "C629440": {
+      "manufacturer": "",
+      "description": "16-bit I2C GPIO expander",
+      "value": "MCP23017",
+      "references": [
+        "U8"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:16:20.855589+00:00"
+    },
+    "C496123": {
+      "manufacturer": "",
+      "description": "16:1 analog multiplexer -- consolidates all current/voltage sense signals onto one ADC pin",
+      "value": "CD74HC4067",
+      "references": [
+        "U9"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-01T03:16:21.609799+00:00"
     }
-  },
-  "last_sync": "2026-09-19T00:59:48.705336+00:00"
+  }
 }

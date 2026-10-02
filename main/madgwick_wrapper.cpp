@@ -15,12 +15,12 @@ void madgwick_set_beta(madgwick_t handle, float beta) {
     static_cast<Madgwick*>(handle)->setBeta(beta);
 }
 
-void madgwick_update(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
-    static_cast<Madgwick*>(handle)->update(gx, gy, gz, ax, ay, az, mx, my, mz);
+bool madgwick_update(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
+    return static_cast<Madgwick*>(handle)->update(gx, gy, gz, ax, ay, az, mx, my, mz);
 }
 
-void madgwick_update_imu(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az) {
-    static_cast<Madgwick*>(handle)->updateIMU(gx, gy, gz, ax, ay, az);
+bool madgwick_update_imu(madgwick_t handle, float gx, float gy, float gz, float ax, float ay, float az) {
+    return static_cast<Madgwick*>(handle)->updateIMU(gx, gy, gz, ax, ay, az);
 }
 
 float madgwick_get_roll(madgwick_t handle) {

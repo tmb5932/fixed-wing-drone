@@ -11,6 +11,7 @@
 
 <header class="topbar">
   <h1>FC Setup</h1>
+  <span id="mode-badge" class="mode-badge">--</span>
 </header>
 
 <main>
@@ -26,6 +27,13 @@
       <span>Loop mission &mdash; wrap back to the first waypoint after the last</span>
     </label>
     <button id="clear-mission-btn" class="secondary-btn" type="button">Clear all waypoints</button>
+  </section>
+
+  <section class="card">
+    <h2>Channel Mapping</h2>
+    <p class="hint">Which physical receiver pin backs each function. Wiggle a stick or flip a switch and watch the numbers below to identify its pin, then assign it below.</p>
+    <div class="rc-map-live-grid" id="rc-map-live-grid"></div>
+    <div id="rc-map-rows"></div>
   </section>
 
   <section class="card">
@@ -48,6 +56,20 @@
   </section>
 
   <section class="card">
+    <div class="card-head">
+      <h2>IMU</h2>
+      <span class="live-us" id="imu-ready-badge">not ready</span>
+    </div>
+    <p class="hint">Tilt and rotate the board and confirm these track correctly. Yaw is only a real compass heading when magnetometer is valid.</p>
+    <div class="imu-readout">
+      <div><span class="pid-field-label">Roll</span><span class="live-us" id="imu-roll">--</span></div>
+      <div><span class="pid-field-label">Pitch</span><span class="live-us" id="imu-pitch">--</span></div>
+      <div><span class="pid-field-label">Yaw</span><span class="live-us" id="imu-yaw">--</span></div>
+      <div><span class="pid-field-label">Mag valid</span><span class="live-us" id="imu-mag-valid">--</span></div>
+    </div>
+  </section>
+
+  <section class="card">
     <h2>Airframe</h2>
     <div class="radio-row">
       <label><input type="radio" name="airframe" value="conventional"> Conventional (independent aileron/elevator)</label>
@@ -56,7 +78,10 @@
   </section>
 
   <section class="card">
-    <h2>Airspeed</h2>
+    <div class="card-head">
+      <h2>Airspeed</h2>
+      <span class="live-us" id="airspeed-live">no reading</span>
+    </div>
     <p class="hint">Fallback throttle is used whenever no airspeed sensor reading is available.</p>
     <div class="airspeed-fields">
       <label class="pid-field">
@@ -77,6 +102,13 @@
     <div id="pid-targets"></div>
   </section>
 </main>
+
+<template id="rc-map-row-template">
+  <div class="rc-map-row">
+    <span class="rc-map-name"></span>
+    <select class="rc-map-select"></select>
+  </div>
+</template>
 
 <template id="output-row-template">
   <div class="output-row">

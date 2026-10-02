@@ -15,6 +15,7 @@
 #include "nav.h"
 #include "airspeed.h"
 #include "config_store.h"
+#include "i2c_bus.h"
 #include "output_ctl.h"
 #include "setup_mode.h"
 
@@ -28,13 +29,14 @@ static const char *TAG = "MAIN";
 
 #define CAPTURE_RESOLUTION (80000000) // This is unchangeable on the esp32s3, so its always 80MHz
 
-// GPIO assignments for RC receiver inputs (i swear these are 6 almost neighboring pins)
-#define CH1_IN_GPIO  GPIO_NUM_37
+// GPIO assignments for RC receiver inputs, confirmed against the v2.1 board
+// pinout (GPIO 35/36/37 are NC on this board -- not usable for anything).
+#define CH1_IN_GPIO  GPIO_NUM_9
 #define CH2_IN_GPIO  GPIO_NUM_38
 #define CH3_IN_GPIO  GPIO_NUM_14
 #define CH4_IN_GPIO  GPIO_NUM_21
-#define CH5_IN_GPIO  GPIO_NUM_35
-#define CH6_IN_GPIO  GPIO_NUM_36
+#define CH5_IN_GPIO  GPIO_NUM_7
+#define CH6_IN_GPIO  GPIO_NUM_8
 
 // GPIO assignments for outputs to the peripherals
 #define CH1_OUT_GPIO  GPIO_NUM_17
@@ -45,9 +47,8 @@ static const char *TAG = "MAIN";
 #define CH6_OUT_GPIO  GPIO_NUM_47
 
 // Dedicated ESC/motor outputs -- separate physical connectors from the 6
-// channels above, previously undriven by firmware entirely. Placeholder
-// pending an exact pinout for the current board rev (the KiCad sources in
-// this repo are a future v3.1 revision and don't reflect it).
+// channels above. Confirmed against the v2.1 board pinout (the KiCad
+// sources in this repo are a future v3.1 revision and don't reflect it).
 #define ESC1_OUT_GPIO GPIO_NUM_16
 #define ESC2_OUT_GPIO GPIO_NUM_15
 
@@ -62,11 +63,20 @@ static output_group_t out_groups[SOC_MCPWM_GROUPS];
 static rc_capture_group_t cap_groups[SOC_MCPWM_GROUPS];
 
 // Per-output-channel calibrated PWM range + reversal, loaded from NVS at
-// boot (config_store.h's output_cfg_t), defaulting to the channel's full
-// type range (servo/motor) with reversed=false when nothing is persisted
-// yet. See channel_output_type()/apply_output_cfg() below. Sized for all 8
-// output channels (6 RC-mirrored + ESC1 + ESC2), not just NUM_RC_CHANNELS.
+// boot (config_store.h's output_cfg_t), defaulting to PULSEWIDTH_DEFAULT_MIN/
+// MAX_US with reversed=false when nothing is persisted yet. See
+// channel_output_type()/apply_output_cfg() below. Sized for all 8 output
+// channels (6 RC-mirrored + ESC1 + ESC2), not just NUM_RC_CHANNELS.
 static output_cfg_t channel_cfgs[NUM_OUTPUT_CHANNELS];
+
+// Which physical RC input pin (capture-channel index, 0-5) each logical
+// RC_* function actually reads from -- see config_store.h's
+// rc_input_map_cfg_t. Defaults to the identity mapping (matching this
+// project's compiled-in default channel order: RC_AILERON=CH1,
+// RC_ELEVATOR=CH2, RC_THROTTLE=CH3, RC_DIAL=CH4, RC_RUDDER=CH5,
+// RC_SWITCH=CH6), overridable from setup mode for a receiver whose channel
+// order doesn't match, without re-wiring anything.
+static uint8_t rc_input_map[NUM_RC_CHANNELS] = {0, 1, 2, 3, 4, 5};
 
 static airframe_mode_t g_airframe_mode = AIRFRAME_CONVENTIONAL;
 
@@ -117,10 +127,31 @@ pid_cfg_t PITCH_PID_CFG = {
     .first = true
 };
 
-// Placeholder gains, real sensor not in hand yet -- retune once
-// read_airspeed() is actually implemented and bench-verified.
+// Desk-derived, not SITL-validated like ROLL/PITCH_PID_CFG above -- there's
+// no airspeed plant model (thrust curve, drag, mass) to sweep against yet.
+// This replaces an untested k_p=5 placeholder with a number grounded in the
+// MS4525DO's own accuracy spec instead of a guess; still needs real bench/
+// flight tuning.
+//
+// The sensor's +-0.25%-of-span spec is +-0.005 PSI (+-34Pa) of noise on the
+// underlying differential-pressure reading, filtered here (see
+// AIRSPEED_FILTER_ALPHA in airspeed.c) down to roughly a 4x std-dev
+// reduction -- but noise on a *pressure* reading translates to noise on the
+// *speed* it implies (dv/dp = 1/(rho*v)) that shrinks with airspeed, not a
+// fixed cm/s figure. At g_airspeed_cfg's default 1000cm/s (10m/s) cruise
+// target, that's dp =~ 61Pa for the target speed itself -- comparable to the
+// sensor's own noise floor -- giving an estimated post-filter residual noise
+// of roughly +-65cm/s even at cruise (worse nearer zero airspeed, where the
+// same pressure noise implies a larger speed swing).
+//
+// Sizing k_p so that residual noise alone doesn't swamp the output: the
+// throttle channel's usable PWM range is ~1000us (SERVO_MIN/MAX_PULSEWIDTH_US
+// via channel_cfgs[ESC1_CH]), so k_p=2 keeps noise-driven throttle
+// chatter to roughly +-130us (2 * 65cm/s) -- a small, tolerable fraction of
+// that range -- while still giving a real 2m/s (200cm/s) airspeed error 400us
+// of correction, which is a meaningful, not negligible, throttle response.
 pid_cfg_t AIRSPEED_PID_CFG = {
-    .k_p = 5,
+    .k_p = 2,
     .k_i = 0,
     .k_d = 0,
     .i_limit = 250,
@@ -256,8 +287,19 @@ int rc_channel_to_output_cmpr(int ch)
     return local_ch % SOC_MCPWM_COMPARATORS_PER_OPERATOR;
 }
 
+// Resolves a logical RC_* channel through rc_input_map to the rc_input_t
+// it's actually wired to right now. Single choke point for the remap --
+// every caller that needs to reach into a capture channel (pulse width,
+// staleness, "ever heard from" checks) goes through this instead of
+// indexing cap_groups directly, so the mapping can't accidentally be
+// bypassed in one place and honored in another.
+static rc_input_t *capture_input_for(int ch) {
+    int phys = rc_input_map[ch];
+    return &cap_groups[rc_channel_to_capture_group(phys)].inputs[rc_channel_to_capture_channel(phys)];
+}
+
 uint32_t get_channel_pulse_width(int ch) {
-    return cap_groups[rc_channel_to_capture_group(ch)].inputs[rc_channel_to_capture_channel(ch)].pulse_width_us;
+    return capture_input_for(ch)->pulse_width_us;
 }
 
 /**
@@ -266,6 +308,23 @@ uint32_t get_channel_pulse_width(int ch) {
 */
 bool is_stale(rc_input_t input_capture) {
     return (esp_timer_get_time() - input_capture.last_update_us) > 200000;
+}
+
+// Single source of truth for "would control_task() currently choose
+// autonomous or manual", used both by control_task() itself and by setup
+// mode's HTTP API (get_rc_mode_status() below) so a bench tester can see,
+// before ever leaving setup mode, which way their switch is set -- without
+// duplicating the decision logic in two places and risking them drifting
+// apart. Deliberately excludes critical_fault_latched: that's a control_task-
+// only concept (never true in setup mode, which never calls
+// update_autonomous_outputs()), so control_task ANDs it in separately.
+rc_mode_status_t get_rc_mode_status(void) {
+    rc_input_t *sw_input = capture_input_for(RC_SWITCH);
+    rc_mode_status_t s;
+    s.radio_connected = sw_input->last_update_us != 0;
+    s.signal_stale = s.radio_connected && is_stale(*sw_input);
+    s.autonomous = s.radio_connected && (s.signal_stale || autonomous_mode_enabled(get_channel_pulse_width(RC_SWITCH)));
+    return s;
 }
 
 /**
@@ -286,8 +345,12 @@ int clip(int num, int min, int max) {
     }
 }
 
+// RC_THROTTLE's own output slot (servo_out_3) used to double as a second,
+// fully redundant copy of the ESC signal -- now it's a spare SERVO_TYPE pin
+// like the other 5 RC-mirrored channels (see pass_through_inputs()), not
+// tied to throttle at all. Only ESC1_CH/ESC2_CH are still MOTOR_TYPE.
 item_type_t channel_output_type(int ch) {
-    return (ch == RC_THROTTLE || ch == ESC1_CH || ch == ESC2_CH) ? MOTOR_TYPE : SERVO_TYPE;
+    return (ch == ESC1_CH || ch == ESC2_CH) ? MOTOR_TYPE : SERVO_TYPE;
 }
 
 // Applies channel ch's calibrated reversal + range (channel_cfgs[ch]) to a
@@ -308,13 +371,10 @@ bool set_channel_output_cfg(int ch, const output_cfg_t *cfg) {
     if (ch < 0 || ch >= NUM_OUTPUT_CHANNELS || cfg->min_us >= cfg->max_us) {
         return false;
     }
-    item_type_t type = channel_output_type(ch);
-    uint16_t abs_min = (type == MOTOR_TYPE) ? MOTOR_MIN_PULSEWIDTH_US : SERVO_MIN_PULSEWIDTH_US;
-    uint16_t abs_max = (type == MOTOR_TYPE) ? MOTOR_MAX_PULSEWIDTH_US : SERVO_MAX_PULSEWIDTH_US;
 
     output_cfg_t validated = {
-        .min_us = (uint16_t)clip(cfg->min_us, abs_min, abs_max),
-        .max_us = (uint16_t)clip(cfg->max_us, abs_min, abs_max),
+        .min_us = (uint16_t)clip(cfg->min_us, PULSEWIDTH_ABS_MIN_US, PULSEWIDTH_ABS_MAX_US),
+        .max_us = (uint16_t)clip(cfg->max_us, PULSEWIDTH_ABS_MIN_US, PULSEWIDTH_ABS_MAX_US),
         .reversed = cfg->reversed,
     };
     if (validated.min_us >= validated.max_us) {
@@ -361,6 +421,30 @@ bool set_motor_cfg(const motor_cfg_t *cfg) {
     return config_store_save_motor_cfg(cfg) == ESP_OK;
 }
 
+rc_input_map_cfg_t get_rc_input_map(void) {
+    rc_input_map_cfg_t cfg;
+    for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+        cfg.phys_ch[i] = rc_input_map[i];
+    }
+    return cfg;
+}
+
+bool set_rc_input_map(const rc_input_map_cfg_t *cfg) {
+    for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+        if (cfg->phys_ch[i] >= NUM_RC_CHANNELS) {
+            return false;
+        }
+    }
+    for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+        rc_input_map[i] = cfg->phys_ch[i];
+    }
+    return config_store_save_rc_input_map(cfg) == ESP_OK;
+}
+
+uint32_t get_physical_pulse_width(int phys) {
+    return cap_groups[rc_channel_to_capture_group(phys)].inputs[rc_channel_to_capture_channel(phys)].pulse_width_us;
+}
+
 // Mirrors throttle_us to ESC1 always, and to ESC2 only in twin-motor mode --
 // there's no differential-thrust mixing yet (see output_ctl.h), just an
 // identical copy of whatever the single throttle command is. In single-motor
@@ -371,20 +455,24 @@ static void apply_throttle_to_escs(int throttle_us) {
     if (g_motor_cfg.motor_count == 2) {
         apply_output_cfg(ESC2_CH, throttle_us);
     } else {
-        apply_output_cfg(ESC2_CH, (int)MOTOR_MIN_PULSEWIDTH_US);
+        apply_output_cfg(ESC2_CH, (int)PULSEWIDTH_DEFAULT_MIN_US);
     }
 }
 
 void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]) {
     for (int i = 0; i < NUM_RC_CHANNELS; i++) {
-        if (cap_groups[rc_channel_to_capture_group(i)].inputs[rc_channel_to_capture_channel(i)].last_update_us == 0) {
+        if (capture_input_for(i)->last_update_us == 0) {
             continue;
         }
 
-        apply_output_cfg(i, (int)ch[i]);
         if (i == RC_THROTTLE) {
+            // RC_THROTTLE's own output slot (servo_out_3) is a spare pin, not
+            // mirrored from the throttle stick -- see channel_output_type()'s
+            // comment. Only the dedicated ESC outputs get the throttle value.
             apply_throttle_to_escs((int)ch[i]);
+            continue;
         }
+        apply_output_cfg(i, (int)ch[i]);
     }
 }
 
@@ -421,16 +509,35 @@ bool update_autonomous_outputs(void)
     // today -- with no sensor driver written yet -- this always falls
     // through to the fallback-percent throttle below (see g_airspeed_cfg,
     // configurable in setup mode).
+    //
+    // Turn compensation: a banked turn needs more lift than level flight to
+    // hold altitude (load factor n = 1/cos(bank)), which raises stall speed
+    // by sqrt(n) = 1/sqrt(cos(bank)) -- so holding the same speed margin
+    // above stall through a turn means flying faster than the level-flight
+    // cruise target, not the same speed. goal_roll_deg is already clamped to
+    // +/-MAX_ROLL_GOAL_DEG (45deg) by set_goal_roll_deg(), safely away from
+    // the singularity at 90deg, so no extra bound is needed here: at the max
+    // commanded bank this scales the target up by ~19% (1/sqrt(cos(45deg))).
+    // Only applies to the closed-loop airspeed-PID path below -- the no-
+    // sensor fallback just outputs a fixed throttle percentage with no speed
+    // feedback at all, so there's no target to compensate there.
+    float bank_rad = fabsf(goal_roll_deg) * ((float)M_PI / 180.0f);
+    float target_cms_effective = g_airspeed_cfg.target_cms / sqrtf(cosf(bank_rad));
+
+    // Throttle range comes from ESC1_CH's own calibrated output_cfg_t --
+    // ESC1 is always driven (single or twin motor, see
+    // apply_throttle_to_escs()), and RC_THROTTLE's own output slot
+    // (servo_out_3) is a spare pin now, no longer tied to throttle at all --
+    // see pass_through_inputs() and channel_output_type()'s comments.
     int16_t airspeed_cms = airspeed_get();
     int throttle_out;
     if (airspeed_reading() && airspeed_cms != INT16_MIN) {
-        float throttle_cmd = pid_step(&AIRSPEED_PID_CFG, (float)airspeed_cms, g_airspeed_cfg.target_cms, dt_s);
-        throttle_out = clip((int)(1000 + throttle_cmd), channel_cfgs[RC_THROTTLE].min_us, channel_cfgs[RC_THROTTLE].max_us);
+        float throttle_cmd = pid_step(&AIRSPEED_PID_CFG, (float)airspeed_cms, target_cms_effective, dt_s);
+        throttle_out = clip((int)(1000 + throttle_cmd), channel_cfgs[ESC1_CH].min_us, channel_cfgs[ESC1_CH].max_us);
     } else {
-        int span = (int)channel_cfgs[RC_THROTTLE].max_us - (int)channel_cfgs[RC_THROTTLE].min_us;
-        throttle_out = (int)channel_cfgs[RC_THROTTLE].min_us + (int)(span * g_airspeed_cfg.fallback_pct);
+        int span = (int)channel_cfgs[ESC1_CH].max_us - (int)channel_cfgs[ESC1_CH].min_us;
+        throttle_out = (int)channel_cfgs[ESC1_CH].min_us + (int)(span * g_airspeed_cfg.fallback_pct);
     }
-    apply_output_cfg(RC_THROTTLE, throttle_out);
     apply_throttle_to_escs(throttle_out);
 
     float roll_cmd = pid_step(&ROLL_PID_CFG, roll_deg, goal_roll_deg, dt_s);
@@ -475,13 +582,8 @@ void control_task(void *arg) {
 
         // printf("CH: %lu, %lu, %lu, %lu, %lu, %lu\n", ch[0], ch[1], ch[2], ch[3], ch[4], ch[5]);
 
-        // No autonomous until we've heard from the radio at least once, otherwise we might start flying away on power up with bad imu data and no rc input
-        bool radio_connected = cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)].last_update_us != 0;
-
-        // if not heard from radio in a while, go autonomous. Otherwise we fall from sky...
-        bool stale_capture = is_stale(cap_groups[rc_channel_to_capture_group(RC_SWITCH)].inputs[rc_channel_to_capture_channel(RC_SWITCH)]);
-
-        bool want_autonomous = !critical_fault_latched && radio_connected && (stale_capture || autonomous_mode_enabled(ch[RC_SWITCH]));
+        rc_mode_status_t mode_status = get_rc_mode_status();
+        bool want_autonomous = !critical_fault_latched && mode_status.autonomous;
 
         // On the manual->autonomous transition edge, clear out accumulated
         // PID/nav state so a nav task that's been idling in the background
@@ -495,7 +597,20 @@ void control_task(void *arg) {
         }
         was_autonomous = want_autonomous;
 
-        if (want_autonomous && !update_autonomous_outputs()) {
+        if (want_autonomous && !imu_ready) {
+            // Not a fault -- the IMU can still be mid-boot (e.g. inside
+            // calibrate_gyro_bias()'s up-to-15s+ settle window, restarted
+            // if it detects motion) well after control_task is already
+            // running. Falling back to manual for this cycle and retrying
+            // once imu_ready actually goes true avoids permanently latching
+            // autonomous off over a race the operator can trivially lose by
+            // flipping the switch early -- there's no external indication
+            // that window is even in progress. A real failure (imu_ready
+            // was true, then update_autonomous_outputs() itself fails, e.g.
+            // a mutex take) below still latches, since that's an actual
+            // runtime fault, not an expected startup race.
+            want_autonomous = false;
+        } else if (want_autonomous && !update_autonomous_outputs()) {
             critical_fault_latched = true;
             want_autonomous = false;
         }
@@ -526,7 +641,10 @@ void io_hardware_init(void) {
     add_gen_cmpr(&out_groups[0].operators[0], 1, CH2_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);
 
     add_operator(&out_groups[0], 1, timer0);
-    add_gen_cmpr(&out_groups[0].operators[1], 0, CH3_OUT_GPIO, MOTOR_TYPE, MIN_STARTING_VALUE);
+    // Spare output (see channel_output_type()'s comment) -- SERVO_TYPE/
+    // DEFAULT_STARTING_VALUE like the other 5 RC-mirrored channels, not
+    // MOTOR_TYPE, since nothing drives this pin as a throttle anymore.
+    add_gen_cmpr(&out_groups[0].operators[1], 0, CH3_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);
     add_gen_cmpr(&out_groups[0].operators[1], 1, CH4_OUT_GPIO, SERVO_TYPE, DEFAULT_STARTING_VALUE);
 
     add_operator(&out_groups[0], 2, timer0);
@@ -612,6 +730,12 @@ void app_main(void)
     // nav_init()'s own persisted-mission/heading-PID load below).
     ESP_ERROR_CHECK(config_store_init());
 
+    // Must run here, in this single-threaded setup phase, before imu_task or
+    // airspeed_init() (below) create any task that might call
+    // i2c_bus_add_device() -- see i2c_bus.h's threading contract.
+    i2c_bus_init();
+    i2c_bus_scan(); // bring-up diagnostic -- see i2c_bus.h
+
     // Override compiled-in PID defaults with whatever was last persisted via
     // setup mode, if anything. HEADING_PID_CFG's own load happens inside
     // nav_init() itself, since it's nav.c's own private state.
@@ -629,13 +753,13 @@ void app_main(void)
         ESP_LOGI(TAG, "Loaded persisted airspeed PID gains from NVS");
     }
 
-    // Per-channel output range/reversal: default to the channel's full type
-    // range with reversed=false when nothing is persisted yet. Covers all 8
-    // output channels (6 RC-mirrored + ESC1 + ESC2).
+    // Per-channel output range/reversal: default to the standard 1000-2000us
+    // range with reversed=false when nothing is persisted yet -- setup mode
+    // can widen this up to PULSEWIDTH_ABS_MIN/MAX_US per channel. Covers all
+    // 8 output channels (6 RC-mirrored + ESC1 + ESC2).
     for (int ch = 0; ch < NUM_OUTPUT_CHANNELS; ch++) {
-        item_type_t type = channel_output_type(ch);
-        channel_cfgs[ch].min_us = (type == MOTOR_TYPE) ? MOTOR_MIN_PULSEWIDTH_US : SERVO_MIN_PULSEWIDTH_US;
-        channel_cfgs[ch].max_us = (type == MOTOR_TYPE) ? MOTOR_MAX_PULSEWIDTH_US : SERVO_MAX_PULSEWIDTH_US;
+        channel_cfgs[ch].min_us = PULSEWIDTH_DEFAULT_MIN_US;
+        channel_cfgs[ch].max_us = PULSEWIDTH_DEFAULT_MAX_US;
         channel_cfgs[ch].reversed = false;
 
         char key[16];
@@ -666,6 +790,16 @@ void app_main(void)
                  g_motor_cfg.motor_count, g_motor_cfg.esc1_is_left);
     }
 
+    // Pure in-memory update (rc_input_map isn't touched by io_hardware_init()
+    // until later), safe to load this early regardless of ordering.
+    rc_input_map_cfg_t loaded_rc_map;
+    if (config_store_load_rc_input_map(&loaded_rc_map)) {
+        for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+            rc_input_map[i] = loaded_rc_map.phys_ch[i];
+        }
+        ESP_LOGI(TAG, "Loaded persisted RC input map from NVS");
+    }
+
     // Checked only after every persisted setting above is loaded into its
     // live global, so setup mode's HTTP API reflects actually-persisted
     // state rather than compiled-in defaults.
@@ -673,14 +807,21 @@ void app_main(void)
         setup_mode_run(); // never returns -- back to flight mode is a physical reset
     }
 
-    // Create the IMU and GPS tasks
-    BaseType_t result = xTaskCreate(
+    // Create the IMU and GPS tasks, pinned to core 1 -- WiFi's own driver/
+    // interrupt handling on the ESP32-S3 is tied to core 0, and an unpinned
+    // I2C/UART-polling task landing there under WiFi load can starve the I2C
+    // driver's recovery path long enough to trip the interrupt watchdog (see
+    // setup_mode.c's identical reasoning; flight mode never runs WiFi, so
+    // this can't happen here today, but pin it anyway for the same defensive
+    // reason control_task already is).
+    BaseType_t result = xTaskCreatePinnedToCore(
         imu_task,
         "imu_task",
         4096,
         NULL,
         5,
-        NULL
+        NULL,
+        1
     );
 
     if (result != pdPASS) {
@@ -690,13 +831,14 @@ void app_main(void)
         ESP_LOGI(TAG, "IMU task created successfully");
     }
 
-    result = xTaskCreate(
+    result = xTaskCreatePinnedToCore(
         gps_task,
         "gps_task",
         4096,
         NULL,
         5,
-        NULL
+        NULL,
+        1
     );
 
     if (result != pdPASS) {

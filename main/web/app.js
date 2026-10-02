@@ -9,6 +9,7 @@
 const PID_TARGETS = ["roll", "pitch", "heading", "airspeed"];
 const PID_FIELDS = ["k_p", "k_i", "k_d", "i_limit"];
 const OUTPUT_POLL_INTERVAL_MS = 250;
+const GPS_POLL_INTERVAL_MS = 1000;
 
 // A 1x1 transparent PNG, used as Leaflet's errorTileUrl so a failed tile
 // fetch (no internet on this AP's connection) renders as blank instead of a
@@ -70,6 +71,11 @@ function initMap(centerLat, centerLon) {
     errorTileUrl: BLANK_TILE,
   }).addTo(map);
 
+  // L.Icon.Default always prepends its own auto-detected imagePath in front
+  // of iconUrl/iconRetinaUrl/shadowUrl, even when those are already absolute
+  // -- clearing it to "" is the standard workaround, otherwise these 404 as
+  // "/images//images/...".
+  L.Icon.Default.imagePath = "";
   L.Icon.Default.mergeOptions({
     iconUrl: "/images/marker-icon.png",
     iconRetinaUrl: "/images/marker-icon-2x.png",
@@ -296,6 +302,92 @@ async function pollOutputs() {
   }
 }
 
+// ---------------- RC channel mapping ----------------
+
+function buildRcMapRows(entries) {
+  const container = document.getElementById("rc-map-rows");
+  const template = document.getElementById("rc-map-row-template");
+  entries.forEach((entry) => {
+    const row = template.content.firstElementChild.cloneNode(true);
+    row.dataset.logical = entry.logical;
+    row.querySelector(".rc-map-name").textContent = entry.name;
+
+    const select = row.querySelector(".rc-map-select");
+    entries.forEach((_, i) => {
+      const opt = document.createElement("option");
+      opt.value = i + 1;
+      opt.textContent = `Pin ${i + 1}`;
+      select.appendChild(opt);
+    });
+    select.value = entry.physical_pin;
+    select.addEventListener("change", async () => {
+      try {
+        await apiPost("/api/rc_map", { logical: entry.logical, physical_pin: Number(select.value) });
+        showToast(`${entry.name} set to pin ${select.value}`);
+      } catch (err) {
+        showToast(`Couldn't save ${entry.name} mapping: ` + err.message);
+      }
+    });
+
+    container.appendChild(row);
+  });
+}
+
+function renderRcMap(data) {
+  const grid = document.getElementById("rc-map-live-grid");
+  grid.innerHTML = "";
+  data.physical_live_us.forEach((us, i) => {
+    const span = document.createElement("span");
+    span.className = "rc-map-live-pin";
+    span.textContent = `Pin ${i + 1}: ${us} µs`;
+    grid.appendChild(span);
+  });
+
+  // Keeps each row's dropdown in sync with the live mapping, but never
+  // clobbers one the user is actively changing.
+  data.map.forEach((entry) => {
+    const row = document.querySelector(`.rc-map-row[data-logical="${entry.logical}"]`);
+    if (!row) return;
+    const select = row.querySelector(".rc-map-select");
+    if (document.activeElement !== select) select.value = entry.physical_pin;
+  });
+}
+
+async function pollRcMap() {
+  try {
+    renderRcMap(await apiGet("/api/rc_map"));
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
+// ---------------- Mode status (manual vs. autonomous) ----------------
+
+function renderMode(data) {
+  const badge = document.getElementById("mode-badge");
+  if (!data.radio_connected) {
+    badge.textContent = "NO RADIO";
+    badge.className = "mode-badge mode-none";
+  } else if (data.signal_stale) {
+    badge.textContent = "AUTONOMOUS (failsafe: signal lost)";
+    badge.className = "mode-badge mode-auto";
+  } else if (data.autonomous) {
+    badge.textContent = "AUTONOMOUS";
+    badge.className = "mode-badge mode-auto";
+  } else {
+    badge.textContent = "MANUAL";
+    badge.className = "mode-badge mode-manual";
+  }
+}
+
+async function pollMode() {
+  try {
+    renderMode(await apiGet("/api/mode"));
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
 // ---------------- Motors ----------------
 
 function initMotorCfg(cfg) {
@@ -350,15 +442,22 @@ function initAirframe(mode) {
 
 // ---------------- Airspeed ----------------
 
+let airspeedDirty = false;
+
+function renderAirspeedLive(data) {
+  document.getElementById("airspeed-live").textContent = data.reading ? `${data.live_cms} cm/s` : "no reading";
+}
+
 function initAirspeed(cfg) {
   const targetInput = document.getElementById("airspeed-target");
   const fallbackInput = document.getElementById("airspeed-fallback");
   const saveBtn = document.getElementById("airspeed-save-btn");
   targetInput.value = cfg.target_cms;
   fallbackInput.value = (cfg.fallback_pct * 100).toFixed(0);
+  renderAirspeedLive(cfg);
 
   [targetInput, fallbackInput].forEach((input) => {
-    input.addEventListener("input", () => { saveBtn.disabled = false; });
+    input.addEventListener("input", () => { airspeedDirty = true; saveBtn.disabled = false; });
   });
 
   saveBtn.addEventListener("click", async () => {
@@ -367,9 +466,11 @@ function initAirspeed(cfg) {
         target_cms: parseFloat(targetInput.value),
         fallback_pct: parseFloat(fallbackInput.value) / 100,
       });
+      airspeedDirty = false;
       targetInput.value = result.target_cms;
       fallbackInput.value = (result.fallback_pct * 100).toFixed(0);
       saveBtn.disabled = true;
+      renderAirspeedLive(result);
       showToast("Airspeed cfg saved");
     } catch (err) {
       showToast("Couldn't save airspeed cfg: " + err.message);
@@ -377,13 +478,108 @@ function initAirspeed(cfg) {
   });
 }
 
+// Polled independently of loadInitialState() so the live reading (and the
+// target/fallback fields, unless you're mid-edit) stay current without a
+// page refresh -- same "don't clobber an in-progress edit" rule the output
+// rows already follow.
+async function pollAirspeed() {
+  try {
+    const data = await apiGet("/api/airspeed");
+    renderAirspeedLive(data);
+    if (!airspeedDirty) {
+      document.getElementById("airspeed-target").value = data.target_cms;
+      document.getElementById("airspeed-fallback").value = (data.fallback_pct * 100).toFixed(0);
+    }
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
+// ---------------- IMU ----------------
+
+function renderImu(data) {
+  document.getElementById("imu-ready-badge").textContent = data.ready ? "ready" : "not ready";
+  document.getElementById("imu-roll").textContent = `${data.roll.toFixed(1)}°`;
+  document.getElementById("imu-pitch").textContent = `${data.pitch.toFixed(1)}°`;
+  document.getElementById("imu-yaw").textContent = `${data.yaw.toFixed(1)}°`;
+  document.getElementById("imu-mag-valid").textContent = data.mag_valid ? "yes" : "no";
+}
+
+async function pollImu() {
+  try {
+    renderImu(await apiGet("/api/imu"));
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
+// ---------------- Live "plane is here" marker ----------------
+
+let planeMarker = null;
+
+function updatePlaneMarker(lat, lon) {
+  if (!map) return; // map isn't created yet -- see loadInitialState()
+  if (!planeMarker) {
+    const icon = L.divIcon({
+      className: "plane-marker-icon",
+      html: '<div class="plane-dot"></div>',
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+    });
+    planeMarker = L.marker([lat, lon], { icon, zIndexOffset: 1000, interactive: false }).addTo(map);
+    planeMarker.bindTooltip("Plane", { permanent: false, direction: "top", offset: [0, -10] });
+  } else {
+    planeMarker.setLatLng([lat, lon]);
+  }
+}
+
+async function pollGps() {
+  try {
+    const data = await apiGet("/api/gps");
+    if (data.valid) updatePlaneMarker(data.lat, data.lon);
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
 // ---------------- Initial load ----------------
+
+// Best-effort browser geolocation, for the rare case the plane's onboard GPS
+// hasn't gotten a fix yet (or this page is ever served over something other
+// than the setup AP's plain HTTP). Note: most browsers block
+// navigator.geolocation entirely on an insecure origin like
+// http://192.168.4.1/, so this will typically just time out and fall
+// through -- it's here in case that's ever not true (HTTPS added later, a
+// browser/OS that's more lenient, etc.), not because it's expected to work
+// today.
+function getBrowserLocation() {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) {
+      resolve(null);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+      () => resolve(null),
+      { timeout: 4000, maximumAge: 60000 }
+    );
+  });
+}
 
 async function loadInitialState() {
   try {
     const state = await apiGet("/api/state");
 
-    const center = state.mission.points[0] || { lat: 0, lon: 0 };
+    // Prefer, in order: an existing mission's first waypoint (so you see
+    // your actual plan, not just where you happen to be standing), the
+    // plane's own onboard GPS fix (the most reliable source here -- see
+    // getBrowserLocation()'s note on why the browser one usually can't run
+    // at all), browser geolocation as a last-ditch best effort, then the
+    // ocean.
+    let center = state.mission.points[0];
+    if (!center && state.gps.valid) center = { lat: state.gps.lat, lon: state.gps.lon };
+    if (!center) center = await getBrowserLocation();
+    if (!center) center = { lat: 0, lon: 0 };
     initMap(center.lat, center.lon);
     mission = state.mission.points.map((p) => ({ lat: p.lat, lon: p.lon }));
     loopMission = state.mission.loop;
@@ -395,6 +591,9 @@ async function loadInitialState() {
     initMotorCfg(state.motor_cfg);
     initAirframe(state.airframe);
     initAirspeed(state.airspeed_cfg);
+
+    const rcMap = await apiGet("/api/rc_map");
+    buildRcMapRows(rcMap.map);
   } catch (err) {
     showToast("Couldn't reach setup API: " + err.message);
     initMap(0, 0);
@@ -407,4 +606,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loop-toggle").addEventListener("change", onLoopToggleChanged);
   loadInitialState();
   setInterval(pollOutputs, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollAirspeed, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollImu, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollRcMap, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollMode, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollGps, GPS_POLL_INTERVAL_MS);
 });

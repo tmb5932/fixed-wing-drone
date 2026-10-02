@@ -33,8 +33,8 @@
 // above -- there is no corresponding RC *input* channel for these (the
 // receiver only has 6), so they're output-only indices. Never pass these to
 // any rc_channel_to_capture_*() function -- those remain bounded by
-// NUM_RC_CHANNELS. GPIO assignments live in main.c pending an exact pinout
-// for the current board rev.
+// NUM_RC_CHANNELS. GPIO assignments (confirmed against the current board's
+// pinout) live in main.c.
 #define NUM_ESC_CHANNELS (2)
 #define NUM_OUTPUT_CHANNELS (NUM_RC_CHANNELS + NUM_ESC_CHANNELS)
 #define ESC1_CH (NUM_RC_CHANNELS)
@@ -46,11 +46,14 @@
 // one of the two runs per boot.
 void io_hardware_init(void);
 
-// Only MOTOR_TYPE for RC_THROTTLE (the ESC channel); SERVO_TYPE for all
-// other channels. Single source of truth for which absolute pulse-width
-// bounds (SERVO_MIN/MAX_PULSEWIDTH_US vs MOTOR_MIN/MAX_PULSEWIDTH_US) apply
-// to a given channel, used for boot-time output_cfg_t defaulting and for
-// clamping calibration input from the setup-mode API.
+// Only MOTOR_TYPE for ESC1_CH/ESC2_CH; SERVO_TYPE for all 6 RC-mirrored
+// channels, including RC_THROTTLE's own output slot (servo_out_3) -- that
+// pin used to be a redundant second copy of the ESC signal, now it's a spare
+// servo output like the rest (see main.c's pass_through_inputs()). Single
+// source of truth for which absolute pulse-width bounds
+// (SERVO_MIN/MAX_PULSEWIDTH_US vs MOTOR_MIN/MAX_PULSEWIDTH_US) apply to a
+// given channel, used for boot-time output_cfg_t defaulting and for clamping
+// calibration input from the setup-mode API.
 item_type_t channel_output_type(int ch);
 
 uint32_t get_channel_pulse_width(int ch);
@@ -97,5 +100,31 @@ pid_gains_t get_airspeed_pid_gains(void);
 // without a schema change.
 motor_cfg_t get_motor_cfg(void);
 bool set_motor_cfg(const motor_cfg_t *cfg);
+
+// Live RC input channel mapping (which physical pin backs each logical RC_*
+// function), for the setup-mode HTTP API. Setter validates each entry is a
+// valid capture-channel index (0..NUM_RC_CHANNELS), applies it live, and
+// persists to NVS, returning false (still applies live) if the NVS write
+// failed or the value was rejected as invalid.
+rc_input_map_cfg_t get_rc_input_map(void);
+bool set_rc_input_map(const rc_input_map_cfg_t *cfg);
+
+// Raw live pulse width for physical capture-channel index `phys` (0-5),
+// bypassing rc_input_map entirely -- for setup mode's channel-mapping UI,
+// so a bench tester can wiggle a stick and see which physical pin number
+// reacts, independent of whatever logical function it's currently mapped to.
+uint32_t get_physical_pulse_width(int phys);
+
+// Whether control_task() would currently choose autonomous or manual mode,
+// exposed for setup mode's HTTP API so a bench tester can see which way
+// their RC switch is set without leaving setup mode (which never runs
+// control_task itself). See get_rc_mode_status()'s own comment in main.c.
+typedef struct {
+    bool autonomous;      // would engage autonomous mode right now
+    bool radio_connected; // false until RC_SWITCH's physical pin has ever updated
+    bool signal_stale;    // radio_connected but no update in >200ms (the failsafe path)
+} rc_mode_status_t;
+
+rc_mode_status_t get_rc_mode_status(void);
 
 #endif // OUTPUT_CTL_H

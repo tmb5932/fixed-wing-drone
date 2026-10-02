@@ -46,17 +46,27 @@ Madgwick::Madgwick() {
 	anglesComputed = 0;
 }
 
-void Madgwick::update(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
+bool Madgwick::update(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
 	float recipNorm;
 	float s0, s1, s2, s3;
 	float qDot1, qDot2, qDot3, qDot4;
 	float hx, hy;
 	float _2q0mx, _2q0my, _2q0mz, _2q1mx, _2bx, _2bz, _4bx, _4bz, _2q0, _2q1, _2q2, _2q3, _2q0q2, _2q2q3, q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
 
+	// Reject non-finite inputs outright, before they ever touch the
+	// quaternion state -- a NaN/Inf sensor sample would otherwise poison
+	// q0..q3 permanently (every later update mixes the corrupted state into
+	// the next one, so it never self-corrects even once inputs go back to
+	// normal).
+	if (!isfinite(gx) || !isfinite(gy) || !isfinite(gz)
+		|| !isfinite(ax) || !isfinite(ay) || !isfinite(az)
+		|| !isfinite(mx) || !isfinite(my) || !isfinite(mz)) {
+		return false;
+	}
+
 	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
 	if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
-		updateIMU(gx, gy, gz, ax, ay, az);
-		return;
+		return updateIMU(gx, gy, gz, ax, ay, az);
 	}
 
 	// Convert gyroscope degrees/sec to radians/sec
@@ -146,16 +156,34 @@ void Madgwick::update(float gx, float gy, float gz, float ax, float ay, float az
 	q2 *= recipNorm;
 	q3 *= recipNorm;
 	anglesComputed = 0;
+
+	// Self-heal instead of propagating corruption forever: once q0..q3 goes
+	// non-finite, every later update mixes it into the next one, so the
+	// filter can never recover on its own even after inputs go back to
+	// normal. Resetting to the identity quaternion (level, zero yaw) is the
+	// same safe starting state used at construction.
+	if (!isfinite(q0) || !isfinite(q1) || !isfinite(q2) || !isfinite(q3)) {
+		q0 = 1.0f; q1 = q2 = q3 = 0.0f;
+		anglesComputed = 0;
+		return false;
+	}
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------
 // IMU algorithm update
 
-void Madgwick::updateIMU(float gx, float gy, float gz, float ax, float ay, float az) {
+bool Madgwick::updateIMU(float gx, float gy, float gz, float ax, float ay, float az) {
 	float recipNorm;
 	float s0, s1, s2, s3;
 	float qDot1, qDot2, qDot3, qDot4;
 	float _2q0, _2q1, _2q2, _2q3, _4q0, _4q1, _4q2 ,_8q1, _8q2, q0q0, q1q1, q2q2, q3q3;
+
+	// Same reasoning as update()'s own input guard above.
+	if (!isfinite(gx) || !isfinite(gy) || !isfinite(gz)
+		|| !isfinite(ax) || !isfinite(ay) || !isfinite(az)) {
+		return false;
+	}
 
 	// Convert gyroscope degrees/sec to radians/sec
 	gx *= 0.0174533f;
@@ -223,6 +251,14 @@ void Madgwick::updateIMU(float gx, float gy, float gz, float ax, float ay, float
 	q2 *= recipNorm;
 	q3 *= recipNorm;
 	anglesComputed = 0;
+
+	// Same self-heal as update() above.
+	if (!isfinite(q0) || !isfinite(q1) || !isfinite(q2) || !isfinite(q3)) {
+		q0 = 1.0f; q1 = q2 = q3 = 0.0f;
+		anglesComputed = 0;
+		return false;
+	}
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------

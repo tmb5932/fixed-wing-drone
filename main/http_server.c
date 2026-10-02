@@ -7,6 +7,9 @@
 #include "http_server.h"
 #include "output_ctl.h"
 #include "nav.h"
+#include "gps.h"
+#include "airspeed.h"
+#include "imu.h"
 #include "pwm_output.h"
 #include "pid_types.h"
 
@@ -138,17 +141,73 @@ static cJSON *mission_json(void) {
     return o;
 }
 
+// Best-effort current fix, for the web UI's initial mission-map center and
+// its live "plane is here" marker (polled repeatedly -- see api_gps_get()).
+// "valid": false whenever gps_task hasn't produced a fix yet (e.g. cold
+// start, no sky view on the bench) -- the caller falls back to browser
+// geolocation or (0,0) for centering in that case, and just doesn't draw the
+// live marker, same as if this endpoint didn't exist.
+static cJSON *gps_json(void) {
+    bool valid = false;
+    double lat = 0.0, lon = 0.0, course_deg = 0.0;
+    if (gps_ready && xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(GPS_DATA_MUTEX_WAIT_MS)) == pdTRUE) {
+        valid = latest_gps_data.valid;
+        lat = latest_gps_data.latitude_deg;
+        lon = latest_gps_data.longitude_deg;
+        course_deg = latest_gps_data.course_deg;
+        xSemaphoreGive(gps_data_mutex);
+    }
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddBoolToObject(o, "valid", valid);
+    cJSON_AddNumberToObject(o, "lat", lat);
+    cJSON_AddNumberToObject(o, "lon", lon);
+    cJSON_AddNumberToObject(o, "course_deg", course_deg);
+    return o;
+}
+
+// Bench-verification readout for the setup-mode IMU card. mag_valid mirrors
+// imu_data_t's own meaning: true only when yaw was just fused with a
+// trustworthy, non-stale magnetometer sample (see imu.h) -- false means
+// yaw is gyro-only drift, not a real compass heading, which matters when
+// judging whether the yaw number on screen should be trusted.
+static cJSON *imu_json(void) {
+    bool ready = imu_ready;
+    float roll = 0.0f, pitch = 0.0f, yaw = 0.0f;
+    bool mag_valid = false;
+    if (ready && xSemaphoreTake(imu_data_mutex, pdMS_TO_TICKS(IMU_MUTEX_WAIT)) == pdTRUE) {
+        roll = imu_data.roll;
+        pitch = imu_data.pitch;
+        yaw = imu_data.yaw;
+        mag_valid = imu_data.mag_valid;
+        xSemaphoreGive(imu_data_mutex);
+    }
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddBoolToObject(o, "ready", ready);
+    cJSON_AddNumberToObject(o, "roll", roll);
+    cJSON_AddNumberToObject(o, "pitch", pitch);
+    cJSON_AddNumberToObject(o, "yaw", yaw);
+    cJSON_AddBoolToObject(o, "mag_valid", mag_valid);
+    return o;
+}
+
 static cJSON *output_channel_json(int ch, const char *name) {
     output_cfg_t cfg = get_channel_output_cfg(ch);
     item_type_t type = channel_output_type(ch);
-    uint16_t abs_min = (type == MOTOR_TYPE) ? MOTOR_MIN_PULSEWIDTH_US : SERVO_MIN_PULSEWIDTH_US;
-    uint16_t abs_max = (type == MOTOR_TYPE) ? MOTOR_MAX_PULSEWIDTH_US : SERVO_MAX_PULSEWIDTH_US;
+    uint16_t abs_min = PULSEWIDTH_ABS_MIN_US;
+    uint16_t abs_max = PULSEWIDTH_ABS_MAX_US;
+
+    // get_channel_pulse_width() is only valid for the 6 RC-mirrored channels
+    // -- ESC1/ESC2 have no capture input of their own (see output_ctl.h's
+    // ESC1_CH/ESC2_CH comment). They always mirror RC_THROTTLE's live input
+    // (see apply_throttle_to_escs() in main.c), so that's the truthful
+    // "live_us" to report for them too.
+    uint32_t live_us = (ch < NUM_RC_CHANNELS) ? get_channel_pulse_width(ch) : get_channel_pulse_width(RC_THROTTLE);
 
     cJSON *o = cJSON_CreateObject();
     cJSON_AddNumberToObject(o, "channel", ch + 1);
     cJSON_AddStringToObject(o, "name", name);
     cJSON_AddStringToObject(o, "type", (type == MOTOR_TYPE) ? "motor" : "servo");
-    cJSON_AddNumberToObject(o, "live_us", get_channel_pulse_width(ch));
+    cJSON_AddNumberToObject(o, "live_us", live_us);
     cJSON_AddNumberToObject(o, "min_us", cfg.min_us);
     cJSON_AddNumberToObject(o, "max_us", cfg.max_us);
     cJSON_AddBoolToObject(o, "reversed", cfg.reversed);
@@ -160,13 +219,61 @@ static cJSON *output_channel_json(int ch, const char *name) {
 static const char *const CHANNEL_NAMES[NUM_OUTPUT_CHANNELS] = {
     [RC_AILERON]  = "Aileron",
     [RC_ELEVATOR] = "Elevator",
-    [RC_THROTTLE] = "Throttle (legacy)",
+    [RC_THROTTLE] = "Spare",
     [RC_DIAL]     = "Aux (dial)",
     [RC_RUDDER]   = "Rudder",
     [RC_SWITCH]   = "Aux (switch)",
     [ESC1_CH]     = "ESC1",
     [ESC2_CH]     = "ESC2",
 };
+
+// Separate from CHANNEL_NAMES above: that array names each *output* slot
+// (where RC_THROTTLE's own output is "Spare", see main.c), but these name
+// each logical RC *input* function -- RC_THROTTLE is very much still "the
+// throttle stick" on the input side, just no longer mirrored to its own
+// output pin.
+static const char *const RC_INPUT_NAMES[NUM_RC_CHANNELS] = {
+    [RC_AILERON]  = "Aileron",
+    [RC_ELEVATOR] = "Elevator",
+    [RC_THROTTLE] = "Throttle",
+    [RC_DIAL]     = "Aux (dial)",
+    [RC_RUDDER]   = "Rudder",
+    [RC_SWITCH]   = "Aux (switch)",
+};
+
+static cJSON *rc_input_map_json(void) {
+    rc_input_map_cfg_t map = get_rc_input_map();
+
+    cJSON *o = cJSON_CreateObject();
+    cJSON *entries = cJSON_CreateArray();
+    for (int logical = 0; logical < NUM_RC_CHANNELS; logical++) {
+        cJSON *e = cJSON_CreateObject();
+        cJSON_AddNumberToObject(e, "logical", logical + 1);
+        cJSON_AddStringToObject(e, "name", RC_INPUT_NAMES[logical]);
+        cJSON_AddNumberToObject(e, "physical_pin", map.phys_ch[logical] + 1);
+        cJSON_AddItemToArray(entries, e);
+    }
+    cJSON_AddItemToObject(o, "map", entries);
+
+    // Raw per-physical-pin live pulse widths, bypassing the map entirely --
+    // lets the setup-mode UI show "wiggle a stick, watch which pin number
+    // moves" regardless of how the logical functions are currently mapped.
+    cJSON *live = cJSON_CreateArray();
+    for (int phys = 0; phys < NUM_RC_CHANNELS; phys++) {
+        cJSON_AddItemToArray(live, cJSON_CreateNumber(get_physical_pulse_width(phys)));
+    }
+    cJSON_AddItemToObject(o, "physical_live_us", live);
+    return o;
+}
+
+static cJSON *rc_mode_json(void) {
+    rc_mode_status_t status = get_rc_mode_status();
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddBoolToObject(o, "autonomous", status.autonomous);
+    cJSON_AddBoolToObject(o, "radio_connected", status.radio_connected);
+    cJSON_AddBoolToObject(o, "signal_stale", status.signal_stale);
+    return o;
+}
 
 static cJSON *motor_cfg_json(motor_cfg_t cfg) {
     cJSON *o = cJSON_CreateObject();
@@ -175,10 +282,26 @@ static cJSON *motor_cfg_json(motor_cfg_t cfg) {
     return o;
 }
 
+// Bench-verification readout for the setup-mode Airspeed card: reading=false
+// means the sensor never self-validated (see airspeed.c's WHO_AM_I-style
+// gate) and live_cms is meaningless in that case, same convention
+// update_autonomous_outputs() already uses in main.c.
+static cJSON *airspeed_live_json(airspeed_cfg_t cfg) {
+    bool reading = airspeed_reading();
+    int16_t raw_cms = airspeed_get();
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddNumberToObject(o, "target_cms", cfg.target_cms);
+    cJSON_AddNumberToObject(o, "fallback_pct", cfg.fallback_pct);
+    cJSON_AddBoolToObject(o, "reading", reading);
+    cJSON_AddNumberToObject(o, "live_cms", (reading && raw_cms != INT16_MIN) ? raw_cms : 0);
+    return o;
+}
+
 static cJSON *full_state_json(void) {
     cJSON *root = cJSON_CreateObject();
 
     cJSON_AddItemToObject(root, "mission", mission_json());
+    cJSON_AddItemToObject(root, "gps", gps_json());
 
     cJSON *pid = cJSON_CreateObject();
     for (pid_target_t t = PID_TARGET_ROLL; t <= PID_TARGET_AIRSPEED; t++) {
@@ -195,11 +318,7 @@ static cJSON *full_state_json(void) {
     cJSON_AddStringToObject(root, "airframe", airframe_mode_name(get_airframe_mode()));
     cJSON_AddItemToObject(root, "motor_cfg", motor_cfg_json(get_motor_cfg()));
 
-    airspeed_cfg_t aspd = get_airspeed_cfg();
-    cJSON *aspd_j = cJSON_CreateObject();
-    cJSON_AddNumberToObject(aspd_j, "target_cms", aspd.target_cms);
-    cJSON_AddNumberToObject(aspd_j, "fallback_pct", aspd.fallback_pct);
-    cJSON_AddItemToObject(root, "airspeed_cfg", aspd_j);
+    cJSON_AddItemToObject(root, "airspeed_cfg", airspeed_live_json(get_airspeed_cfg()));
 
     return root;
 }
@@ -256,6 +375,14 @@ static esp_err_t recv_json_body(httpd_req_t *req, cJSON **out) {
 
 static esp_err_t api_state_get(httpd_req_t *req) {
     return send_json(req, full_state_json(), 200);
+}
+
+static esp_err_t api_gps_get(httpd_req_t *req) {
+    return send_json(req, gps_json(), 200);
+}
+
+static esp_err_t api_imu_get(httpd_req_t *req) {
+    return send_json(req, imu_json(), 200);
 }
 
 static esp_err_t api_mission_post(httpd_req_t *req) {
@@ -435,6 +562,10 @@ static esp_err_t api_airframe_post(httpd_req_t *req) {
     return send_json(req, o, 200);
 }
 
+static esp_err_t api_airspeed_get(httpd_req_t *req) {
+    return send_json(req, airspeed_live_json(get_airspeed_cfg()), 200);
+}
+
 static esp_err_t api_airspeed_post(httpd_req_t *req) {
     cJSON *body;
     if (recv_json_body(req, &body) != ESP_OK) {
@@ -456,10 +587,7 @@ static esp_err_t api_airspeed_post(httpd_req_t *req) {
     if (!set_airspeed_cfg(&cfg)) {
         return send_error(req, 400, "invalid airspeed cfg (fallback_pct must be 0.0-1.0, values must be finite)");
     }
-    cJSON *o = cJSON_CreateObject();
-    cJSON_AddNumberToObject(o, "target_cms", cfg.target_cms);
-    cJSON_AddNumberToObject(o, "fallback_pct", cfg.fallback_pct);
-    return send_json(req, o, 200);
+    return send_json(req, airspeed_live_json(cfg), 200);
 }
 
 static esp_err_t api_motor_post(httpd_req_t *req) {
@@ -486,6 +614,42 @@ static esp_err_t api_motor_post(httpd_req_t *req) {
     return send_json(req, motor_cfg_json(get_motor_cfg()), 200);
 }
 
+static esp_err_t api_rc_map_get(httpd_req_t *req) {
+    return send_json(req, rc_input_map_json(), 200);
+}
+
+static esp_err_t api_rc_map_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+
+    cJSON *logical_j = cJSON_GetObjectItemCaseSensitive(body, "logical");
+    cJSON *phys_j = cJSON_GetObjectItemCaseSensitive(body, "physical_pin");
+    if (!cJSON_IsNumber(logical_j) || !cJSON_IsNumber(phys_j)) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "\"logical\" and \"physical_pin\" must both be numbers (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+    int logical = logical_j->valueint - 1;
+    int phys = phys_j->valueint - 1;
+    cJSON_Delete(body);
+
+    if (logical < 0 || logical >= NUM_RC_CHANNELS) {
+        return send_error(req, 400, "\"logical\" out of range (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+
+    rc_input_map_cfg_t map = get_rc_input_map();
+    map.phys_ch[logical] = (uint8_t)phys;
+    if (!set_rc_input_map(&map)) {
+        return send_error(req, 400, "\"physical_pin\" out of range (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+    return send_json(req, rc_input_map_json(), 200);
+}
+
+static esp_err_t api_mode_get(httpd_req_t *req) {
+    return send_json(req, rc_mode_json(), 200);
+}
+
 // ---- Static asset handlers ----
 
 static esp_err_t send_embedded_text(httpd_req_t *req, const char *content_type, const uint8_t *start, const uint8_t *end) {
@@ -510,7 +674,7 @@ static esp_err_t marker_shadow_get(httpd_req_t *req)  { return send_embedded_bin
 
 void http_server_start(void) {
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    config.max_uri_handlers = 20;
+    config.max_uri_handlers = 24;
     config.stack_size = 8192;
     config.uri_match_fn = httpd_uri_match_wildcard;
 
@@ -527,13 +691,19 @@ void http_server_start(void) {
         { .uri = "/images/marker-icon-2x.png", .method = HTTP_GET, .handler = marker_icon_2x_get },
         { .uri = "/images/marker-shadow.png",  .method = HTTP_GET, .handler = marker_shadow_get },
         { .uri = "/api/state",             .method = HTTP_GET,  .handler = api_state_get },
+        { .uri = "/api/gps",               .method = HTTP_GET,  .handler = api_gps_get },
+        { .uri = "/api/imu",               .method = HTTP_GET,  .handler = api_imu_get },
         { .uri = "/api/mission",           .method = HTTP_POST, .handler = api_mission_post },
         { .uri = "/api/pid",               .method = HTTP_POST, .handler = api_pid_post },
         { .uri = "/api/outputs",           .method = HTTP_GET,  .handler = api_outputs_get },
         { .uri = "/api/outputs",           .method = HTTP_POST, .handler = api_outputs_post },
         { .uri = "/api/airframe",          .method = HTTP_POST, .handler = api_airframe_post },
+        { .uri = "/api/airspeed",          .method = HTTP_GET,  .handler = api_airspeed_get },
         { .uri = "/api/airspeed",          .method = HTTP_POST, .handler = api_airspeed_post },
         { .uri = "/api/motor",             .method = HTTP_POST, .handler = api_motor_post },
+        { .uri = "/api/rc_map",            .method = HTTP_GET,  .handler = api_rc_map_get },
+        { .uri = "/api/rc_map",            .method = HTTP_POST, .handler = api_rc_map_post },
+        { .uri = "/api/mode",              .method = HTTP_GET,  .handler = api_mode_get },
     };
     for (size_t i = 0; i < sizeof(routes) / sizeof(routes[0]); i++) {
         ESP_ERROR_CHECK(httpd_register_uri_handler(server, &routes[i]));

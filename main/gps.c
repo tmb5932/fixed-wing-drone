@@ -262,17 +262,7 @@ void loop_uart_gps(void)
         int len = uart_read_line(line, sizeof(line), pdMS_TO_TICKS(1000));
         if (len > 0) {
             ESP_LOGD(TAG, "Received GPS line: %s", line);
-            if (parse_nmea_rmc(line, &gps)) {
-                if (gps.valid) {
-                    ESP_LOGI(TAG, "Lat: %.6f, Lon: %.6f, Speed: %.2f mph, Course: %.2f\n",
-                        gps.latitude_deg,
-                        gps.longitude_deg,
-                        gps.speed_mph,
-                        gps.course_deg);
-                } else {
-                    ESP_LOGI(TAG, "RMC parsed, but no valid fix yet\n");
-                }
-            }
+            parse_nmea_rmc(line, &gps);
         }
     }
 }
@@ -350,7 +340,6 @@ void gps_task(void *pvParameters)
     while (1) {
         gps_data_t gps;
         if (!read_gps(&gps)) {
-            ESP_LOGI("GPS", "Failed to get GPS fix...");
             continue;
         }
         if (gps.valid) {
@@ -358,8 +347,6 @@ void gps_task(void *pvParameters)
             if (ret == pdTRUE) {
                 latest_gps_data = gps;
                 xSemaphoreGive(gps_data_mutex);
-                ESP_LOGI(TAG, "Lat: %.6f, Lon: %.6f, Speed: %.2f mph, Course: %.2f\n",
-                    gps.latitude_deg, gps.longitude_deg, gps.speed_mph, gps.course_deg);
             }
         }
 

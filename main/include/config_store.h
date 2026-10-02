@@ -85,4 +85,24 @@ typedef struct {
 bool config_store_load_motor_cfg(motor_cfg_t *out);
 esp_err_t config_store_save_motor_cfg(const motor_cfg_t *cfg);
 
+// Which physical RC input pin (0-5, i.e. capture-channel index -- CH1_IN_GPIO
+// is 0, CH6_IN_GPIO is 5, see main.c) each logical RC_* function
+// (output_ctl.h's RC_THROTTLE/RC_AILERON/etc.) actually reads from. Lets a
+// receiver whose channel order doesn't match this project's default
+// (RC_AILERON=CH1, RC_ELEVATOR=CH2, RC_THROTTLE=CH3, RC_DIAL=CH4,
+// RC_RUDDER=CH5, RC_SWITCH=CH6) be remapped from setup mode instead of
+// re-wiring anything. Indexed by logical channel -- same count as
+// output_ctl.h's NUM_RC_CHANNELS, kept as its own literal here since
+// output_ctl.h already includes this header (a circular include the other
+// way isn't possible).
+#define RC_INPUT_MAP_CHANNELS (6)
+typedef struct {
+    uint8_t phys_ch[RC_INPUT_MAP_CHANNELS];
+} rc_input_map_cfg_t;
+
+// Returns false (leaving *out untouched) if nothing is persisted -- the
+// caller should default to the identity mapping {0,1,2,3,4,5} in that case.
+bool config_store_load_rc_input_map(rc_input_map_cfg_t *out);
+esp_err_t config_store_save_rc_input_map(const rc_input_map_cfg_t *cfg);
+
 #endif // CONFIG_STORE_H

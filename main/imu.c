@@ -2,7 +2,8 @@
 #include <math.h>
 #include "esp_log.h"
 #include "esp_timer.h"
-#include "driver/i2c.h"
+#include "driver/i2c_master.h"
+#include "i2c_bus.h"
 #include "madgwick_wrapper.h"
 #include "imu.h"
 #include "globals.h"
@@ -44,15 +45,32 @@ static bool mag_available = false;
 static float last_mx = 0.0f, last_my = 0.0f, last_mz = 0.0f;
 static int64_t last_good_mag_us = 0;
 
-// Low level I2C helpers
+// Low level I2C helpers. ICM-20948 and AK09916 (bypass mode, see mag_init())
+// are two separate addressable devices on the shared bus (i2c_bus.h) --
+// each needs its own device handle, so imu_write()/imu_read() (still keyed
+// by the same `addr` callers already pass) resolve to the right one.
 
+static i2c_master_dev_handle_t icm_dev_handle = NULL;
+static i2c_master_dev_handle_t mag_dev_handle = NULL;
+
+static i2c_master_dev_handle_t dev_handle_for_addr(uint8_t addr) {
+    return (addr == AK09916_I2C_ADDR) ? mag_dev_handle : icm_dev_handle;
+}
+
+// driver/i2c_master.h's xfer_timeout_ms is a plain millisecond count, NOT a
+// FreeRTOS tick count like the legacy driver's API used everywhere else in
+// this file -- pdMS_TO_TICKS(10) here would silently evaluate to 1 (at the
+// common 100Hz tick rate) and hand the driver a ~1ms timeout instead of the
+// intended 10ms, which is what actually caused "ICM-20948 not found: 0x00"
+// on the bench: the bus and chip were fine (i2c_bus_scan() found it), but
+// every real read/write timed out before the transaction could complete.
 static esp_err_t imu_write(uint8_t addr, uint8_t reg, uint8_t val) {
     uint8_t buf[2] = {reg, val};
-    return i2c_master_write_to_device(I2C_PORT, addr, buf, 2, pdMS_TO_TICKS(10));
+    return i2c_master_transmit(dev_handle_for_addr(addr), buf, 2, 10);
 }
 
 static esp_err_t imu_read(uint8_t addr, uint8_t reg, uint8_t *buf, size_t len) {
-    return i2c_master_write_read_device(I2C_PORT, addr, &reg, 1, buf, len, pdMS_TO_TICKS(10));
+    return i2c_master_transmit_receive(dev_handle_for_addr(addr), &reg, 1, buf, len, 10);
 }
 
 static esp_err_t icm_write(uint8_t reg, uint8_t val) {
@@ -67,18 +85,12 @@ static esp_err_t icm_select_bank(uint8_t bank) {
     return icm_write(ICM20948_REG_BANK_SEL, (bank << 4) & 0x30);
 }
 
-// I2C initializaton for the IMU
-static void i2c_bus_init() {
-    i2c_config_t conf = {
-        .mode = I2C_MODE_MASTER,
-        .sda_io_num = I2C_SDA_PIN,
-        .scl_io_num = I2C_SCL_PIN,
-        .sda_pullup_en = GPIO_PULLUP_ENABLE,
-        .scl_pullup_en = GPIO_PULLUP_ENABLE,
-        .master.clk_speed = I2C_FREQ_HZ,
-    };
-    ESP_ERROR_CHECK(i2c_param_config(I2C_PORT, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
+// Registers both devices on the shared I2C bus (i2c_bus_add_device() brings
+// the bus itself up the first time anything calls it, regardless of
+// whether imu.c or airspeed.c gets there first).
+static void imu_i2c_setup() {
+    ESP_ERROR_CHECK(i2c_bus_add_device(ICM20948_I2C_ADDR, I2C_FREQ_HZ, &icm_dev_handle));
+    ESP_ERROR_CHECK(i2c_bus_add_device(AK09916_I2C_ADDR, I2C_FREQ_HZ, &mag_dev_handle));
 }
 
 // Magnometer setup (this was awful to do, and im not even using it rn)
@@ -296,7 +308,7 @@ bool imu_init() {
     imu_ready = true;
     return true;
 #else
-    i2c_bus_init();
+    imu_i2c_setup();
     vTaskDelay(pdMS_TO_TICKS(100));
 
     // Verify the IMU
@@ -446,7 +458,13 @@ void imu_task(void *pvParameters) {
             float my = mag_fresh ? last_my : 0.0f;
             float mz = mag_fresh ? last_mz : 0.0f;
 
-            madgwick_update(filter, gx, gy, gz, ax, ay, az, mx, my, mz);
+            if (!madgwick_update(filter, gx, gy, gz, ax, ay, az, mx, my, mz)) {
+                // Non-finite input or internal quaternion state -- the
+                // filter has already reset itself to level (see
+                // MadgwickAHRS.cpp), so it's safe to keep going, but this
+                // cycle's angles are a reset, not a real reading.
+                ESP_LOGE(TAG, "Madgwick filter produced non-finite output -- reset to level");
+            }
 
             BaseType_t ret = xSemaphoreTake(imu_data_mutex, pdMS_TO_TICKS(IMU_MUTEX_WAIT));
             if (ret == pdTRUE) {

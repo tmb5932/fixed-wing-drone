@@ -7,6 +7,8 @@
   --accent: #2563eb;
   --accent-ink: #ffffff;
   --fail: #dc2626;
+  --ok: #16a34a;
+  --warn: #d97706;
   --radius: 14px;
   --gap: 16px;
   color-scheme: light;
@@ -335,4 +337,94 @@ main {
 .leaflet-container {
   font-family: inherit;
   border-radius: 10px;
+}
+
+/* Live "plane is here" marker (app.js's updatePlaneMarker) -- a plain
+   accent-colored dot, deliberately distinct from the default red/blue
+   waypoint pins so the two are never confused at a glance. */
+.plane-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.imu-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.imu-readout > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+/* Reflects what control_task() would choose right now (see /api/mode) --
+   MANUAL is the expected/safe bench state, so it gets the calm color;
+   AUTONOMOUS is the one worth noticing at a glance. */
+.mode-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--ink-soft);
+}
+
+.mode-badge.mode-manual { background: var(--ok); }
+.mode-badge.mode-auto   { background: var(--warn); }
+.mode-badge.mode-none   { background: var(--ink-soft); }
+
+.rc-map-live-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rc-map-live-pin {
+  padding: 8px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+#rc-map-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rc-map-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.rc-map-select {
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--ink);
+  background: var(--card-bg);
+  min-height: 40px;
 }

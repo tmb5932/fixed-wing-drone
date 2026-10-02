@@ -61,7 +61,7 @@
 // Bench-tunable correction for the AK09916's yaw zero-reference/direction
 // vs. heading_to_target()'s true-north-clockwise convention. Starts at 0;
 // calibrate by pointing the nose at known headings and adjusting.
-#define MAG_YAW_OFFSET_DEG          (0.0f)
+#define MAG_YAW_OFFSET_DEG          (180.0f)
 
 // Hard-iron calibration: a fixed offset from nearby ferrous/current-
 // carrying material (servos, motor, wiring, the board itself) that adds

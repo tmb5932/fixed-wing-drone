@@ -3,7 +3,7 @@
 
 uint32_t servo_angle_to_compare(int angle)
 {
-    return (angle - SERVO_MIN_DEGREE) * (SERVO_MAX_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) / (SERVO_MAX_DEGREE - SERVO_MIN_DEGREE) + SERVO_MIN_PULSEWIDTH_US;
+    return (angle - SERVO_MIN_DEGREE) * (PULSEWIDTH_DEFAULT_MAX_US - PULSEWIDTH_DEFAULT_MIN_US) / (SERVO_MAX_DEGREE - SERVO_MIN_DEGREE) + PULSEWIDTH_DEFAULT_MIN_US;
 }
 
 int starting_to_pulse_width(item_type_t type, comparator_starting_value_t val)
@@ -13,12 +13,12 @@ int starting_to_pulse_width(item_type_t type, comparator_starting_value_t val)
     int def = -1;
 
     if (type == SERVO_TYPE) {
-        min = SERVO_MIN_PULSEWIDTH_US;
-        max = SERVO_MAX_PULSEWIDTH_US;
+        min = PULSEWIDTH_DEFAULT_MIN_US;
+        max = PULSEWIDTH_DEFAULT_MAX_US;
         def = servo_angle_to_compare(0); // middle of range
     } else if (type == MOTOR_TYPE) {
-        min = MOTOR_MIN_PULSEWIDTH_US;
-        max = MOTOR_MAX_PULSEWIDTH_US;
+        min = PULSEWIDTH_DEFAULT_MIN_US;
+        max = PULSEWIDTH_DEFAULT_MAX_US;
         def = min; // motor should always default to off...
     } else {
         min = max = def = 1500; // most things are good roughly 1000-2000us, so 1500 is good safety if of unknown type;

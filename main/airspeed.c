@@ -5,7 +5,8 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "esp_log.h"
-#include "driver/i2c.h"
+#include "driver/i2c_master.h"
+#include "i2c_bus.h"
 #include "globals.h"
 #include "airspeed.h"
 #include "sim_config.h"
@@ -57,6 +58,32 @@ SemaphoreHandle_t airspeed_mutex = NULL;
 // airspeed_reading()-gated fallback keeps throttle on the known-good path.
 static float zero_offset_psi = 0.0f;
 
+// Exponential moving average applied to the raw differential-pressure
+// reading in read_airspeed(), before the sign/sqrt transform -- not to the
+// resulting speed. Filtering post-sqrt would average across a transform
+// whose derivative blows up near zero differential pressure (near-zero
+// airspeed), distorting exactly the region where the raw sensor is noisiest
+// to begin with; filtering the pressure first avoids that, and it's where
+// the sensor's actual noise floor (+-0.005 PSI, from its +-0.25%-of-span
+// accuracy spec) lives.
+//
+// alpha=0.1 at this task's 100Hz sample rate gives a step-response time
+// constant of about -1/ln(1-alpha) =~ 9.5 samples =~ 95ms -- fast next to
+// real airframe speed dynamics (seconds, not tens of ms) but slow enough to
+// meaningfully average out sensor noise: for white noise, an EMA's steady-
+// state std-dev reduction factor is sqrt(alpha/(2-alpha)) =~ 0.23, i.e.
+// roughly a 4x cut (measured on the bench at ~+-280cm/s raw -> ~+-65cm/s
+// filtered near zero airspeed).
+#define AIRSPEED_FILTER_ALPHA (0.1f)
+static float filtered_diff_press_pa = 0.0f;
+static bool filter_primed = false;
+
+// Registered once, at the start of airspeed_task()'s real-hardware branch
+// (see below) -- i2c_bus_add_device() brings the shared bus itself up the
+// first time anything calls it, regardless of whether imu.c or this file
+// gets there first (see i2c_bus.h).
+static i2c_master_dev_handle_t ms4525_dev_handle = NULL;
+
 /**
  * Gets the current airspeed value in cm/s.
  * Returns INT16_MIN on failure.
@@ -99,7 +126,11 @@ void airspeed_disable() {
  */
 static bool ms4525_read_raw(uint16_t *out_pressure_counts, uint16_t *out_temp_counts) {
     uint8_t raw[4];
-    esp_err_t ret = i2c_master_read_from_device(I2C_PORT, MS4525DO_I2C_ADDR, raw, sizeof(raw), pdMS_TO_TICKS(10));
+    // driver/i2c_master.h's xfer_timeout_ms is a plain millisecond count, not
+    // a FreeRTOS tick count -- see imu.c's imu_write()/imu_read() for the
+    // full explanation of why pdMS_TO_TICKS(10) here would be a real bug
+    // (silently ~1ms instead of 10ms), not just a style inconsistency.
+    esp_err_t ret = i2c_master_receive(ms4525_dev_handle, raw, sizeof(raw), 10);
     if (ret != ESP_OK) {
         return false;
     }
@@ -130,11 +161,21 @@ static int16_t read_airspeed() {
     float diff_press_psi = ms4525_counts_to_psi(pressure_counts) - zero_offset_psi;
     float diff_press_pa = diff_press_psi * PSI_TO_PA;
 
+    // Skipped entirely on a failed read (see the early return above), so a
+    // transient I2C hiccup just holds the filter at its last good value
+    // instead of corrupting it with e.g. a decoded-garbage sample.
+    if (!filter_primed) {
+        filtered_diff_press_pa = diff_press_pa;
+        filter_primed = true;
+    } else {
+        filtered_diff_press_pa += AIRSPEED_FILTER_ALPHA * (diff_press_pa - filtered_diff_press_pa);
+    }
+
     // v = sign(dp) * sqrt(2*|dp|/rho) -- signed so a reversed/backwards
     // pitot install reads as a (wrong-signed) speed instead of NaN, which is
     // easier to notice and debug on the bench than a silent stuck value.
-    float sign = (diff_press_pa < 0.0f) ? -1.0f : 1.0f;
-    float speed_ms = sign * sqrtf(2.0f * fabsf(diff_press_pa) / AIR_DENSITY_KG_M3);
+    float sign = (filtered_diff_press_pa < 0.0f) ? -1.0f : 1.0f;
+    float speed_ms = sign * sqrtf(2.0f * fabsf(filtered_diff_press_pa) / AIR_DENSITY_KG_M3);
 
     return (int16_t)(speed_ms * 100.0f);
 }
@@ -206,7 +247,9 @@ static void airspeed_task(void *_params) {
     // airspeed_reading() is true, so until this succeeds, throttle stays on
     // its existing hardcoded fallback. Runs from inside this task (not
     // app_main) so it doesn't matter whether imu_task has finished bringing
-    // up the shared I2C bus yet -- the retry loop above tolerates that.
+    // up the shared I2C bus yet -- i2c_bus_add_device() below brings it up
+    // itself if it isn't already (see i2c_bus.h).
+    ESP_ERROR_CHECK(i2c_bus_add_device(MS4525DO_I2C_ADDR, I2C_FREQ_HZ, &ms4525_dev_handle));
     if (ms4525_init_and_calibrate()) {
         airspeed_enable();
     }
@@ -241,7 +284,15 @@ void airspeed_init() {
     // 2048 was enough when this task did nothing but a stub read; real I2C
     // reads plus float-formatting ESP_LOG calls (e.g. "%.4f") need more
     // headroom than that, matching the other sensor tasks' 4096.
-    BaseType_t ret = xTaskCreate(airspeed_task, "airspeed_task", 4096, NULL, 5, NULL);
+    //
+    // Pinned to core 1: this task (called from both flight boot and setup
+    // mode) shares the I2C bus with imu_task, and setup mode also runs WiFi
+    // concurrently -- WiFi's own driver/interrupt handling on the ESP32-S3
+    // is tied to core 0, and an I2C-polling task landing there under WiFi
+    // load can starve the I2C driver's recovery path long enough to trip the
+    // interrupt watchdog (confirmed on the bench for imu_task with exactly
+    // this signature; airspeed_task polls the same bus the same way).
+    BaseType_t ret = xTaskCreatePinnedToCore(airspeed_task, "airspeed_task", 4096, NULL, 5, NULL, 1);
     if (ret != pdTRUE) {
         ESP_LOGE(TAG, "Airspeed task creation failed, aborting");
         abort();

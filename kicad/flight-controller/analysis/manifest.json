@@ -1,24 +1,105 @@
 {
   "version": 1,
   "project": "fixed-wing-drone.kicad_pro",
-  "current": "2026-09-24_1752",
+  "current": "2026-09-30_2158",
   "runs": {
-    "2026-09-24_1752": {
+    "2026-09-30_1921": {
       "source_hashes": {
         "fixed-wing-drone.kicad_sch": "sha256:b48032ae2a82e211d3e3d5a43c575783a53f2e92692f59a8d05ee3dce2e10283",
-        "fixed-wing-drone.kicad_pcb": "sha256:5b820e11084b29b21f9be5a52c3d77971fcb532af58ad92269f91ec873483f94"
+        "fixed-wing-drone.kicad_pcb": "sha256:c1c3ba01db5d37dc6b39f6e511a513b9f2ec1ee00da9b11e062cc98bb60b2a18",
+        "schematic.json": "sha256:8e21f6873c6297c9a8fa3666ce1bcb44f4d789618f34dfc63993decf9e69a308",
+        "pcb.json": "sha256:bdaac70cb92df8ec7f462f8bca7f2afb7eb817b7ffd6e94d79eeffce2e168803"
       },
       "outputs": {
         "schematic": "schematic.json",
         "pcb": "pcb.json",
         "cross_analysis": "cross_analysis.json",
         "emc": "emc.json",
-        "thermal": "thermal.json"
+        "thermal": "thermal.json",
+        "spice": "spice.json"
       },
       "scripts": {
         "schematic": "analyze_schematic.py fixed-wing-drone.kicad_sch"
       },
-      "generated": "2026-09-24T17:52:55-04:00",
+      "generated": "2026-09-30T20:30:54-04:00",
+      "pinned": false
+    },
+    "2026-09-30_2030": {
+      "source_hashes": {
+        "schematic.json": "sha256:53ae19cb538d902bf54be1726f5785aa6e563efebdd858fe1fd98da65309a52c",
+        "pcb.json": "sha256:90a767c50b5cd487650c8f08081ceb1874148409d30998a95f01c4a387f1a29c"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json",
+        "spice": "spice.json"
+      },
+      "scripts": {
+        "emc": "analyze_emc.py"
+      },
+      "generated": "2026-09-30T20:31:03-04:00",
+      "pinned": false
+    },
+    "2026-09-30_2100": {
+      "source_hashes": {
+        "fixed-wing-drone.kicad_sch": "sha256:3e1b596ec52463fa4bd073e37fb4b702f1e67648d2fbb9afad57b68c6b79ddd6",
+        "fixed-wing-drone.kicad_pcb": "sha256:fc8c0eb3bad761657d5f6f408b0a817e7dcf165cdecd13402cca450f22019d36"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json",
+        "spice": "spice.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py fixed-wing-drone.kicad_sch"
+      },
+      "generated": "2026-09-30T21:00:28-04:00",
+      "pinned": false
+    },
+    "2026-09-30_2100-2": {
+      "source_hashes": {
+        "schematic.json": "sha256:e631800db5bd365be3a067e16564d6ce2933b822de7c8ef89f5cda086b0f94ef",
+        "pcb.json": "sha256:0362c1e3fee89781afdf1d4d5298b80b4d7e0865e5f9f9eaddcfbf6a8399a988",
+        "fixed-wing-drone.kicad_sch": "sha256:3e1b596ec52463fa4bd073e37fb4b702f1e67648d2fbb9afad57b68c6b79ddd6",
+        "fixed-wing-drone.kicad_pcb": "sha256:fc8c0eb3bad761657d5f6f408b0a817e7dcf165cdecd13402cca450f22019d36"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json",
+        "spice": "spice.json"
+      },
+      "scripts": {
+        "emc": "analyze_emc.py"
+      },
+      "generated": "2026-09-30T21:57:49-04:00",
+      "pinned": false
+    },
+    "2026-09-30_2158": {
+      "source_hashes": {
+        "schematic.json": "sha256:b528283b87a66a927f52492ba0c5365471e5996cb9dd83ef19c928a5622d69e2",
+        "pcb.json": "sha256:89e9b2ae93e4389f04563616264d14e3601454f086f5ee576809e2d463c77518"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json",
+        "spice": "spice.json"
+      },
+      "scripts": {
+        "emc": "analyze_emc.py"
+      },
+      "generated": "2026-09-30T21:58:16-04:00",
       "pinned": false
     }
   }
