@@ -1513,6 +1513,16 @@
 		(uuid "4c2ec46e-4cc0-42ba-84d8-23b28037bc92")
 	)
 	(label "ACT_PWR"
+		(at 50.8 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "50a7e60b-f42f-4868-9b74-10d511a6e3a4")
+	)
+	(label "ACT_PWR"
 		(at 26.67 68.58 0)
 		(effects
 			(font
@@ -1672,6 +1682,16 @@
 		)
 		(uuid "879b2fb7-f615-48d4-85ac-b3840285a677")
 	)
+	(label "ACT_PWR"
+		(at 63.5 168.91 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "898f62bc-4d1e-4143-9b1d-351cccfd82bd")
+	)
 	(label "GND"
 		(at 228.6 66.04 0)
 		(effects
@@ -1712,6 +1732,16 @@
 		)
 		(uuid "94e818a4-7c2c-45d5-94e9-839c4bfba928")
 	)
+	(label "GND"
+		(at 63.5 176.53 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "97c97445-0924-44b9-8c83-9095e2379c76")
+	)
 	(label "HBRIDGE2_AOUT2"
 		(at 203.2 76.2 180)
 		(effects
@@ -1732,7 +1762,7 @@
 		)
 		(uuid "9d35016c-a181-4a22-bd79-e4fdef776830")
 	)
-	(label "HBRIDGE_BOUT1"
+	(label "HBRIDGE_BOUT2"
 		(at 111.76 101.6 0)
 		(effects
 			(font
@@ -1822,7 +1852,7 @@
 		)
 		(uuid "b4c13526-0365-414b-8619-9f74506be70c")
 	)
-	(label "HBRIDGE3_BOUT1"
+	(label "HBRIDGE3_BOUT2"
 		(at 155.16 110 0)
 		(effects
 			(font
@@ -1852,7 +1882,7 @@
 		)
 		(uuid "c6a51d5d-26c8-4a3b-b4b1-0ab902b1a17d")
 	)
-	(label "HBRIDGE2_BOUT2"
+	(label "HBRIDGE2_BOUT1"
 		(at 155.16 62.54 0)
 		(effects
 			(font
@@ -1862,7 +1892,7 @@
 		)
 		(uuid "c79ca1a7-6066-4f30-9f80-ea4754169899")
 	)
-	(label "HBRIDGE_BOUT2"
+	(label "HBRIDGE_BOUT1"
 		(at 111.76 104.14 0)
 		(effects
 			(font
@@ -1872,7 +1902,7 @@
 		)
 		(uuid "d2d1cafa-885f-4fef-99af-dd72482284a6")
 	)
-	(label "HBRIDGE2_BOUT1"
+	(label "HBRIDGE2_BOUT2"
 		(at 155.16 60 0)
 		(effects
 			(font
@@ -1892,7 +1922,7 @@
 		)
 		(uuid "deee10d9-1469-4438-95cd-d7426f93acbe")
 	)
-	(label "HBRIDGE3_BOUT2"
+	(label "HBRIDGE3_BOUT1"
 		(at 155.16 112.54 0)
 		(effects
 			(font
@@ -1911,6 +1941,16 @@
 			(justify bottom)
 		)
 		(uuid "e83edec7-78bc-4cdb-9d49-f0d9aeb4804f")
+	)
+	(label "GND"
+		(at 50.8 176.53 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e94df5fd-5a0d-430f-aa40-fa158cff7f79")
 	)
 	(label "GND"
 		(at 163 53.89 0)
@@ -2392,7 +2432,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 96.52 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2402,7 +2442,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 101.6 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2424,7 +2464,18 @@
 				)
 			)
 		)
-		(property "Description" "BISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 101.6 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 101.6 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2698,6 +2749,98 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 50.8 172.72 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3bff886f-1b71-4378-8bb5-bef3426cb403")
+		(property "Reference" "C17"
+			(at 53.34 171.45 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10uF"
+			(at 53.34 173.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 50.8 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 50.8 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C15850"
+			(at 50.8 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "93ea8c10-c031-4aab-ae74-690c32e0cc26")
+		)
+		(pin "2"
+			(uuid "e58d0aae-0c9b-4d59-b344-c59d8ef07aa0")
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058/350c07be-86d8-4797-bfe1-493e323992ab"
+					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 50.8 50.8 0)
 		(unit 1)
@@ -2718,7 +2861,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 45.72 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2728,7 +2871,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 50.8 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2750,7 +2893,18 @@
 				)
 			)
 		)
-		(property "Description" "AISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 50.8 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 50.8 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -3044,7 +3198,7 @@
 				)
 			)
 		)
-		(property "Value" "470nF"
+		(property "Value" "2.2uF"
 			(at 121.92 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3054,7 +3208,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 127 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -3076,7 +3230,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "DRV8833 VINT bypass, 2.2uF 6.3V+ per datasheet"
 			(at 127 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3086,7 +3240,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C47339"
+		(property "LCSC Part" "C23630"
 			(at 127 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -3134,7 +3288,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470nF"
+		(property "Value" "2.2uF"
 			(at 157.92 117.54 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3145,7 +3299,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 163 115 0)
 			(hide yes)
 			(show_name no)
@@ -3167,8 +3321,19 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "DRV8833 VINT bypass, 2.2uF 6.3V+ per datasheet"
 			(at 163 115 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C23630"
+			(at 163 115 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3293,7 +3458,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 158.5 47.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3303,7 +3468,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 163 45 0)
 			(hide yes)
 			(show_name no)
@@ -3325,7 +3490,18 @@
 				)
 			)
 		)
-		(property "Description" "BISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 163 45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 163 45 0)
 			(hide yes)
 			(show_name no)
@@ -3372,7 +3548,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 150.5 47.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3382,7 +3558,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 155 45 0)
 			(hide yes)
 			(show_name no)
@@ -3404,7 +3580,18 @@
 				)
 			)
 		)
-		(property "Description" "AISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 155 45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 155 45 0)
 			(hide yes)
 			(show_name no)
@@ -3587,7 +3774,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470nF"
+		(property "Value" "2.2uF"
 			(at 157.92 67.54 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3598,7 +3785,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 163 65 0)
 			(hide yes)
 			(show_name no)
@@ -3620,8 +3807,19 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "DRV8833 VINT bypass, 2.2uF 6.3V+ per datasheet"
 			(at 163 65 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C23630"
+			(at 163 65 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3755,7 +3953,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 150.5 97.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3765,7 +3963,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 155 95 0)
 			(hide yes)
 			(show_name no)
@@ -3787,7 +3985,18 @@
 				)
 			)
 		)
-		(property "Description" "AISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 155 95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 155 95 0)
 			(hide yes)
 			(show_name no)
@@ -4028,6 +4237,98 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 63.5 172.72 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e5014e9f-7a3d-4fcd-b91b-876edf343b77")
+		(property "Reference" "C18"
+			(at 66.04 171.45 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10uF"
+			(at 66.04 173.99 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 63.5 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 63.5 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C15850"
+			(at 63.5 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "086237cb-5d1d-4362-b26e-94dd1f05b4d7")
+		)
+		(pin "2"
+			(uuid "dd6ff7ca-78e1-411d-a15a-e21016fb345d")
+		)
+		(instances
+			(project "mission-board"
+				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058/350c07be-86d8-4797-bfe1-493e323992ab"
+					(reference "C18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x02_Pin")
 		(at 50.8 101.6 0)
 		(unit 1)
@@ -4127,7 +4428,7 @@
 				)
 			)
 		)
-		(property "Value" "1R"
+		(property "Value" "0.2R"
 			(at 158.5 97.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4137,7 +4438,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 163 95 0)
 			(hide yes)
 			(show_name no)
@@ -4159,7 +4460,18 @@
 				)
 			)
 		)
-		(property "Description" "BISEN sense resistor -- verify value against DRV8833 datasheet ISEN gain"
+		(property "Description" "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux"
+			(at 163 95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25335"
 			(at 163 95 0)
 			(hide yes)
 			(show_name no)
