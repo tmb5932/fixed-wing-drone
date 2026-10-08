@@ -1195,9 +1195,9 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
+		(in_pos_files no)
 		(dnp no)
 		(uuid "0eda9a9d-6a6c-4595-9139-cd03a31b29a2")
 		(property "Reference" "TP10"
@@ -1286,7 +1286,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF"
 			(at 159.004 94.234 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1297,7 +1297,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 160.3248 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -1330,7 +1330,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C1691"
+		(property "LCSC Part" "C45783"
 			(at 161.29 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -1546,9 +1546,9 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
+		(in_pos_files no)
 		(dnp no)
 		(uuid "7b7e49a2-5204-452e-97a8-a324fecbbebe")
 		(property "Reference" "TP8"
@@ -1621,9 +1621,9 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
+		(in_pos_files no)
 		(dnp no)
 		(uuid "d5603cd5-8a6b-4ea2-bd7a-d87837e55c99")
 		(property "Reference" "TP7"
@@ -1696,9 +1696,9 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
+		(in_pos_files no)
 		(dnp no)
 		(uuid "e75a7837-4b8e-46e6-8b10-7e71cc585911")
 		(property "Reference" "TP9"

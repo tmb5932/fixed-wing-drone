@@ -330,6 +330,7 @@ void gps_task(void *pvParameters)
             gps.course_deg = 0.0;
         }
 
+        gps.timestamp_us = esp_timer_get_time();
         BaseType_t ret = xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(GPS_MUTEX_WAIT));
         if (ret == pdTRUE) {
             latest_gps_data = gps;
@@ -343,6 +344,7 @@ void gps_task(void *pvParameters)
             continue;
         }
         if (gps.valid) {
+            gps.timestamp_us = esp_timer_get_time();
             BaseType_t ret = xSemaphoreTake(gps_data_mutex, pdMS_TO_TICKS(GPS_MUTEX_WAIT));
             if (ret == pdTRUE) {
                 latest_gps_data = gps;

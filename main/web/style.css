@@ -273,7 +273,7 @@ main {
   gap: 6px;
 }
 
-.pid-field input {
+.pid-field input, .trim-input {
   font-size: 1rem;
   padding: 9px 10px;
   border-radius: 8px;
@@ -284,13 +284,13 @@ main {
   width: 100%;
 }
 
-.pid-field input:focus {
+.pid-field input:focus, .trim-input:focus {
   outline: 2px solid var(--accent);
   outline-offset: -1px;
   background: var(--card-bg);
 }
 
-.pid-field input.dirty {
+.pid-field input.dirty, .trim-input.dirty {
   border-color: var(--accent);
 }
 
@@ -402,10 +402,62 @@ main {
   text-align: center;
 }
 
-#rc-map-rows {
+.map-rows {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.flight-log {
+  max-height: 320px;
+  overflow-y: auto;
+  margin: 0 0 8px;
+  padding-left: 1.6em;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.flight-log li {
+  padding: 3px 0;
+}
+
+.flight-log .flog-boot {
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.flight-log .flog-bad {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.ctrl-test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#ctrl-test-status {
+  font-variant-numeric: tabular-nums;
+  margin-top: 8px;
+}
+
+.trim-row .trim-live {
+  margin-left: auto;
+}
+
+.trim-row .trim-input {
+  width: 5.5em;
+  flex: none;
+}
+
+.trim-row {
+  flex-wrap: wrap;
+}
+
+#servo-map-rows {
+  margin-bottom: 16px;
 }
 
 .rc-map-row {

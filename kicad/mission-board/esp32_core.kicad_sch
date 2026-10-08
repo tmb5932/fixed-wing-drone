@@ -2181,22 +2181,16 @@
 		(uuid "3c488067-986a-4552-bf15-60698644a5c8")
 	)
 	(no_connect
+		(at 124.46 162.56)
+		(uuid "551cbb59-b9bf-4ea0-93a9-0f5e8f83bce1")
+	)
+	(no_connect
 		(at 148.59 143.51)
 		(uuid "65d06677-08fd-4173-b25e-4ebc779e7e65")
 	)
 	(no_connect
 		(at 148.59 146.05)
 		(uuid "74daa02d-6f19-473f-bdaf-fb560b6d9936")
-	)
-	(wire
-		(pts
-			(xy 225.08 137.46) (xy 230.16 137.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "159beb55-4655-441c-9c81-70eb5fe40269")
 	)
 	(wire
 		(pts
@@ -2217,16 +2211,6 @@
 			(type default)
 		)
 		(uuid "30e4b25b-1535-44a1-a09f-0c2456e59736")
-	)
-	(wire
-		(pts
-			(xy 225.08 134.92) (xy 230.16 134.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "363b7801-0dbb-4544-8b85-9bae532cebdc")
 	)
 	(wire
 		(pts
@@ -2280,13 +2264,23 @@
 	)
 	(wire
 		(pts
-			(xy 225.08 145.08) (xy 230.16 145.08)
+			(xy 224.79 144.78) (xy 231.14 144.78)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "4ecc81c6-03ff-4523-831e-fcde396dbdbe")
+	)
+	(wire
+		(pts
+			(xy 224.79 137.16) (xy 231.14 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "68cf6006-ef14-4f6e-b558-f6bbdc135a58")
 	)
 	(wire
 		(pts
@@ -2297,6 +2291,16 @@
 			(type default)
 		)
 		(uuid "6d3962b7-a11b-4228-a180-7c5442d6b378")
+	)
+	(wire
+		(pts
+			(xy 224.79 139.7) (xy 231.14 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d591807-757b-4b55-be91-d71835f8adee")
 	)
 	(wire
 		(pts
@@ -2340,7 +2344,7 @@
 	)
 	(wire
 		(pts
-			(xy 225.08 142.54) (xy 230.16 142.54)
+			(xy 224.79 142.24) (xy 231.14 142.24)
 		)
 		(stroke
 			(width 0)
@@ -2390,16 +2394,6 @@
 	)
 	(wire
 		(pts
-			(xy 225.08 140) (xy 230.16 140)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "da7b548a-c6eb-4602-b13c-d0dab9948c4d")
-	)
-	(wire
-		(pts
 			(xy 33.02 107.95) (xy 33.02 113.03)
 		)
 		(stroke
@@ -2407,6 +2401,16 @@
 			(type default)
 		)
 		(uuid "e40bfc06-6c46-4259-a6aa-b9d2f360c2bc")
+	)
+	(wire
+		(pts
+			(xy 224.79 134.62) (xy 231.14 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9c04608-d096-44e6-95ce-91ee93769c68")
 	)
 	(wire
 		(pts
@@ -2459,7 +2463,7 @@
 		(uuid "140179f7-ad21-4fb0-a4cf-ee7dae787091")
 	)
 	(label "FASTIO1"
-		(at 230.16 140 0)
+		(at 231.14 139.7 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2499,7 +2503,7 @@
 		(uuid "25324b59-6174-41ff-aaa2-3a253170cfce")
 	)
 	(label "FASTIO2"
-		(at 230.16 142.54 0)
+		(at 231.14 142.24 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2509,7 +2513,7 @@
 		(uuid "298ab241-7fc2-45d3-a943-46e2e7c6e2ad")
 	)
 	(label "FASTIO3"
-		(at 230.16 145.08 0)
+		(at 231.14 144.78 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2658,7 +2662,7 @@
 		(uuid "9e35cfec-0e81-4b25-ad81-60c15440be4a")
 	)
 	(label "ESP_3V3"
-		(at 230.16 134.92 0)
+		(at 231.14 134.62 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2718,7 +2722,7 @@
 		(uuid "fdae9589-ad9f-41ea-9cd7-f199e4e85687")
 	)
 	(label "GND"
-		(at 230.16 137.46 0)
+		(at 231.14 137.16 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2737,17 +2741,6 @@
 			(justify right)
 		)
 		(uuid "0373d33c-9e2b-4ece-9615-3e111ac6af70")
-	)
-	(hierarchical_label "SPI_SCK"
-		(shape output)
-		(at 119.38 162.56 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0fe02be7-cb37-47d5-a14f-c66af7e06d46")
 	)
 	(hierarchical_label "ESP_3V3"
 		(shape input)
@@ -2771,6 +2764,17 @@
 		)
 		(uuid "158718ac-fbfb-4f9a-bb6e-95c166cb2247")
 	)
+	(hierarchical_label "FASTIO5"
+		(shape bidirectional)
+		(at 121.92 162.56 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "19e7e859-5f47-49e5-933f-7de0e262865b")
+	)
 	(hierarchical_label "USB_DP"
 		(shape input)
 		(at 105.41 148.59 180)
@@ -2782,20 +2786,20 @@
 		)
 		(uuid "1d419963-0444-4446-9a9c-f0787df6b360")
 	)
-	(hierarchical_label "SPI_MISO"
-		(shape input)
-		(at 121.92 162.56 270)
+	(hierarchical_label "FASTIO4"
+		(shape bidirectional)
+		(at 119.38 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "284f8b5f-78e2-4a3c-83e2-fddcc9f4a89d")
+		(uuid "1f35119f-67e5-4e17-ba32-45d4d8469df1")
 	)
 	(hierarchical_label "INTER_ESP_UART_TX"
 		(shape output)
-		(at 129.54 162.56 270)
+		(at 127 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2826,17 +2830,6 @@
 		)
 		(uuid "499b0e62-e16d-438e-a48d-a1a22641bad1")
 	)
-	(hierarchical_label "SPI_MOSI"
-		(shape output)
-		(at 124.46 162.56 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "4a519ed5-4821-4df2-adf2-5a5fe65bc26c")
-	)
 	(hierarchical_label "HBRIDGE_AIN1"
 		(shape output)
 		(at 105.41 123.19 180)
@@ -2861,7 +2854,7 @@
 	)
 	(hierarchical_label "CAM_D1"
 		(shape input)
-		(at 134.62 162.56 270)
+		(at 137.16 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2894,7 +2887,7 @@
 	)
 	(hierarchical_label "CAM_D2"
 		(shape input)
-		(at 132.08 162.56 270)
+		(at 139.7 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2916,7 +2909,7 @@
 	)
 	(hierarchical_label "INTER_ESP_UART_RX"
 		(shape input)
-		(at 127 162.56 270)
+		(at 129.54 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2927,7 +2920,7 @@
 	)
 	(hierarchical_label "CAM_D3"
 		(shape input)
-		(at 137.16 162.56 270)
+		(at 134.62 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3004,7 +2997,7 @@
 	)
 	(hierarchical_label "CAM_D0"
 		(shape input)
-		(at 139.7 162.56 270)
+		(at 132.08 162.56 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3120,7 +3113,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2289"
+		(property "LCSC Part" "C2286"
 			(at 50.8 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -3209,7 +3202,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C25531"
+		(property "LCSC Part" "C25744"
 			(at 58.42 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -3504,7 +3497,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C25531"
+		(property "LCSC Part" "C25744"
 			(at 33.02 104.14 0)
 			(hide yes)
 			(show_name no)
@@ -3532,7 +3525,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x05_Pin")
-		(at 220 140 0)
+		(at 219.71 139.7 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3542,7 +3535,7 @@
 		(dnp no)
 		(uuid "6b52adc3-082c-45fc-8515-8ba6cc9b1ed7")
 		(property "Reference" "J21"
-			(at 214.92 132.38 0)
+			(at 214.63 132.08 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3552,7 +3545,7 @@
 			)
 		)
 		(property "Value" "Fast IO Expansion"
-			(at 208.788 139.7 0)
+			(at 208.498 139.4 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3562,7 +3555,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
-			(at 220 140 0)
+			(at 219.71 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3573,7 +3566,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 220 140 0)
+			(at 219.71 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3584,7 +3577,18 @@
 			)
 		)
 		(property "Description" "Direct ESP32-S3 GPIO breakout for future fast/timing-critical IO (IO5-IO7); pin6 not connected"
-			(at 220 140 0)
+			(at 219.71 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C2895846"
+			(at 219.71 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3639,7 +3643,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "22uF"
 			(at 186.69 116.84 0)
 			(show_name no)
 			(do_not_autoplace no)

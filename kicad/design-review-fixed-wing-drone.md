@@ -1,3 +1,5 @@
+> **Superseded.** This is the original review of flight controller **v3.0** (2026-09-11), kept for history. Most of its findings were fixed in v3.1 (for example, the ESP32's LDO is now the XC6220 `U4`, and USB-C now has ESD protection). The current review is [`flight-controller/design-review-fixed-wing-drone.md`](flight-controller/design-review-fixed-wing-drone.md), and the current pinout is [`../docs/buses.md`](../docs/buses.md).
+
 # Design Review — Autonomous Fixed-Wing Drone Flight Controller
 
 **Board:** `fixed-wing-drone` v3.0 (4-layer, 91.0 × 61.5 mm, 78 footprints)

@@ -20,7 +20,16 @@ typedef struct {
     double speed_knots;
     double speed_mph;
     double course_deg;
+    // esp_timer_get_time() when this fix was stored. gps_task only ever
+    // stores valid fixes, so `valid` alone stays true forever after the
+    // first fix even if the receiver later loses it -- check freshness
+    // against GPS_FIX_MAX_AGE_US instead (see nav.c).
+    int64_t timestamp_us;
 } gps_data_t;
+
+// A fix older than this is treated as "no fix" (the module runs at 5Hz, so
+// this is ~10 missed fixes).
+#define GPS_FIX_MAX_AGE_US (2000000)
 
 #define GPS_DATA_MUTEX_WAIT_MS (500) // matches GPS_MUTEX_WAIT in gps.c
 

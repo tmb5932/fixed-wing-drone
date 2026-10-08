@@ -1048,7 +1048,7 @@
 		)
 		(uuid "1a71c42f-d903-4107-9a93-3ee560f64cc0")
 	)
-	(hierarchical_label "MOSI"
+	(hierarchical_label "SD_MOSI"
 		(shape input)
 		(at 151.13 99.06 180)
 		(effects
@@ -1103,7 +1103,7 @@
 		)
 		(uuid "7e9295eb-2d20-447d-99fd-2623b57fdff9")
 	)
-	(hierarchical_label "MISO"
+	(hierarchical_label "SD_MISO"
 		(shape output)
 		(at 200.66 102.87 0)
 		(effects
@@ -1180,7 +1180,7 @@
 		)
 		(uuid "e92251c7-ae76-4dc9-a559-8808dab49869")
 	)
-	(hierarchical_label "SCK"
+	(hierarchical_label "SD_SCK"
 		(shape input)
 		(at 151.13 102.87 180)
 		(effects
@@ -1368,6 +1368,17 @@
 			)
 		)
 		(property "Description" "IR LED current-limit resistor -- verify value against actual LED Vf/battery voltage before fab"
+			(at 119.38 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C5759775"
 			(at 119.38 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -1640,6 +1651,17 @@
 			)
 		)
 		(property "Description" "IR LED Out 3 pin connector"
+			(at 160.02 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C161691"
 			(at 160.02 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -2091,6 +2113,17 @@
 			)
 		)
 		(property "Description" "IR LED current-limit resistor -- verify value against actual LED Vf/battery voltage before fab"
+			(at 119.38 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C5759775"
 			(at 119.38 142.24 0)
 			(hide yes)
 			(show_name no)

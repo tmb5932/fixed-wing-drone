@@ -1856,7 +1856,7 @@
 	)
 	(hierarchical_label "HBRIDGE3_BIN2"
 		(shape output)
-		(at 218.44 73.66 180)
+		(at 218.44 71.12 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1867,7 +1867,7 @@
 	)
 	(hierarchical_label "HBRIDGE3_BIN1"
 		(shape output)
-		(at 218.44 71.12 180)
+		(at 218.44 73.66 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1889,7 +1889,7 @@
 	)
 	(hierarchical_label "HBRIDGE2_BIN2"
 		(shape output)
-		(at 218.44 63.5 180)
+		(at 218.44 60.96 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2197,7 +2197,7 @@
 	)
 	(hierarchical_label "HBRIDGE2_BIN1"
 		(shape output)
-		(at 218.44 60.96 180)
+		(at 218.44 63.5 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2273,6 +2273,17 @@
 			)
 		)
 		(property "Description" "PCA9685 VDD decoupling"
+			(at 179.07 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C1525"
 			(at 179.07 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -3596,7 +3607,7 @@
 		(dnp no)
 		(uuid "ed252d99-a7f9-4aee-b072-1caf0f889de5")
 		(property "Reference" "U18"
-			(at 233.68 58.42 0)
+			(at 229.362 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3607,7 +3618,7 @@
 			)
 		)
 		(property "Value" "PCA9685PW"
-			(at 233.68 60.96 0)
+			(at 225.298 42.418 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

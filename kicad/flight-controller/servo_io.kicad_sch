@@ -1432,6 +1432,17 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C25104"
+			(at 109.22 58.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "c1c2c3c4-4444-4a44-8a44-444444444444")
 		)
@@ -1501,6 +1512,17 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 96.52 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C25104"
 			(at 96.52 105.41 0)
 			(hide yes)
 			(show_name no)

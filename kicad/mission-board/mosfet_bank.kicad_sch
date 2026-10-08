@@ -2917,6 +2917,17 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C158012"
+			(at 152.4 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "47f2d243-dfaa-4046-87f3-9e3dd22e41cf")
 		)
@@ -3738,6 +3749,17 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C158012"
+			(at 203.2 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "00553379-a041-4dd6-9a15-26fc80d9bb1b")
 		)
@@ -4077,6 +4099,17 @@
 			)
 		)
 		(property "Description" "Switched output channel 2, 2-pin 2.50mm JST-XH"
+			(at 101.6 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C158012"
 			(at 101.6 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -5155,6 +5188,17 @@
 			)
 		)
 		(property "Description" "Switched output channel 1, 2-pin 2.50mm JST-XH"
+			(at 50.8 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C158012"
 			(at 50.8 50.8 0)
 			(hide yes)
 			(show_name no)

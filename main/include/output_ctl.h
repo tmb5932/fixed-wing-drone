@@ -41,9 +41,8 @@
 #define ESC2_CH (NUM_RC_CHANNELS + 1)
 
 // Brings up the MCPWM capture groups (RC input) and MCPWM output groups
-// (servo/ESC), and starts both. Called once from app_main() during normal
-// flight boot, or from setup_mode_run() during setup-mode boot -- exactly
-// one of the two runs per boot.
+// (servo/ESC), and starts both. Called exactly once per boot, from
+// app_main() before the setup-mode BOOT-button window, for both boot paths.
 void io_hardware_init(void);
 
 // Only MOTOR_TYPE for ESC1_CH/ESC2_CH; SERVO_TYPE for all 6 RC-mirrored
@@ -69,10 +68,15 @@ void pass_through_inputs(uint32_t ch[NUM_RC_CHANNELS]);
 output_cfg_t get_channel_output_cfg(int ch);
 
 // Validates `cfg` (min_us < max_us, clamped to channel_output_type(ch)'s
-// absolute bounds), applies it live, and persists it to NVS. Returns false
-// (still applies live) if the NVS write failed, or if cfg was rejected as
-// invalid.
-bool set_channel_output_cfg(int ch, const output_cfg_t *cfg);
+// absolute bounds), applies it live, and persists it to NVS. Returns
+// ESP_ERR_INVALID_ARG (nothing applied) if cfg was rejected, or the NVS
+// error (still applied live) if only persisting failed -- distinguished so
+// the API doesn't report a storage failure as "invalid range".
+esp_err_t set_channel_output_cfg(int ch, const output_cfg_t *cfg);
+
+// Last pulse width actually written to logical output channel `ch`, after
+// reversal and clipping (0 if never written yet).
+uint16_t get_channel_output_us(int ch);
 
 // Live airframe mixing mode / airspeed-hold config accessors, for the
 // setup-mode HTTP API. Setters apply live and persist to NVS, returning
@@ -101,6 +105,53 @@ pid_gains_t get_airspeed_pid_gains(void);
 motor_cfg_t get_motor_cfg(void);
 bool set_motor_cfg(const motor_cfg_t *cfg);
 
+// Setup-mode bench test for identifying which physical motor is ESC1 vs
+// ESC2: spins only `esc_ch` (ESC1_CH or ESC2_CH) at ESC_TEST_THROTTLE_PCT of
+// its calibrated range for `duration_ms`, holding the other ESC at
+// motor-off, overriding the throttle stick for the duration. Takes effect
+// through pass_through_inputs(), so only does anything while something is
+// calling that (setup mode's pass-through task). Returns false if esc_ch
+// isn't an ESC or duration_ms is outside (0, ESC_TEST_MAX_MS].
+#define ESC_TEST_THROTTLE_PCT (0.15f)
+#define ESC_TEST_MAX_MS (3000)
+bool start_esc_test(int esc_ch, int duration_ms);
+
+// Setup-mode control tests (see main.c), both holding the ESCs at
+// motor-off and taking over the surfaces from RC pass-through:
+//
+//  - start_direction_test(): open loop, no IMU. Applies fixed roll/pitch
+//    commands (us offsets from trim, clamped to +/-CONTROL_TEST_FULL_CMD_US)
+//    through the real surface mixing/trim/reversal/mapping path. Autopilot
+//    convention: positive roll = roll right, positive pitch = nose up.
+//  - start_level_test(): closed loop. Runs the real roll/pitch PIDs toward
+//    level on live IMU data. Returns false if the IMU isn't ready yet.
+//
+// Both return false if duration_ms is outside (0, CONTROL_TEST_MAX_MS].
+// Starting one cancels any running ESC test (and vice versa).
+#define CONTROL_TEST_MAX_MS (20000)
+#define CONTROL_TEST_FULL_CMD_US (500.0f)
+typedef enum {
+    CONTROL_TEST_DIRECTION = 0,
+    CONTROL_TEST_LEVEL = 1,
+} control_test_kind_t;
+bool start_direction_test(float roll_cmd_us, float pitch_cmd_us, int duration_ms);
+bool start_level_test(int duration_ms);
+void stop_control_test(void);
+
+// Call once per pass-through cycle from setup mode, in place of
+// pass_through_inputs() whenever it returns true (a test is running and it
+// drove the outputs this cycle).
+bool control_test_step(float dt_s);
+
+typedef struct {
+    bool active;
+    int remaining_ms;
+    control_test_kind_t kind;
+    float roll_deg, pitch_deg;            // live IMU attitude (level test only)
+    float roll_cmd_us, pitch_cmd_us;      // command sent, us offset from trim
+} control_test_status_t;
+control_test_status_t get_control_test_status(void);
+
 // Live RC input channel mapping (which physical pin backs each logical RC_*
 // function), for the setup-mode HTTP API. Setter validates each entry is a
 // valid capture-channel index (0..NUM_RC_CHANNELS), applies it live, and
@@ -108,6 +159,41 @@ bool set_motor_cfg(const motor_cfg_t *cfg);
 // failed or the value was rejected as invalid.
 rc_input_map_cfg_t get_rc_input_map(void);
 bool set_rc_input_map(const rc_input_map_cfg_t *cfg);
+
+// Live servo output mapping (which physical servo_out pin each logical RC_*
+// function drives), for the setup-mode HTTP API. Setter rejects anything
+// that isn't a permutation of 0..NUM_RC_CHANNELS-1 (see config_store.h's
+// servo_output_map_cfg_t), applies it live, and persists to NVS, returning
+// false if rejected (nothing applied) or if the NVS write failed (still
+// applied live).
+servo_output_map_cfg_t get_servo_output_map(void);
+bool set_servo_output_map(const servo_output_map_cfg_t *cfg);
+
+// Autonomous-mode trim centres (see config_store.h's trim_cfg_t). Every
+// centre is bounded to TRIM_NEUTRAL_US +/- TRIM_MAX_OFFSET_US: real trim is
+// a small correction, so anything past that is treated as a mistake (a
+// deflected stick, a mis-mapped channel) rather than silently flown.
+#define TRIM_NEUTRAL_US (1500)
+#define TRIM_MAX_OFFSET_US (200)
+
+trim_cfg_t get_trim_cfg(void);
+
+// Whether logical channel `ch` is one autonomous mode actually commands
+// around a trim centre (aileron, elevator, rudder).
+bool trim_channel_allowed(int ch);
+
+// Sets one channel's centre, applies it live and persists it. Returns
+// false (nothing applied) if `ch` isn't trimmable or `center_us` is out of
+// bounds, or (still applied live) if the NVS write failed.
+bool set_trim_center(int ch, uint16_t center_us);
+
+// Samples every trimmable channel's live RC input over ~200ms and, only if
+// all of them are present, steady, and in bounds, applies and persists the
+// averages as the new trim centres. Intended use: trim the plane out on the
+// transmitter in manual flight, land, enter setup mode, centre the sticks,
+// capture. On failure nothing is changed and `err` describes why. Blocks
+// the caller for the sampling window.
+bool capture_trim_from_inputs(char *err, size_t err_len);
 
 // Raw live pulse width for physical capture-channel index `phys` (0-5),
 // bypassing rc_input_map entirely -- for setup mode's channel-mapping UI,
@@ -122,7 +208,7 @@ uint32_t get_physical_pulse_width(int phys);
 typedef struct {
     bool autonomous;      // would engage autonomous mode right now
     bool radio_connected; // false until RC_SWITCH's physical pin has ever updated
-    bool signal_stale;    // radio_connected but no update in >200ms (the failsafe path)
+    bool signal_stale;    // radio_connected but no update in >1s (RC_SIGNAL_LOSS_US, main.c -- the failsafe path)
 } rc_mode_status_t;
 
 rc_mode_status_t get_rc_mode_status(void);

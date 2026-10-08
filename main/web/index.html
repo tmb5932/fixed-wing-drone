@@ -15,6 +15,25 @@
 </header>
 
 <main>
+  <section class="card">
+    <div class="card-head">
+      <h2>Flight Log</h2>
+      <button id="flight-log-refresh" class="secondary-btn" type="button">Refresh</button>
+    </div>
+    <p class="hint">Events from previous boots: RC dropouts, failsafes, and why the board reset (a mid-flight BROWNOUT or CRASH shows up here). Survives the reset button, not unplugging the battery &mdash; after an incident, land, keep the battery in, hold BOOT and press reset.</p>
+    <ol id="flight-log" class="flight-log"></ol>
+    <button id="flight-log-clear" class="secondary-btn" type="button">Clear log</button>
+  </section>
+
+  <section class="card">
+    <h2>Autonomous Mode</h2>
+    <p class="hint">What the plane does when you flip to autonomous. Pitch is held level in both.</p>
+    <div class="radio-row">
+      <label><input type="radio" name="nav-mode" value="waypoint"> Follow waypoints (mission below, needs GPS fix)</label>
+      <label><input type="radio" name="nav-mode" value="heading_hold"> Straight &amp; level (hold the heading you had when you engaged)</label>
+    </div>
+  </section>
+
   <section class="card map-card">
     <div class="card-head">
       <h2>Mission</h2>
@@ -33,13 +52,41 @@
     <h2>Channel Mapping</h2>
     <p class="hint">Which physical receiver pin backs each function. Wiggle a stick or flip a switch and watch the numbers below to identify its pin, then assign it below.</p>
     <div class="rc-map-live-grid" id="rc-map-live-grid"></div>
-    <div id="rc-map-rows"></div>
+    <div id="rc-map-rows" class="map-rows"></div>
   </section>
 
   <section class="card">
     <h2>Outputs</h2>
+    <p class="hint">Which servo_out pin on the board each function drives. Picking a pin that's already taken swaps the two. Calibration below stays with the function, so it follows the servo to its new pin.</p>
+    <div id="servo-map-rows" class="map-rows"></div>
     <p class="hint">Live pulse width updates as the RC receiver moves. "Set as Min/Max" fills in the field from the current live value; Save commits it.</p>
     <div id="output-channels"></div>
+  </section>
+
+  <section class="card">
+    <h2>Control Tests</h2>
+    <p class="hint"><strong>Direction:</strong> sends the autopilot's full roll/pitch command for 4 seconds, no IMU involved. Check each surface moves the way the button says (e.g. Roll right: right aileron up, left down). If one is backwards, fix it with Reversed in Outputs.</p>
+    <div class="ctrl-test-grid">
+      <button class="secondary-btn ctrl-test-btn" type="button" data-test="pitch_up">Pull up</button>
+      <button class="secondary-btn ctrl-test-btn" type="button" data-test="roll_left">Roll left</button>
+      <button class="secondary-btn ctrl-test-btn" type="button" data-test="roll_right">Roll right</button>
+      <button class="secondary-btn ctrl-test-btn" type="button" data-test="pitch_down">Push down</button>
+    </div>
+    <p class="hint"><strong>Level:</strong> runs the real autopilot (IMU + PID) trying to hold level for 15 seconds. Tilt the board: the surfaces should push it back toward level (dip the right wing &rarr; it should roll left; nose down &rarr; it should pull up). Do the direction tests first.</p>
+    <button class="secondary-btn ctrl-test-btn" type="button" data-test="level">Level test</button>
+    <button id="ctrl-test-stop" class="secondary-btn" type="button">Stop</button>
+    <p class="hint" id="ctrl-test-status">Idle</p>
+  </section>
+
+  <section class="card">
+    <h2>Autonomous Trim</h2>
+    <p class="hint">The neutral each surface is held around when autonomous flight takes over (manual flight uses your transmitter trim directly). Trim the plane on the transmitter until it flies level hands-off, land, enter setup mode, let go of the sticks, then Capture. Limited to &plusmn;<span id="trim-max-offset">200</span> &micro;s from <span id="trim-neutral">1500</span>.</p>
+    <div id="trim-rows" class="map-rows"></div>
+    <div class="radio-row">
+      <button id="trim-capture-btn" class="secondary-btn" type="button">Capture from sticks</button>
+      <button id="trim-reset-btn" class="secondary-btn" type="button">Reset all to neutral</button>
+    </div>
+    <p class="fail-reason" id="trim-fail-reason"></p>
   </section>
 
   <section class="card">
@@ -53,6 +100,11 @@
       <input type="checkbox" id="esc1-is-left">
       <span>ESC1 is the left motor (unchecked = ESC1 is right)</span>
     </label>
+    <p class="hint"><strong>Remove propellers first.</strong> Test spins only that ESC's motor at 15% of its calibrated range for 1 second (the other ESC is held off), so you can see which physical motor is which.</p>
+    <div class="radio-row">
+      <button class="secondary-btn esc-test-btn" type="button" data-esc="1">Test ESC1</button>
+      <button class="secondary-btn esc-test-btn" type="button" data-esc="2">Test ESC2</button>
+    </div>
   </section>
 
   <section class="card">

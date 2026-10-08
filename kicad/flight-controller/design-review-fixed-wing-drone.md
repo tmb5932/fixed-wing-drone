@@ -1,275 +1,177 @@
 # Autonomous Fixed-Wing Drone Flight Controller — Design Review
 
-**Project:** `fixed-wing-drone` v3.0/v3.1 (KiCad 7+, 11 hierarchical sheets, 4-layer PCB, 91.0 × 61.5 mm)
-**Date:** 2026-09-12
-**Location:** `/Users/travis/projects/autonomous-rc-plane/kicad/flight-controller/`
-**Analyzers run:** `analyze_schematic.py`, `analyze_pcb.py --full`, `analyze_gerbers.py`, `cross_analysis.py`, `analyze_emc.py`, `analyze_thermal.py`, `lifecycle_audit.py --only lcsc`, plus a manual **Deep Review** pass against 6 freshly-downloaded manufacturer datasheets (schema-gated, 7 findings, 0 quarantined). SPICE not available in this environment.
-**Reviewing state:** this pass reviews the **current, not-yet-committed** working tree (PCB has small uncommitted changes on top of the last commit, `3abb847`/`1d1c1d2`).
-
-## Overview
-
-A 4-layer ESP32-S3-based fixed-wing flight controller: dual IMU (ICM-42688-P primary + BMI088 backup) over SPI, DPS368 barometer over SPI, microSD logging, GPS/UART, SBUS RC input, 8 servo/ESC outputs, USB-C (device) for programming/telemetry, and a UWB radio interface. Power comes from a 5V source rail regulated locally to 3V3 by a Torex XC6220B331PR-G LDO. This is the same board reviewed on 2026-09-11/12 after the ESP32 LDO thermal fix and USB-C/SBUS ESD-protection rework (commits `5bb4e34`, `1d1c1d2`, `3abb847`); this pass re-verifies that work from scratch with datasheet evidence and checks everything that has changed since.
-
-## Previous Review Delta
-
-The prior review (`2026-09-12` ~00:57, before commit `3abb847`) reported 1 HIGH blocker (stale fab package) and 1 MEDIUM blocker (D4/D6 cosmetic value desync). Both are now resolved, confirmed by data, not just by re-reading prose:
-
-| Status | Count | Detail |
-|--------|-------|--------|
-| Fixed since last review | 2 | Fab package regenerated (v3.1, commit `3abb847`) with U4/D4/D6/C17-C19 present; D4/D6 PCB `Value` field now reads `ESD5Z5.0T1G` instead of the `TVS 5V` placeholder — confirmed via `diff_analysis.py` on `pcb.json` (base 00:55 run → current run): the *only* footprint-level changes are those two `Value` field corrections. `cross_analysis.py` no longer emits the `XV-002` finding that flagged this. |
-| Still open (pre-existing, untouched this session) | 6 | EMC risk 58/100 with 2 error-severity findings (`GP-001`, `RP-001`), low ground-plane fill (`GP-004`), 0% ESD coverage on 14 of 18 external connectors (`EP-AUD`/`IO-001`/`IO-002`), no fiducials (`FD-001`), 0% test-point coverage (`TE-001`), no component lifecycle data (no distributor API keys). |
-| New this pass | 3 | (1) A small, uncommitted routing change since the v3.1 fab package: +5 track segments, +1 via, +2.48mm total copper, 0 net/footprint changes, **0 EMC delta** (verified via `diff_analysis.py` on `emc.json` — identical before/after) — cosmetic/incremental, not a regression. (2) The BOM sourcing-audit rule `SS-001` fires as `error` ("<50% MPN coverage") but is measuring the wrong field for this LCSC-sourced BOM — see False Positives. (3) Deep Review pass added: 7 new datasheet-grounded findings (both LDO pinouts, BMI088 protocol-select, DPS368 CS behavior, SPI CS fan-out, 2 false-positive corrections on `PU-001`) — none were checked with real manufacturer PDFs in the prior pass. |
-
-## Critical Findings
-
-| Severity | Issue | Section |
-|----------|-------|---------|
-| WARNING | Working-tree PCB has ~13.5h of small uncommitted edits (routing polish) on top of the last fab export (v3.1, 01:11) — electrically inert (0 EMC delta, 0 net changes) but the fab package should be re-exported once more before ordering, as routine practice. | PCB Layout Analysis |
-| WARNING | EMC risk score 58/100 with 2 error-severity findings: a reference-plane gap under the FC 5V power input net (`GP-001`) and a missing stitching via at an `/SCK` layer transition (`RP-001`). Pre-existing, not touched this session. | EMC / Cross-Domain Analysis |
-| WARNING | 14 of 18 external connectors have no ESD/EMC filtering (`EP-AUD`/`IO-001`); J8 and J15 (I2C headers) also have an insufficient signal-to-ground pin ratio (`IO-002`). Pre-existing. | Signal Analysis Review — Protection Devices |
-| WARNING | No fiducial markers on F.Cu with 66 SMD components including 0.25mm-pitch fine-pitch parts (`FD-001`); 0% test-point coverage across 83 nets (`TE-001`). Assembly-process concerns, not board-function concerns. Pre-existing. | Quality & Manufacturing |
-
-No CRITICAL (board-won't-function) issues were found. The design's pinout-critical assumptions — the ones that would silently produce a non-functional board — were checked against real manufacturer datasheets this pass and all confirmed correct (see Deep Review).
-
-## Component Summary
-
-| Type | Count |
-|------|-------|
-| Resistors | 23 |
-| Capacitors | 18 |
-| Connectors | 18 |
-| ICs | 6 (ESP32-S3-WROOM-1, XC6220B331PR-G, ICM-42688-P, BMI088, DPS368XTSA1, +1 second LDO U6) |
-| Diodes | 4 (2× ESD5Z5.0T1G TVS, others) |
-| Ferrite beads | 3 |
-| Transistors | 2 |
-| LEDs | 2 |
-| Switches | 2 |
-
-Nets: 83 · Wires: 156 · No-connects: 17 · Power rails: 5V_SRC, GND, GND_SRC (+derived ESP_3V3, SENSOR_3V3) · Sheets: 11 (main + aux, barometer, esc_io, esp32s3, external_sensors, fc_ldo, imu, microsd, onboard_sensors, servo_io, servo_out) · DNP parts: 1.
-
-**Sourcing:** 36/37 unique BOM lines carry a valid LCSC catalog number (only `J7`, the RC-receiver connector, lacks one — likely a generic/proprietary connector with no direct LCSC listing). The schematic analyzer's `SS-001` rule reports "8/36 MPN coverage" and calls this an `error`-severity pre-fab blocker — see **False Positives** for why that specific framing is misleading for an LCSC-sourced BOM. `DS-002` ("no datasheets directory") is now stale: this review synced a `datasheets/` directory with 6 manufacturer PDFs during the pass.
-
-## Power Tree
-
-```
-5V_SRC (external 5V input, e.g. FC UBEC / USB-C VBUS via J20/J13)
- │
- ├── U4 XC6220B331PR-G (LDO, CE tied HIGH to 5V_SRC = always enabled)
- │     Cin: C18 10µF · Cout: C19 4.7µF
- │     └── ESP_3V3 ── U1 ESP32-S3-WROOM-1 (3V3, GND ×2)
- │                    ├── R7 10k pull-up + C12 1µF + C14 100nF on EN
- │                    └── SW1 manual reset (EN → GND)
- │
- └── U6 AP2112K-3.3 (LDO, EN tied HIGH to 5V_SRC = always enabled, same
-       pattern as U4 -- power_sequencing confirms both regulators "always_on",
-       so there is no U4/U6 start-up ordering dependency)
-       Cin: C9 1µF · Cout: C8 1µF (+ per-sensor local decoupling)
-       └── SENSOR_3V3 ── U2 (ICM-42688-P), U3 (BMI088), U7 (DPS368XTSA1)
-
-GND_SRC — single ground reference tying U1/U4/U6/all sensor GND pins; PCB-level
-ground-plane analysis (GP-004) shows F.Cu 49% / B.Cu 44% fill — thin but not
-split (no disconnected islands reported by connectivity_graph).
-```
-
-`vref_source` for U4 and U6: both **datasheet-verified this pass** (fixed-output parts, not feedback-divider heuristics) — see Deep Review. `power_budget` estimates only ~10mA load on 5V_SRC from U6 itself (per-sensor loads not separately modeled by the analyzer); `sleep_current_audit` estimates 56µA worst-case / ~0µA realistic always-on quiescent current across both regulators (both have functioning EN pins, though both are hard-strapped on in this design).
-
-## Analyzer Verification
-
-### Component Count
-Schematic: 78 components (statistics.total_components) excluding power symbols. PCB: 81 footprints = 78 schematic components + 3 mounting holes (confirmed via `cross_analysis` `XV-001`, info severity — the 1 PCB-only item found in this run's `XV-001` list is a mounting hole, as in the prior pass). **Match.**
-
-### Component Pinout Verification (Deep Review subset — see full section below)
-All 6 ICs were checked against manufacturer PDF datasheets this pass:
-
-| Ref | Value | Datasheet Verified | Status | Match |
-|-----|-------|---------------------|--------|-------|
-| U4 | XC6220B331PR-G | Torex XC6220 datasheet p.2 | **Verified (datasheet)** | Exact |
-| U6 | AP2112K-3.3 | Diodes Inc. AP2112 datasheet p.2 (SOT25 pin table) | **Verified (datasheet)** | Exact |
-| U1 | ESP32-S3-WROOM-1-N16R8 | Espressif module datasheet p.40 | **Verified (datasheet)** | Exact (EN pin function) |
-| U3 | BMI088 | Bosch BMI088 datasheet p.3, 32, 33, 44 | **Verified (datasheet)** | Exact (PS strap + INT pins) |
-| U2 | ICM-42688-P | TDK InvenSense datasheet (pin table, chip-select-based SPI select) | **Verified (extraction-equivalent — read directly, see note)** | Consistent |
-| U7 | DPS368XTSA1 | Infineon DPS368 datasheet p.20 | **Verified (datasheet)** | Exact |
-
-For U2, the pin table and interface-selection description were read directly from the PDF but not entered into `deep_review.json` as a separate gated finding (the ICM-42688-P uses simple CS-pin-driven SPI selection, standard for InvenSense parts, with no strap ambiguity worth a formal finding) — its wiring (`AP_CS`→`IMU1_CS`, `AP_SDO/AP_AD0`→`MISO`, `AP_SCL/AP_SCLK`→`SCK`, `AP_SDA/AP_SDI`→`MOSI`) is consistent with standard 4-wire SPI use.
-
-### Pinout Ambiguity & Plausibility
-All 5 ICs use `easyeda2kicad:*` symbols — EasyEDA-imported libraries with no upstream KiCad library as a secondary check, making them the highest-priority verification targets per the skill's guidance. All 5 passed direct datasheet verification (see Deep Review) — no unresolved ambiguity remains among the ICs. The 2 TVS diodes (D4/D6, `ESD5Z5.0T1G`, SOD-523) are 2-terminal, non-polarized-relevant devices — pinout verification not meaningful (2-pin part).
-
-### Net Tracing
-- **EN** (U1 pin 3): U1.EN — R7(10k)→ESP_3V3, C12(1µF), C14(100nF), SW1(reset button)→GND. Confirmed via `analysis/helpers/check_en_pullup.py`. Matches Espressif's documented WROOM-1 EN reference circuit.
-- **SPI bus** (SCK/MOSI/MISO): shared by U2, U3 (×2 CS), U7; 4 distinct, non-overlapping CS nets confirmed (`IMU1_CS`, `IMU2_ACCEL_CS`, `IMU2_GYRO_CS`, `BAROMETER_CS`) — no bus contention.
-- **USB DATA+/DATA-**: differential pair detected between J13 and U1, `has_esd: true` via U1's on-die USB PHY... actually via the ESD5Z5.0T1G pair; `usb_compliance` reports CC1/CC2 5.1kΩ pulldowns (sink role, correct), VBUS ESD/decoupling/capacitance all pass.
-
-### PCB Verification
-Footprint count 81/81 match (above). Board dimensions 91.0 × 61.5mm confirmed via both `pcb.json.statistics` and gerber `board_dimensions` (edge-cuts extents) — **exact match across both sources**. Net count 84 (PCB) vs 83 (schematic) — the +1 is the PCB-only mounting-hole net, expected.
-
-### Gerber Verification
-**Correction during this pass:** the stale `analysis/gerbers_v3/` directory (dated 2026-09-11 11:18, pre-dating the LDO/ESD rework) was initially mistaken for the current gerber set. The actual current-as-of-fab-package gerbers are inside `production/Autonomous_Fixed_Wing_Flight_Controller_v3.1.zip` (2026-09-12 01:11). Extracted and re-analyzed: **all 11 layers + 2 drill files found, 0 missing required/recommended layers, aligned=true, 0 findings.** Board dimensions match the PCB exactly (91.0 × 61.5mm). Via count in the gerbers (187) matches the *current* PCB's via count exactly, and drill classification cross-checks cleanly (187 vias @ 0.3mm, 41 component holes, 0 unclassified mounting holes — the 3 PCB mounting holes are NPTH per `board_outline`, consistent with 2 NPTH tool sizes reported: 0.65mm ×2, 2.2mm ×3). **`analysis/gerbers_v3/` should be deleted or regenerated — it no longer reflects the design and analyzing it would silently mislead a future review.**
-
-## Deep Review
-
-7 findings, all gated with 0 quarantined (`analysis/deep_review.json`, verified via `deep_review_gate.py`):
-
-**1. U4 (XC6220B331PR-G) pinout — datasheet-verified exact match.** SOT-89-5 pin1=CE, pin2=VSS, pin3=NC, pin4=VIN, pin5=VOUT per Torex's own pin-assignment table (p.2). Schematic: pin1→5V_SRC, pin2→GND_SRC, pin3→NO_CONNECT, pin4→5V_SRC, pin5→ESP_3V3. Exact match.
-
-**1b. U6 (AP2112K-3.3) pinout — datasheet-verified exact match.** U6 uses the *standard* KiCad `Regulator_Linear:AP2112K-3.3` library symbol (not a custom EasyEDA import, so inherently lower risk — but checked anyway since this session obtained its datasheet incidentally via the LCSC sync). Diodes Inc.'s AP2112 datasheet (p.2) SOT25 pin table ("SOT-23-5" was renamed "SOT25" by Diodes): pin1=VIN, pin2=GND, pin3=EN, pin4=NC, pin5=VOUT. Schematic: pin1→5V_SRC, pin2→GND_SRC, pin3→5V_SRC (EN hard-tied high, always-on — same pattern as U4), pin4→NO_CONNECT, pin5→SENSOR_3V3. Exact match.
-
-**2. U3 (BMI088) PS pin — datasheet-verified correct SPI strap, plus a firmware note.** Bosch's datasheet (p.44): *"The active interface is selected by the state of the Pin#07 (PS) 'protocol select' pin: PS = 'VDDIO' selects I²C, PS = 'GND' selects SPI."* Schematic ties PS to GND_SRC — correct for the SPI-throughout design (separate CSB1/CSB2, shared MISO). **Firmware note (not a hardware defect):** per the same datasheet (p.3), *"The accelerometer part starts in I2C mode... until it detects a rising edge on the CSB1 pin, on which the accelerometer part switches to SPI mode... To change the accelerometer to SPI mode in the initialization phase, the user could perform a dummy SPI read operation, e.g. of register ACC_CHIP_ID."* The hardware already supports this (CSB1 wired to `IMU2_ACCEL_CS`, a real GPIO); firmware init must perform that first CS toggle/dummy-read or the accelerometer die will not respond over SPI.
-
-**3. U7 (DPS368) CSB pin — datasheet-verified correct.** Infineon's datasheet (p.20): *"The interface selection is done based on CSB pin status. If CSB is connected to VDDIO, the I2C interface is active. If CSB is low, the SPI interface is active."* CSB is wired to `BAROMETER_CS` (a GPIO), not statically strapped — correct, since the first CS-low SPI transaction will latch SPI mode as intended.
-
-**4. SPI CS fan-out — confirmed no conflicts.** 4 SPI devices (U2, U3×2 dies, U7) share SCK/MOSI/MISO; each has a distinct, dedicated CS net (`IMU1_CS`, `IMU2_ACCEL_CS`, `IMU2_GYRO_CS`, `BAROMETER_CS`). No shared/conflicting CS assignments.
-
-**5. False positive — `PU-001` on U1.EN.** The analyzer flagged "missing pull-up" on U1's EN pin. Direct trace shows R7 (10k, EN→ESP_3V3) + C12/C14 decoupling + SW1 reset button — exactly Espressif's documented WROOM-1 EN reference circuit (datasheet p.40: *"High: on, enables the chip. Low: off, the chip powers off."*). The analyzer's pull-up detector likely mis-traces this schematic's hierarchical/UUID-qualified net names. **No hardware issue.**
-
-**6. False positive — `PU-001` on U3.INT1/INT2.** Both interrupt pins are `NO_CONNECT`. Bosch's register map (p.32-33) shows `INT1_IO_CONF`'s `int1_in` and `int1_out` bits both reset to `0x00` (disabled) at power-on — the pin is electrically inert until firmware explicitly enables a direction, which this polled-SPI design never does. An inert, unenabled pin needs no pull-up. **No hardware issue.**
-
-## Signal Analysis Review
-
-### Power Regulators
-U4 (XC6220B331PR-G): fixed-output LDO, 5V_SRC→ESP_3V3 (3.3V nominal). Vout is fixed by part-number suffix ("B331" = 3.3V), not a feedback-divider calculation — no `vref_source`/heuristic risk applies. Datasheet-confirmed pinout (Deep Review #1). U6 (2nd LDO, GND_SRC/SENSOR_3V3): not independently re-verified this pass — no MPN populated in the BOM for U6, so its output voltage and required externals could not be checked against a datasheet. **Gap, not a defect** — flag for a future pass once U6's MPN is filled in.
-
-### Protection Devices
-2× ESD5Z5.0T1G TVS (D4 on USB-C VBUS, D6 on RC_SBUS) — both correctly netted, `Value` field now correct on the PCB (fixed this session, see delta). 14 of 18 external connectors still have `EP-AUD: none coverage` — pre-existing, unrelated to this session's changes.
-
-### USB Compliance
-J13 (USB-C, sink role): CC1/CC2 5.1kΩ pulldowns pass, VBUS ESD/decoupling/capacitance all pass (10µF total). D+/D- series resistors flagged `info` (not `pass`) — acceptable for USB 2.0 FS, no series resistor is mandatory. Differential pair `DATA+`/`DATA-` detected between J13 and U1 with ESD coverage.
-
-### Decoupling Analysis
-No `DA-001` decoupling-adequacy findings from `cross_analysis`. `PP-001` (power-in-pin-only-through-a-cap) did not fire for any IC — all power pins have a direct DC path to a rail.
-
-### Bus Topology
-SPI (4 devices, distinct CS — see Deep Review #4), I2C (J8/J15 headers — `IO-002` flags insufficient ground-pin ratio, pre-existing), UART ×2 (GPS, SBUS-adjacent), USB (device).
-
-## Power Analysis
-
-### PDN Impedance
-`pdn_impedance` populated for 5V_SRC: C9 (1µF, 0402, SRF 7.12MHz) + C18 (10µF, 0603, SRF 1.90MHz), 11µF total. Impedance profile at 1kHz is 14.5Ω, falling to <5Ω by ~2.5kHz and continuing to drop with frequency as the MLCC pair's combined ESR/ESL dominates — a conventional two-tier bulk+bypass PDN shape with no anti-resonant peak reported in the profiled range. ESP_3V3 and SENSOR_3V3 rail PDN profiles were not separately inspected in this pass beyond the decoupling-cap inventory already covered under Decoupling Analysis; no PDN-related findings (`GP-00x` excluded, those are PCB reference-plane findings, not PDN) fired against either rail.
-
-### Power Budget
-`power_budget` models only the regulator input stage explicitly: U6 draws an estimated 10mA from 5V_SRC (`ic_count: 1`). Per-sensor downstream loads on ESP_3V3/SENSOR_3V3 are not populated by the analyzer (`ic_count: 0` on both output rails) — this is a known analyzer limitation for boards where load current isn't inferable from the schematic alone (ESP32-S3 active current varies enormously with radio/CPU state; IMU/barometer currents are sub-mA and not separately modeled). No overload condition is reported, and U4/U6 (600mA-1A rated) have enormous headroom over any plausible combined sensor + WiFi/BLE load, so this is not flagged as a concern.
-
-### Power Sequencing
-`power_sequencing` reports both U4 and U6 as `always_on` (EN/CE hard-strapped to 5V_SRC, confirmed independently in Deep Review #1 and #1b) — no EN/PG dependency chain exists between the two regulators, and none is needed since ESP32-S3 and the SPI sensors have no documented power-up ordering requirement relative to each other. No `PS-001`-class sequencing-violation findings fired.
-
-### Sleep Current Audit
-`total_estimated_sleep_uA` (worst-case) = 56µA: U4's Iq ~1µA + U6's Iq ~55µA, both regulators modeled as "can be disabled via EN" even though neither actually is in this design (both EN/CE pins are hard-strapped on, not GPIO-controlled) — so `realistic_uA` for both paths is reported as 0.0, giving `realistic_total_uA` = 0.0µA. **Caveat, not a defect:** because EN is hard-tied rather than GPIO-switched, the *realistic* estimate of 0µA is optimistic — the regulators cannot actually be disabled by firmware in this design, so the true sleep-mode floor is closer to the 56µA worst-case figure (dominated by U6's 55µA quiescent current) plus whatever the ESP32-S3 itself draws in its lowest sleep mode. This wasn't caught by the analyzer's own heuristic (which assumes any regulator with an EN pin is disableable) and is worth noting for battery-life planning.
-
-## Thermal Analysis
-
-`analyze_thermal.py`: **100/100 score, 0 findings.** U4's original thermal-margin problem (the reason for this session's LDO swap, per commit `1d1c1d2`) is fully resolved. Thermal vias under U4's tab: 6 placed, netted to GND — analyzer confirms "adequate (6/5 min)". U6 (AP2112K-3.3, SOT-23-5, no exposed pad) does not register as a thermal concern — at ~10mA estimated load and a 1.7V dropout (per `power_budget.ldo_dissipation`), dissipation is negligible (<0.02W).
-
-## Inrush Analysis
-`inrush_analysis` models both regulators' power-on surge from their output bulk capacitance and an assumed 0.5ms soft-start: U4 (ESP_3V3, 26.8µF total output cap: C19 4.7µF + C10 22µF + C11 100nF) — estimated inrush **0.177A**; U6 (SENSOR_3V3, 3.71µF total output cap) — estimated inrush **0.024A**. Both are well within U4's (1A/1.2A limit) and U6's (600mA min) current ratings and their respective inrush-protection circuits (Torex XC6220 has a dedicated inrush-current-prevention circuit per its datasheet; AP2112 has foldback current limiting at 50mA — its 0.024A inrush estimate for U6 sits below foldback threshold). No `TS-00x` thermal-safety findings fired.
-
-## Voltage Derating
-`voltage_derating` was not populated for this schematic (key absent from the analyzer output) — not separately assessed this pass beyond noting nominal operating voltages are well inside every checked IC's absolute-maximum ratings (BMI088: -0.3 to 4V on VDD/VDDIO vs 3.3V nominal; ICM-42688-P: 1.71-3.6V rated vs 3.3V nominal — both with comfortable margin).
-
-## PCB Layout Analysis
-
-### Board Overview
-91.0 × 61.5mm, 4 copper layers (F.Cu/In1.Cu/In2.Cu/B.Cu), 1.6mm total thickness, `copper_finish` unset in the KiCad project (choose HASL or ENIG at order time). 81 footprints, 65 SMD / 13 THT / 3 mounting holes, all on the front side.
-
-### Routing / Connectivity
-648 track segments, 187 vias, 2032.71mm total track length, 84 nets, **0 unrouted, 100% routing complete.**
-
-### Via Analysis
-187 vias, all 0.3mm drill. No via-in-pad findings (`VP-001` did not fire). No board-edge via-clearance findings (`BV-001` did not fire).
-
-### Signal Integrity
-`RP-001` (missing stitching via at a layer transition) fires 22 times across `/SCK` and `/MISO` — 1 `high`, 21 `warning`. `GP-001` (reference-plane gap) fires on the FC 5V input net (high) plus 10 more nets (partial gap, warning). `CK-001`/`CK-003` flag `/SCK` routed on an outer layer near connector J15. These are the same class of finding the prior review already carried forward as pre-existing/not-yet-addressed; none regressed this session (confirmed 0 EMC delta between the pre- and post-session-edit PCB runs).
-
-### Power & Ground
-`GP-004`: F.Cu 49% / B.Cu 44% ground-fill ratio — thin but not split; `connectivity_graph` shows no disconnected GND islands.
-
-### Thermal (PCB-level)
-See Thermal Analysis section below — 100/100, U4's tab vias adequate.
-
-### DFM Assessment
-JLCPCB **standard** tier. Min track 0.2mm, min spacing 0.244mm, min drill 0.3mm, min annular ring 0.15mm — **0 DFM violations.**
-
-### Silkscreen / Fiducials / Test Points
-`FD-001` (error): no fiducials on F.Cu with 66 SMD parts including 0.25mm-pitch fine-pitch components — worth adding 3 per side before a production assembly run. `TE-001` (warning): 0% test-point coverage across 83 nets — acceptable for hand-assembly/bring-up. `OR-001` (info): 15 passives deviate from the dominant 0° placement orientation — cosmetic/assembly-throughput note, not a functional issue.
-
-## EMC / Cross-Domain Analysis
-
-`analyze_emc.py` (5 rule categories checked, 53 total findings): **risk score 58/100**, 2 `error`, 36 `warning`, 15 `info`. Unchanged from the prior review's EMC state and unchanged by this session's small PCB edit (confirmed 0-delta via `diff_analysis.py` on `emc.json`, base 00:55 run vs current run):
-
-- **`GP-001` (error)**: the FC 5V power-input net (`Net-(J20-Pin_2)`) has a reference-plane gap over ~5.3mm of routing (75% covered) — a return-path discontinuity risk for that supply trace.
-- **`RP-001` (error + 21×warning)**: `/SCK` and `/MISO` layer transitions (22 total across the two nets) lack a nearby stitching via, meaning return current has no low-impedance path back across layer changes — standard SI/EMI concern for a 4-layer board with this much layer-hopping on SPI signals.
-- **`GP-004` (warning, ×2)**: ground-plane fill 49% (F.Cu) / 44% (B.Cu) — thin, though `connectivity_graph` shows no disconnected GND islands.
-- **`CK-001`/`CK-003`**: `/SCK` routed on an outer layer, near connector J15 — clock-radiation risk, minor at SPI clock rates.
-- **`IO-001`/`IO-002`/`EP-AUD`**: connector-level ESD/filtering coverage — see Signal Analysis Review → Protection Devices above.
-
-`cross_analysis.py` (schematic↔PCB sync checks): **1 finding**, `XV-001` (info) — 1 PCB-only component (a mounting hole), expected. **0** `XV-002` (value mismatch — the D4/D6 issue from the prior review, now fixed) and **0** `XV-003` (pin-net mismatch) findings. `CC-001` (connector current capacity) and `EG-001` (ESD gap) did not fire beyond what's already covered by the EMC skill's own connector audit.
-
-None of the EMC findings are new this session or affected by the small uncommitted routing delta.
-
-## Schematic ↔ PCB Cross-Reference
-
-- **Component count**: 78 schematic (excl. power symbols) vs 81 PCB (78 + 3 mounting holes). Match, confirmed via `XV-001` (info, expected).
-- **Pin-net verification**: not re-walked component-by-component this pass beyond the 5 ICs covered in Deep Review (already the highest-risk items, being custom EasyEDA symbols); `cross_analysis` reports 0 `XV-003` (schematic/PCB pin-net mismatch) findings across the whole board.
-- **Value/MPN consistency**: D4/D6 mismatch from the prior review is fixed (see Previous Review Delta). No other value mismatches reported by `diff_analysis` or `cross_analysis`.
-- **DNP consistency**: 1 DNP part in the schematic; not independently re-traced against PCB routing this pass (no DNP-related finding fired).
-
-## Gerber Analysis
-
-See **Gerber Verification** above. Summary: extracted from `production/Autonomous_Fixed_Wing_Flight_Controller_v3.1.zip`, 13 gerber files + 2 drill files, all required/recommended layers present, aligned, 228 holes total (187 via + 41 component), 2168 flash apertures, 67341 draws, 0 findings.
-
-## Interface Summary
-
-- **USB-C (J13)**: device/sink, ESD via ESD5Z5.0T1G on VBUS, CC1/CC2 5.1kΩ, D+/D- to U1 native USB PHY.
-- **SBUS RC input (J7)**: full ESD coverage (`EP-AUD: full`), TVS D6.
-- **SPI bus**: U2 (primary IMU), U3 (backup IMU, dual CS), U7 (barometer) — 4 distinct CS nets, no conflicts.
-- **I2C headers (J8, J15)**: no ESD, insufficient ground-pin ratio (`IO-002`) — pre-existing.
-- **UART**: GPS (RX/TX), plus SBUS on U1's TXD0.
-- **Servo/ESC outputs**: 8 channels (SERVO_OUT1-8, ESC_OUT1-2) from GPIO.
-- **microSD**: SD_CS, SD_CARD_DETECT.
-- **UWB radio interface**: UWB_CS, UWB_INT — separate CS from the sensor SPI devices; no cross-checks against a UWB datasheet performed this pass (no datasheet obtained for that part).
-
-## Quality & Manufacturing
-
-### Assembly Complexity
-65 SMD / 13 THT, includes fine-pitch parts (0.25mm finest pad, LGA-8/14/16 sensor packages) — not a hand-assembly-only design; a paste stencil is warranted.
-
-### Sourcing Audit
-36/37 unique parts have an LCSC catalog number (97%); only J7 lacks one. `SS-001`'s "8/36 MPN coverage <50%" framing is misleading here — see False Positives.
-
-### Component Lifecycle Status
-**Attempted this pass** via `lifecycle_audit.py --only lcsc` (no API key required). Result: all 8 queried MPNs returned `unknown` — LCSC's public lookup does not expose lifecycle/EOL status, only the DigiKey/Mouser/element14 APIs do, and none of those API keys are configured in this environment. **Lifecycle audit not usefully performed — no distributor API keys available.** This is a real coverage gap for a flight-safety-relevant board; recommend configuring at least one keyed distributor API before a production order.
-
-### BOM Optimization / Test Coverage
-Not separately computed this pass beyond what's captured above (test points: 0%, see `TE-001`).
-
-### Ordering Notes
-- Layer count: 4, surface finish: **unset in project — choose at order time** (HASL for cost, ENIG for the fine-pitch LGA parts), board thickness: 1.6mm (standard).
-- DFM tier: standard (0 violations) — no advanced-tier fab required.
-- Stencil: recommended (65 SMD parts, fine-pitch sensors present).
-- Fiducials: **add 3 per side before a production run** (currently 0, `FD-001`).
-- Copper weight: 0.035mm layers = 1oz, consistent with the DFM metrics above.
-
-## False Positives / Reviewer Overrides
-
-1. **`SS-001` ("<50% MPN coverage", error/blocker)** — this rule counts the `mpn` property field, which for an LCSC-sourced BOM is only populated on true ICs (6-8 parts); passives are correctly identified by their `lcsc` catalog number instead, which is the actual sourcing key for JLCPCB/LCSC assembly. Measured the right way, sourcing is 36/37 (97%) complete — only `J7` genuinely lacks a distributor part number. **Downgraded from blocker to non-issue**, with a suggestion to fill in `J7`'s LCSC number and, optionally, `manufacturer`/`mpn` fields for documentation completeness.
-2. **`PU-001` on U1.EN** — see Deep Review #5. Confirmed present (10k + decoupling); analyzer net-tracing gap, not a hardware defect.
-3. **`PU-001` on U3.INT1/INT2** — see Deep Review #6. Both directions disabled by register default on an intentionally-unconnected pin; not a hardware defect.
-4. **`DS-002` ("no datasheets directory")** — stale as of the cached schematic run (00:55); this review synced 6 datasheets into `datasheets/` during the pass. Will clear on the next schematic re-run.
-5. **Initial gerber-directory mix-up (self-corrected during this pass)** — `analysis/gerbers_v3/` looked plausible at first glance but is dated 2026-09-11 11:18, predating the LDO/ESD rework entirely; the actual current gerbers live in `production/*.zip`. Not an analyzer false-positive, but a trap worth naming so a future review doesn't repeat it — see Gerber Verification.
-
-## Not Performed / Review Limits
-
-- **SPICE simulation**: not performed — no ngspice/LTspice/Xyce installed in this environment. No RC filters / dividers / opamp stages were flagged as needing verification beyond what the LDO's fixed-output pinout check already covered.
-- **U6 (2nd LDO) datasheet verification**: not performed — no MPN populated in the BOM for U6. Its output-voltage correctness and required externals are unverified.
-- **UWB module datasheet verification**: not performed — no datasheet obtained for the UWB radio part this pass; its pin/protocol assumptions are unverified (topology-only).
-- **Component lifecycle status**: not usefully obtained — LCSC's public API doesn't expose EOL/NRND status; DigiKey/Mouser/element14 API keys are not configured in this environment.
-- **Full pin-by-pin schematic↔PCB pad cross-reference**: performed for the 5 Deep-Reviewed ICs; not exhaustively re-walked for all 81 footprints this pass (relied on `cross_analysis`'s 0 `XV-003` findings as the coverage signal for the rest).
-- **Native `kicad-cli` DRC**: not re-run this pass (was run and passed cleanly in the prior session's work per commit `3abb847`'s message; no footprint-shape changes since then to warrant a repeat, though the small uncommitted routing delta was not independently DRC-checked with `kicad-cli` in this pass — only cross-checked via the PCB analyzer's own connectivity/DFM findings, which showed 0 violations).
-
-## Final Verdict
-
-**Conditionally ready.** No CRITICAL board-function defects were found, and the datasheet-grounded Deep Review this pass positively confirmed the highest-risk pinout/protocol assumptions (LDO pinout, BMI088 protocol-select strap, DPS368 chip-select behavior, SPI CS fan-out) rather than just trusting internal consistency. Before ordering:
-
-1. Re-export gerbers/BOM/CPL one more time to pick up the small uncommitted routing delta (cosmetic per the diff, but don't ship stale files) and delete the stale `analysis/gerbers_v3/` so it can't mislead a future review.
-2. Treat the pre-existing EMC (`GP-001`/`RP-001`), ESD-coverage, fiducial, and test-point items as a backlog — none are new, none block a first prototype run, but they're the right list to work through before a production order.
-3. Fill in U6's MPN so its regulation can be datasheet-checked, and get a datasheet for the UWB module before trusting its pin assignments the same way.
-4. Note the BMI088 firmware requirement (Deep Review #2): the accelerometer die needs a boot-time CS toggle/dummy-read to leave I2C mode, or it will silently fail to respond over SPI.
+**Project:** `fixed-wing-drone` v3.1 (KiCad 10.0.1, 12 hierarchical sheets, 4-layer PCB, 91.0 × 61.5 mm)
+**Date:** 2026-10-03
+**Baseline:** commit `ddca75b` ("progress on v1 of mission board"). "Changes since `ddca75b`" lists everything changed after that commit.
+**Location:** `kicad/flight-controller/`
+
+## Review process
+
+1. **Four independent reviews.** Two schematic reviewers and two PCB reviewers each did a full review without seeing each other's work, and without seeing earlier review documents. Between them they raised 35 distinct issues.
+2. **Independent verification.** A separate verifier checked every claim against KiCad's netlist, the PCB geometry (pcbnew Python), the manufacturer datasheets (Torex XC6220, AOS AO3407A, TDK ICM-42688-P, Bosch BMI088, Espressif ESP32-S3, ST USBLC6-2) and live JLC/LCSC catalog lookups. Results: 21 confirmed, 12 partially confirmed with corrected severity, 0 pure false positives, and two conflicts between reviewers resolved.
+3. **Iterative checks after each round of fixes.** After each round I diffed the netlist and PCB footprints, ran `kicad-cli sch erc`, and ran `kicad-cli pcb drc --schematic-parity --refill-zones`. KiCad's own netlist is treated as ground truth for connectivity.
+
+Not re-run this pass: the kicad-happy EMC, thermal and SPICE analyzers. The changes were targeted and were verified directly instead (see "Review limits").
+
+## Verdict
+
+**Ready for fab.** Round 2 (below) added no must-fix items on the flight controller itself. The one cross-board item, the inter-ESP connector (J11 ↔ mission-board J18), has since been fixed on the mission board.
+
+Current state, with zones refilled:
+
+| Check | Result |
+|---|---|
+| ERC errors | 0 |
+| ERC warnings | 1, cosmetic: J7 library-symbol mismatch |
+| DRC unconnected items | 0 |
+| DRC clearance errors | 0 |
+| DRC remaining errors | Only J13 pads A1/B12 "starved thermal" (accepted, see below) |
+| Schematic ↔ PCB parity | In sync. Only board-only items (FID1–3 fiducials, M2 mounting holes) are flagged. |
+
+## Changes since `ddca75b`
+
+### Schematic and netlist
+
+| Change | Detail |
+|---|---|
+| **ESP32 module variant** | U1 `ESP32-S3-WROOM-1-N16R8` (C2913202) → `-N16R2` (C2913205). The 2 MB **quad** PSRAM frees GPIO35/36/37; on R8/R16V parts these pins are wired to the octal PSRAM. The N16R2 is also rated −40–85 °C, versus −40–65 °C for the N16R8. **Do not substitute an R8 part.** |
+| **Dedicated microSD SPI bus** | SD_SCK = IO35 (U1.28), SD_MOSI = IO36 (U1.29), SD_CS = IO37 (U1.30), SD_MISO = IO8 (U1.12). Card1 is no longer on the shared sensor bus. R28/R29/R30 (10k pull-ups to ESP_3V3) added on SD_MISO/SD_CS/SD_MOSI. |
+| **USB data ESD** | D8/D9 (2× ESD5Z5.0T1G) replaced by U5 USBLC6-2SC6 (C7519). Pins 1/6 = D+, 3/4 = D−, 2 = GND, 5 = VBUS. The VBUS net was renamed `/esp32s3/USB_VBUS`. |
+| **FC 5 V input** | Q1/R8 (P-FET reverse-polarity stage) removed. D5 (B5819W) already blocks reverse current. J20 pin 1 is now GND, so J20 = GND / V+ / GND and the plug can go in either way round. |
+| **Servo rail** | Q2/R10 removed. The FET's thermal margin was inadequate for six servos, and it gave no protection against a flipped centre-V+ servo plug. J22 pin 2 now feeds SERVO_5V directly. C20 (22 µF / 25 V 0805, C45783) added on SERVO_5V near J7. |
+| **U4 input cap** | C18: 10 µF / 6.3 V 0603 (C1691) → 22 µF / 25 V 0805 (C45783). The old part derated to roughly 3–4 µF at 5 V, which falls in the XC6220's "CIN 4.7 µF needs CL 47 µF" stability row. |
+| **I2C pull-ups** | R20/R21: 6.8k → 4.7k (C25900), for margin with three cabled I2C devices. |
+| **UWB power** | J10 pin 1: SENSOR_3V3 → FC_5V through ferrite L3 (BLM18PG121SN1D). The UWB board must carry its own 3.3 V LDO (see "Cross-board dependency"). |
+| **BOM fixes** | J8 LCSC C234195 (not in JLC catalog) → C17617036. R26/R27 (330 Ω, RC_TX/RC_SBUS series resistors) given LCSC C25104. Without a number, JLC would have skipped them and left the RC lines open. R24/R25 (33 Ω 1206 IR LED feed) given C5759775 (0.75 W). ESP32 sheet title corrected to N16R2. |
+
+### PCB
+
+| Change | Detail |
+|---|---|
+| EN reset filter | C12/C14 moved from beside SW1 (~47 mm away) to 4.0/4.4 mm from U1 pin 3. R7 is 1.6 mm from the pin. |
+| USB-C position | J13 moved to x = 101.875. Its "PCB edge" line is now flush with Edge.Cuts; it was previously recessed ~0.75 mm. D+/D− rerouted. |
+| U5 jumper groups | `jumper_pad_groups` (1,6) and (3,4) are present. **Note:** the stock `SOT-23-6` footprint does not carry these, so updating footprints from the library strips them and brings back two false "unconnected" DRC errors. Consider a project-local copy of the footprint. |
+| EPAD vias | 9 × 0.3 mm GND vias, one in each pad of U1's 3×3 EPAD (Espressif land pattern). |
+| MISO | The 5 inner-layer MISO segments beside the BMI088 moved from In1 (GND) to In2 (Pwr). The In1 GND plane under U3 is unbroken. |
+| SBUS/RC TVS | D6/D7 moved from ~32 mm away to 5.0/4.7 mm from J7 pins 1/4. |
+| Fiducials | `REF**` ×3 renamed FID1 (142.25, 82.25), FID2 (118.25, 96.25), FID3 (161.25, 118.75). Their reference text is on F.Fab, not silkscreen. |
+| Silkscreen | Board text corrected to "v3.1". |
+
+## Review findings and disposition
+
+Severities are the verifier's corrected ratings.
+
+### Fixed
+| Finding | Severity |
+|---|---|
+| SERVO_5V had no capacitance (receiver brown-out risk) | HIGH → C20 22 µF added. The user's decision was to skip bulk capacitance, because v2.0 drove six servos with no caps (see "Accepted"). |
+| Q2 SOT-23 P-FET undersized for servo current | MEDIUM → removed |
+| EN RC 47 mm from module | MEDIUM → moved |
+| USB-C recessed 0.75 mm | MEDIUM → fixed |
+| UWB powered from the IMU rail (SENSOR_3V3) | MEDIUM → moved to FC_5V via ferrite + LDO on the UWB board |
+| C18 bias derating / XC6220 stability | LOW → 22 µF 25 V 0805 |
+| ESP32 EPAD had no vias | LOW → 9 vias |
+| MISO slot in In1 GND under BMI088 | LOW → moved to In2 |
+| SBUS/RC TVS far from J7 | LOW → moved |
+| I2C pull-ups weak for cabled bus | LOW → 4.7k |
+| Q1 redundant with D5 | LOW → removed. J20 pinout made symmetric. |
+| J8 LCSC not orderable; R24–R27 missing LCSC | LOW/HIGH-impact → fixed |
+| R24/R25 1206 overloaded (0.33 W) by a shorted LED cable | LOW → 0.75 W part (C5759775) |
+| Duplicate `REF**` fiducial designators | LOW → FID1–3 |
+| ESP32 title said N16-R8 | INFO → fixed |
+
+### Accepted / not changed (with rationale)
+| Finding | Rationale |
+|---|---|
+| No bulk cap on SERVO_5V | The v2.0 board ran six servos with no caps. One 22 µF ceramic was added as a compromise. If receiver brown-outs or failsafes appear (check receiver telemetry: RX voltage, frame loss), add a 220 µF polymer (e.g. C22395163, 6.3 × 5 mm). |
+| No pull-ups on the 5 sensor-bus CS lines | No board space. Handled in firmware (see "Firmware to-do"). |
+| UWB shares the sensor SPI bus; no series resistors on J10 | Accepted. The ESP32-S3 has only two user SPI hosts, and the SD card uses the other one. Power is isolated (ferrite + separate LDO). |
+| J14 GPS pinout isn't Pixhawk DS-009 | Not a defect. J14 (SDA, GND, RX, TX, 5V, SCL) matches the RDQ BN-880 module ("SDA, GND, TX, RX, VCC, SCL") with TX/RX already crossed, so a straight-through cable works. |
+| No TVS on FC_5V | Skipped. The LDOs' absolute max is 6.0–6.5 V. Relies on a correctly set UBEC and D5. Hot-plug ringing risk is low because the servo lead stays plugged in and the BEC ramps with the ESC. |
+| No 10 µF at microSD; C13 is ~7 mm from Card1 VDD | C13 cannot move closer. C10 (22 µF) is on ESP_3V3. Revisit only if SD write errors or brown-outs appear. |
+| No 100 nF at U5 pin 5 | No space. C17 (10 µF) is ~5 mm away on the same net; ST lists the cap as best practice only. |
+| Inner-zone clearance 0.5 mm (via anti-pads merge into slots beside U1) | Not changed. Optional improvement: 0.2–0.25 mm, then refill. |
+| J13 A1/B12 starved thermal (DRC) | Accepted by the user. The pads are connected to GND, just with fewer spokes than the rule requires. |
+| No battery voltage/current sense | No free ADC1 pin. Plan an I2C power monitor (e.g. INA226-based module) on the existing bus. |
+| ESC_OUT1/2 no pull-downs; ICM-42688 FSYNC NC; BMI088 INT pins NC | INFO/LOW. ESCs need a valid pulse train to arm. INT2 defaults to an open-drain output. The BMI088 is polled. |
+| SD pins use the GPIO matrix rather than native FSPI IO_MUX | INFO. Fine for SD at ≤20 MHz. |
+
+## Round 2 review (2026-10-03, after all fixes)
+
+**Method.** Four new blind reviewers (two schematic, two PCB) worked without access to round 1 or to this document. They raised 32 claims, and an independent verifier checked each one against the netlist, the PCB geometry, the datasheets and the LCSC/JLC pages. Result: no CRITICAL or HIGH issues.
+
+**Fixed in round 2**
+
+| Item | Fix |
+|---|---|
+| J9 (IR LED connector) had no LCSC number | **C161691** (BM03B-GHS-TBT), the same part as J11. It matches the footprint exactly. |
+| D5 Notes field said "ESC1 UBEC diode" | Changed to "FC UBEC input diode (J20 -> FC_5V)" |
+| TP1–TP10 appeared in the BOM and placement file with no part | Excluded from BOM and position files, in both schematic and PCB |
+| J19 pin 2 (NC) labelled "5V" on silk | Relabelled "NC" |
+| "91mm" / "61.5mm" text would print on the board | Moved from F.Silkscreen to Dwgs.User |
+| 32 silk texts had 0.1 mm stroke | Raised to 0.15 mm. The silk-overlap and silk-over-copper counts did not change. |
+| Mounting holes all named `M2` | Renamed H1–H3 (owner) |
+
+**Cross-board item, fixed on the mission board.** FC J11 is 1 GND / 2 TX / 3 RX, while the mission-board J18 was 1 TX / 2 RX / 3 GND, and its description calls for a straight-through cable. With a 1:1 cable, the mission-board TX would be driven into FC GND and FC RX would be held low. The mission-board J18 is now 1 GND / 2 RX / 3 TX (confirmed in its netlist on 2026-10-08), so a 1:1 cable crosses TX and RX correctly.
+
+**Sourcing: resolved.** The jlcsearch mirror of JLC's library proved incomplete and stale. It reported C25531 as missing, C161692 at 2 in stock and C378970 at 162. The owner checked JLC's own parts pages on 2026-10-03 and found C25531 present, **C161692 (J15) at ~14k** and **C378970 (J10) at ~23k**. Do not rely on jlcsearch for stock. DPS368 (C3232508) was reported at ~285; confirm it on JLC as well.
+
+**Should fix (cheap; layout or placement work, left to the owner)**
+- **ICM-42688 U2 pin 9 (FSYNC):** the datasheet says to connect it to GND if unused. Floating is harmless by default: at reset it is INT2, open-drain, active-low. To fix, tie pins 9, 10 and 11 to GND with an F.Cu stub. **Pad 8, next to pin 9, is SENSOR_3V3. Do not bridge it.**
+- **ESC_OUT1/ESC_OUT2:** no pull-downs, so the outputs float during boot. Fix: 100k (C25741) to GND on the connector side of R22/R23.
+- **C19 → C15850** (10 µF 25 V 0805). This is optional, because C10 (22 µF, 5.9 mm from U4) already gives enough output capacitance.
+- **D3/D5 → DSS24 (C2923950, SOD-123FL, 2 A).** This adds margin on FC_5V; the peak load is ~0.8 A against the B5819W's 1 A rating. It is nearly a drop-in on the SOD-123 land.
+- **Servo rail feed:** add 4–6 vias at J22 (there are 5 now), and order **1 oz inner copper**. JLC's default inner copper is 0.5 oz. A solid zone connection on the servo-header 5 V pins would help current capacity but makes hand-soldering harder.
+- **GND island near Card1:** the F.Cu GND island around Card1 and the 330 Ω resistors (~43.5 mm²) has a single stitching via. Add 2–3 more.
+- **Plane-split crossings (optional):** B.Cu servo/SBUS traces cross the Pwr.Cu FC_5V/SERVO_5V split. This is an EMI concern only. Move the crossing segments to F.Cu.
+- **"Power Plane Split" silk:** the hatch line at x = 164.5 runs over the D7 pads. It is cosmetic, because the fab clips silk on pads.
+
+**Re-confirmed as accepted.** The facts match the owner's assumptions for all of these: CS pull-ups, microSD bulk cap, FC_5V TVS, MISO on Pwr.Cu, the servo bulk cap, the I2C module pull-up meter check, and the J13 starved thermal. The starved thermal is a KiCad DRC error only and does not block fab. U4's thermal estimate is Tj ≈ 85 °C at 40 °C ambient against a 125 °C limit, which is adequate.
+
+**Accepted failure mode to record.** The UWB module shares the IMU/barometer SPI bus through an off-board cable, with no series resistors and no ESD protection. A harness fault (MISO shorted, or a stuck UWB driving MISO) takes out **both IMUs and the barometer at once**.
+
+**Other notes**
+- **R1 back-power:** if the receiver is powered (SERVO_5V) while FC_5V is off, it back-powers the ESP32 at ~8 mA through R26/R27 and the clamp diodes. Benign.
+- **R2 cables:** the LIDAR model is still unknown. Benewake parts order SDA/SCL differently from J8's Pixhawk order, so build the cable to suit. The BN-880 may ship with a 1.0 mm SH lead, which would need a GH adapter.
+
+Minor, still open:
+- TP1/TP9 "non-mirrored text" warnings are on B.Fab, which is not printed. Harmless.
+- J7 ERC library-symbol mismatch. Cosmetic.
+
+## Cross-board dependency: UWB radio
+
+J10 pin 1 now supplies **5 V** (FC_5V via L3). The DWM3000 is a 3.3 V-only part. The UWB board (`../uwb-radio-kicad/`) **must** have its own 3.3 V LDO (e.g. AP2112K-3.3, 1 µF in/out) plus 10 µF + 100 nF at the module VDD pins. Do not connect an older UWB board without that LDO; it would destroy the DWM3000. As of 2026-10-08, the UWB schematic has its LDO drawn in: CN1 pin 1 (5V) feeds U2 (XC6220B331PR-G), whose 3.3V output supplies the DWM3000. Verify that board's decoupling before ordering both. Also consider labelling J10/CN1 pin 1 "5V" on both silkscreens.
+
+## Firmware to-do for bring-up
+
+- **PSRAM:** `sdkconfig` set for **2 MB quad** PSRAM (N16R2), not octal.
+- **SD card:** SPI on GPIO35 (SCK), 36 (MOSI), 37 (CS), 8 (MISO), on its own SPI host.
+- **Sensor-bus chip selects:** at the very start of `app_main`, before any SPI init, drive all five CS lines (IMU1_CS, IMU2_ACCEL_CS, IMU2_GYRO_CS, BAROMETER_CS, UWB_CS) as outputs high, with internal pull-ups enabled.
+- **IMUs:**
+  - BMI088: the accelerometer starts in I2C mode. Do a dummy read on CSB1 (e.g. ACC_CHIP_ID) to switch it to SPI.
+  - ICM-42688-P: set `UI_SIFS_CFG = 11` to disable its I2C interface.
+- **Barometer:** DPS368 supports SPI mode 3 only.
+- **UWB:** use a slow SPI clock for DWM3000 init, before its PLL locks. The bus speed has to switch per device.
+- **UART0 / RC link:** the RC link is on UART0 (GPIO43/44), so the ROM boot log is sent to the receiver. Suppress it (eFuse/GPIO46), or move the console to USB-Serial-JTAG.
+- **SBUS:** enable UART RX inversion.
+- **GPS (BN-880):** default 38400 baud. Detect the compass chip at bring-up (HMC5883L vs QMC5883L clone). Start I2C at 100 kHz.
+
+## Ordering notes (JLCPCB)
+
+- **Panel rails:** the ESP32 antenna overhangs the top edge by ~6.2 mm, by design. Request rails on the other edges only.
+- **Finish:** ENIG recommended, for the 0.5 mm-pitch LGA sensors. `copper_finish` is currently unset in the project.
+- **Stackup:** the file declares 0.1 mm prepreg with 35 µm inner copper. Select JLC's standard 4-layer stackup when ordering. Only the short USB pair is impedance-sensitive, and only at full speed.
+- **Placement file:** check polarity and rotation in JLC's CPL preview, particularly for the polarized/oriented parts (diodes, LEDs, USBLC6, LGA sensors).
+- **Hand-soldered parts:** J1–J7, J19, J20 and J22 are DNP through-hole headers. Check that standard JR/Futaba servo plugs physically seat in the KK-style footprints.
+
+## Datasheet folder housekeeping
+
+- `datasheets/imu_DPS368_datasheet.pdf` is actually the **BMI088** datasheet. Rename it.
+- There is no local XC6220 (U4) datasheet. `C51118_…pdf` is a duplicate of the AP2112K datasheet (U6's LCSC part).
+
+## Review limits
+
+- The kicad-happy EMC, thermal and SPICE analyzers were not re-run on the final state. The earlier pass's results (thermal U6 Tj ≈ 41 °C; U4 manual estimate ≈ 69–80 °C worst case; SPICE subcircuits passing) predate this round. They did include Q1/Q2, which are now removed.
+- No component lifecycle audit (no distributor API keys).
+- No gerber or drill review. Re-export the fab package from the final board.
+- External module behaviour was not verified: receiver signal voltage, BN-880 pull-up voltage (it should be 3.3 V, not 5 V; check with a meter), LIDAR minimum supply voltage (FC_5V is ~4.5–4.7 V after the Schottky).

@@ -22,10 +22,14 @@ static const char *TAG = "SETUP_MODE";
 static void setup_mode_passthrough_task(void *arg) {
     uint32_t ch[NUM_RC_CHANNELS];
     while (1) {
-        for (int i = 0; i < NUM_RC_CHANNELS; i++) {
-            ch[i] = get_channel_pulse_width(i);
+        // A running control test (see start_direction_test()/start_level_test()) takes
+        // over the outputs instead of the RC pass-through.
+        if (!control_test_step(SETUP_MODE_PASSTHROUGH_PERIOD_MS / 1000.0f)) {
+            for (int i = 0; i < NUM_RC_CHANNELS; i++) {
+                ch[i] = get_channel_pulse_width(i);
+            }
+            pass_through_inputs(ch);
         }
-        pass_through_inputs(ch);
         vTaskDelay(pdMS_TO_TICKS(SETUP_MODE_PASSTHROUGH_PERIOD_MS));
     }
 }
@@ -36,7 +40,9 @@ void setup_mode_run(void) {
     ESP_LOGI(TAG, " Reset the board (without holding BOOT) to return to flight mode.");
     ESP_LOGI(TAG, "==========================================================");
 
-    io_hardware_init();
+    // io_hardware_init() already ran in app_main(), before the BOOT-button
+    // window (so manual pass-through works during it) -- calling it again
+    // here would abort on the already-claimed MCPWM slots.
 
     // Must run here, in this single-threaded setup phase, before airspeed_init()
     // or imu_task (below) create any task that might call
@@ -52,7 +58,10 @@ void setup_mode_run(void) {
     // interrupt watchdog and crash the whole chip under real WiFi load
     // (confirmed on the bench: a phone actively loading the setup page
     // crashed imu_task mid I2C-transaction with exactly this signature).
-    BaseType_t ret = xTaskCreatePinnedToCore(setup_mode_passthrough_task, "setup_passthrough", 2048, NULL, 1, NULL, 1);
+    // 4096, not 2048: this task also runs the control-direction test
+    // (control_test_step()), which does PID math and float-formatting
+    // ESP_LOGs -- the same thing that overflowed a 2048 stack elsewhere.
+    BaseType_t ret = xTaskCreatePinnedToCore(setup_mode_passthrough_task, "setup_passthrough", 4096, NULL, 1, NULL, 1);
     if (ret != pdPASS) {
         ESP_LOGE(TAG, "Failed to create setup-mode pass-through task! Error: %d", ret);
     }
@@ -96,8 +105,7 @@ void setup_mode_run(void) {
     // Everything setup mode actually does runs in background tasks
     // (setup_mode_passthrough_task, the WiFi/HTTP server's own tasks) --
     // this call itself must still never return, or app_main() falls through
-    // into normal flight boot and double-initializes the same MCPWM
-    // hardware io_hardware_init() already claimed above.
+    // into normal flight boot (control_task etc.) alongside setup mode.
     while (1) {
         vTaskDelay(portMAX_DELAY);
     }

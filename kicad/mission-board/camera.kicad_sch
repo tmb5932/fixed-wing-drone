@@ -1261,16 +1261,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "PLACEHOLDER PINOUT: verify against the exact camera module datasheet before fab."
-		(exclude_from_sim no)
-		(at 69.088 34.798 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f4a6e6c6-c5dd-43c1-ac27-f31afe4d7c55")
-	)
 	(no_connect
 		(at 71.12 49.53)
 		(uuid "1ee24d8b-f2bd-4aba-935d-68feccbdb8ff")
@@ -1788,7 +1778,7 @@
 		(dnp no)
 		(uuid "0621fc0b-8be9-452b-8bf9-9f02b84ae5c4")
 		(property "Reference" "C25"
-			(at 134.62 49.53 0)
+			(at 120.396 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1799,7 +1789,7 @@
 			)
 		)
 		(property "Value" "1uF"
-			(at 134.62 52.07 0)
+			(at 120.396 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2064,7 +2054,7 @@
 		(dnp no)
 		(uuid "46a29be7-0a24-40de-b943-22fa68231352")
 		(property "Reference" "U17"
-			(at 154.94 87.63 0)
+			(at 149.352 84.582 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2075,7 +2065,7 @@
 			)
 		)
 		(property "Value" "XC6206P122MR"
-			(at 154.94 90.17 0)
+			(at 145.034 82.296 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2170,7 +2160,7 @@
 		(dnp no)
 		(uuid "52bd8421-78b8-496e-ae50-3666fd6c8b4f")
 		(property "Reference" "C27"
-			(at 134.62 87.63 0)
+			(at 124.714 86.868 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2181,7 +2171,7 @@
 			)
 		)
 		(property "Value" "1uF"
-			(at 134.62 90.17 0)
+			(at 124.714 89.408 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2262,7 +2252,7 @@
 		(dnp no)
 		(uuid "7dfe5aed-f957-4f68-a0f4-adc2ba6eb80c")
 		(property "Reference" "U16"
-			(at 154.94 49.53 0)
+			(at 149.86 66.548 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2273,7 +2263,7 @@
 			)
 		)
 		(property "Value" "XC6206P282MR"
-			(at 154.94 52.07 0)
+			(at 144.272 64.262 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

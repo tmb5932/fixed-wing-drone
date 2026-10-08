@@ -28,7 +28,8 @@ static bool rc_capture_cb(mcpwm_cap_channel_handle_t channel, const mcpwm_captur
         }
     }
 
-    in->last_update_us = esp_timer_get_time();
+    in->last_update_us = (uint32_t)esp_timer_get_time();
+    in->ever_updated = true;
 
     return false; // no task wake needed
 }

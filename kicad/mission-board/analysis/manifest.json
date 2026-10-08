@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project": "mission-board.kicad_pro",
-  "current": "2026-09-30_2312",
+  "current": "2026-10-04_1455",
   "runs": {
     "2026-09-30_2312": {
       "source_hashes": {
@@ -21,6 +21,74 @@
         "schematic": "analyze_schematic.py mission-board.kicad_sch"
       },
       "generated": "2026-09-30T23:12:47-04:00",
+      "pinned": false
+    },
+    "2026-10-04_0135": {
+      "source_hashes": {
+        "mission-board.kicad_sch": "sha256:190c710ca4ca5456e77801bc92ed5501f9b6631513787b82dcb403f864e5f98d"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py mission-board.kicad_sch"
+      },
+      "generated": "2026-10-04T01:35:05-04:00",
+      "pinned": false
+    },
+    "2026-10-04_0135-2": {
+      "source_hashes": {
+        "mission-board.kicad_pcb": "sha256:f87f6c1741428b1e95641fc6a45f5ddad0352d3684720f4af704a38f71f9cd5e"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json"
+      },
+      "scripts": {
+        "pcb": "analyze_pcb.py mission-board.kicad_pcb"
+      },
+      "generated": "2026-10-04T01:35:26-04:00",
+      "pinned": false
+    },
+    "2026-10-04_1454": {
+      "source_hashes": {
+        "mission-board.kicad_sch": "sha256:01d1e48ec5bf87782bc98e0589a17d2ae9a9248f676dafa579a32cba471a6b2b"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json"
+      },
+      "scripts": {
+        "schematic": "analyze_schematic.py mission-board.kicad_sch"
+      },
+      "generated": "2026-10-04T14:54:50-04:00",
+      "pinned": false
+    },
+    "2026-10-04_1455": {
+      "source_hashes": {
+        "mission-board.kicad_pcb": "sha256:00e22e4136fcbce282168248cf2dfdc950cc93e6fff263930665de2f374203d6"
+      },
+      "outputs": {
+        "schematic": "schematic.json",
+        "pcb": "pcb.json",
+        "cross_analysis": "cross_analysis.json",
+        "emc": "emc.json",
+        "thermal": "thermal.json"
+      },
+      "scripts": {
+        "pcb": "analyze_pcb.py mission-board.kicad_pcb"
+      },
+      "generated": "2026-10-04T14:55:15-04:00",
       "pinned": false
     }
   }

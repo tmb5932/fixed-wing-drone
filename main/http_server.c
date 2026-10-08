@@ -7,6 +7,8 @@
 #include "http_server.h"
 #include "output_ctl.h"
 #include "nav.h"
+#include "flight_log.h"
+#include "esp_system.h"
 #include "gps.h"
 #include "airspeed.h"
 #include "imu.h"
@@ -101,6 +103,16 @@ static bool gain_ok(uint8_t fields_present, uint8_t bit, float v) {
     return isfinite(v) && fabsf(v) <= PID_GAIN_ABS_MAX;
 }
 
+static const char *nav_mode_name(nav_mode_t m) {
+    return (m == NAV_MODE_HEADING_HOLD) ? "heading_hold" : "waypoint";
+}
+
+static bool parse_nav_mode(const char *s, nav_mode_t *out) {
+    if (strcmp(s, "waypoint") == 0)     { *out = NAV_MODE_WAYPOINT; return true; }
+    if (strcmp(s, "heading_hold") == 0) { *out = NAV_MODE_HEADING_HOLD; return true; }
+    return false;
+}
+
 static const char *airframe_mode_name(airframe_mode_t m) {
     return (m == AIRFRAME_AILEVON_MODE) ? "ailevon" : "conventional";
 }
@@ -162,6 +174,16 @@ static cJSON *gps_json(void) {
     cJSON_AddNumberToObject(o, "lat", lat);
     cJSON_AddNumberToObject(o, "lon", lon);
     cJSON_AddNumberToObject(o, "course_deg", course_deg);
+
+    waypoint_t home;
+    if (nav_get_home(&home)) {
+        cJSON *h = cJSON_CreateObject();
+        cJSON_AddNumberToObject(h, "lat", home.lat_deg);
+        cJSON_AddNumberToObject(h, "lon", home.lon_deg);
+        cJSON_AddItemToObject(o, "home", h);
+    } else {
+        cJSON_AddNullToObject(o, "home");
+    }
     return o;
 }
 
@@ -208,9 +230,17 @@ static cJSON *output_channel_json(int ch, const char *name) {
     cJSON_AddStringToObject(o, "name", name);
     cJSON_AddStringToObject(o, "type", (type == MOTOR_TYPE) ? "motor" : "servo");
     cJSON_AddNumberToObject(o, "live_us", live_us);
+    cJSON_AddNumberToObject(o, "out_us", get_channel_output_us(ch));
     cJSON_AddNumberToObject(o, "min_us", cfg.min_us);
     cJSON_AddNumberToObject(o, "max_us", cfg.max_us);
     cJSON_AddBoolToObject(o, "reversed", cfg.reversed);
+    // Physical servo_out pin (1-based) this function currently drives, or
+    // null for ESC1/ESC2, which have their own dedicated connectors.
+    if (ch < NUM_RC_CHANNELS) {
+        cJSON_AddNumberToObject(o, "output_pin", get_servo_output_map().phys_out[ch] + 1);
+    } else {
+        cJSON_AddNullToObject(o, "output_pin");
+    }
     cJSON_AddNumberToObject(o, "abs_min_us", abs_min);
     cJSON_AddNumberToObject(o, "abs_max_us", abs_max);
     return o;
@@ -266,6 +296,22 @@ static cJSON *rc_input_map_json(void) {
     return o;
 }
 
+static cJSON *servo_output_map_json(void) {
+    servo_output_map_cfg_t map = get_servo_output_map();
+
+    cJSON *o = cJSON_CreateObject();
+    cJSON *entries = cJSON_CreateArray();
+    for (int logical = 0; logical < NUM_RC_CHANNELS; logical++) {
+        cJSON *e = cJSON_CreateObject();
+        cJSON_AddNumberToObject(e, "logical", logical + 1);
+        cJSON_AddStringToObject(e, "name", CHANNEL_NAMES[logical]);
+        cJSON_AddNumberToObject(e, "output_pin", map.phys_out[logical] + 1);
+        cJSON_AddItemToArray(entries, e);
+    }
+    cJSON_AddItemToObject(o, "map", entries);
+    return o;
+}
+
 static cJSON *rc_mode_json(void) {
     rc_mode_status_t status = get_rc_mode_status();
     cJSON *o = cJSON_CreateObject();
@@ -316,6 +362,7 @@ static cJSON *full_state_json(void) {
     cJSON_AddItemToObject(root, "outputs", outputs);
 
     cJSON_AddStringToObject(root, "airframe", airframe_mode_name(get_airframe_mode()));
+    cJSON_AddStringToObject(root, "nav_mode", nav_mode_name(nav_get_mode()));
     cJSON_AddItemToObject(root, "motor_cfg", motor_cfg_json(get_motor_cfg()));
 
     cJSON_AddItemToObject(root, "airspeed_cfg", airspeed_live_json(get_airspeed_cfg()));
@@ -535,10 +582,35 @@ static esp_err_t api_outputs_post(httpd_req_t *req) {
     }
     cJSON_Delete(body);
 
-    if (!set_channel_output_cfg(ch, &cfg)) {
+    esp_err_t err = set_channel_output_cfg(ch, &cfg);
+    if (err == ESP_ERR_INVALID_ARG) {
         return send_error(req, 400, "invalid range (min_us must be < max_us, within the channel's absolute bounds)");
     }
+    if (err != ESP_OK) {
+        return send_error(req, 500, "applied live, but failed to save to flash -- will be lost on reboot");
+    }
     return send_json(req, output_channel_json(ch, CHANNEL_NAMES[ch]), 200);
+}
+
+static esp_err_t api_nav_mode_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+    cJSON *mode_j = cJSON_GetObjectItemCaseSensitive(body, "mode");
+    nav_mode_t mode;
+    if (!cJSON_IsString(mode_j) || !parse_nav_mode(mode_j->valuestring, &mode)) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "\"mode\" must be \"waypoint\" or \"heading_hold\"");
+    }
+    cJSON_Delete(body);
+
+    if (!nav_set_mode(mode)) {
+        ESP_LOGW(TAG, "nav mode change failed to apply or persist");
+    }
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddStringToObject(o, "nav_mode", nav_mode_name(nav_get_mode()));
+    return send_json(req, o, 200);
 }
 
 static esp_err_t api_airframe_post(httpd_req_t *req) {
@@ -614,6 +686,92 @@ static esp_err_t api_motor_post(httpd_req_t *req) {
     return send_json(req, motor_cfg_json(get_motor_cfg()), 200);
 }
 
+// Bench-spins one ESC briefly so the operator can see which physical motor
+// it is -- see start_esc_test() in main.c. Body: {"esc": 1|2, "duration_ms"?}.
+#define ESC_TEST_DEFAULT_MS (1000)
+static esp_err_t api_motor_test_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+    cJSON *esc_j = cJSON_GetObjectItemCaseSensitive(body, "esc");
+    cJSON *dur_j = cJSON_GetObjectItemCaseSensitive(body, "duration_ms");
+    if (!cJSON_IsNumber(esc_j) || (dur_j != NULL && !cJSON_IsNumber(dur_j))) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "\"esc\" must be 1 or 2, \"duration_ms\" (optional) a number");
+    }
+    int esc = esc_j->valueint;
+    int duration_ms = dur_j ? dur_j->valueint : ESC_TEST_DEFAULT_MS;
+    cJSON_Delete(body);
+
+    int esc_ch = (esc == 1) ? ESC1_CH : (esc == 2) ? ESC2_CH : -1;
+    if (!start_esc_test(esc_ch, duration_ms)) {
+        return send_error(req, 400, "\"esc\" must be 1 or 2, \"duration_ms\" in 1.." STR(ESC_TEST_MAX_MS));
+    }
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddNumberToObject(o, "esc", esc);
+    cJSON_AddNumberToObject(o, "duration_ms", duration_ms);
+    return send_json(req, o, 200);
+}
+
+// Setup-mode control tests -- see start_direction_test()/start_level_test()
+// in main.c.
+#define DIRECTION_TEST_MS (4000)
+#define LEVEL_TEST_MS (15000)
+
+static cJSON *control_test_json(void) {
+    control_test_status_t s = get_control_test_status();
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddBoolToObject(o, "active", s.active);
+    cJSON_AddNumberToObject(o, "remaining_ms", s.remaining_ms);
+    cJSON_AddStringToObject(o, "kind", s.kind == CONTROL_TEST_LEVEL ? "level" : "direction");
+    cJSON_AddNumberToObject(o, "roll_deg", s.roll_deg);
+    cJSON_AddNumberToObject(o, "pitch_deg", s.pitch_deg);
+    cJSON_AddNumberToObject(o, "roll_cmd_us", s.roll_cmd_us);
+    cJSON_AddNumberToObject(o, "pitch_cmd_us", s.pitch_cmd_us);
+    return o;
+}
+
+static esp_err_t api_control_test_get(httpd_req_t *req) {
+    return send_json(req, control_test_json(), 200);
+}
+
+// Body: {"test": "pitch_up" | "pitch_down" | "roll_left" | "roll_right" | "level" | "stop"}
+static esp_err_t api_control_test_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+    cJSON *test_j = cJSON_GetObjectItemCaseSensitive(body, "test");
+    if (!cJSON_IsString(test_j)) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "\"test\" must be a string");
+    }
+    char t[16];
+    strlcpy(t, test_j->valuestring, sizeof(t));
+    cJSON_Delete(body);
+
+    const float full = CONTROL_TEST_FULL_CMD_US;
+    bool ok = true;
+    if (strcmp(t, "pitch_up") == 0)        ok = start_direction_test(0.0f, full, DIRECTION_TEST_MS);
+    else if (strcmp(t, "pitch_down") == 0) ok = start_direction_test(0.0f, -full, DIRECTION_TEST_MS);
+    else if (strcmp(t, "roll_right") == 0) ok = start_direction_test(full, 0.0f, DIRECTION_TEST_MS);
+    else if (strcmp(t, "roll_left") == 0)  ok = start_direction_test(-full, 0.0f, DIRECTION_TEST_MS);
+    else if (strcmp(t, "level") == 0) {
+        if (!start_level_test(LEVEL_TEST_MS)) {
+            return send_error(req, 409, "IMU isn't ready yet -- wait for gyro calibration to finish (keep the board still)");
+        }
+    }
+    else if (strcmp(t, "stop") == 0)       stop_control_test();
+    else {
+        return send_error(req, 400, "\"test\" must be pitch_up, pitch_down, roll_left, roll_right, level or stop");
+    }
+    if (!ok) {
+        return send_error(req, 500, "couldn't start test");
+    }
+    return send_json(req, control_test_json(), 200);
+}
+
 static esp_err_t api_rc_map_get(httpd_req_t *req) {
     return send_json(req, rc_input_map_json(), 200);
 }
@@ -646,6 +804,183 @@ static esp_err_t api_rc_map_post(httpd_req_t *req) {
     return send_json(req, rc_input_map_json(), 200);
 }
 
+static esp_err_t api_servo_map_get(httpd_req_t *req) {
+    return send_json(req, servo_output_map_json(), 200);
+}
+
+// Assigns one logical function to a physical servo_out pin. Whichever
+// function previously held that pin takes over this function's old pin, so
+// the map stays a permutation (see config_store.h's servo_output_map_cfg_t)
+// and no pin is ever driven by two functions at once.
+static esp_err_t api_servo_map_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+
+    cJSON *logical_j = cJSON_GetObjectItemCaseSensitive(body, "logical");
+    cJSON *pin_j = cJSON_GetObjectItemCaseSensitive(body, "output_pin");
+    if (!cJSON_IsNumber(logical_j) || !cJSON_IsNumber(pin_j)) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "\"logical\" and \"output_pin\" must both be numbers (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+    int logical = logical_j->valueint - 1;
+    int pin = pin_j->valueint - 1;
+    cJSON_Delete(body);
+
+    if (logical < 0 || logical >= NUM_RC_CHANNELS) {
+        return send_error(req, 400, "\"logical\" out of range (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+    if (pin < 0 || pin >= NUM_RC_CHANNELS) {
+        return send_error(req, 400, "\"output_pin\" out of range (1.." STR(NUM_RC_CHANNELS) ")");
+    }
+
+    servo_output_map_cfg_t map = get_servo_output_map();
+    for (int other = 0; other < NUM_RC_CHANNELS; other++) {
+        if (other != logical && map.phys_out[other] == pin) {
+            map.phys_out[other] = map.phys_out[logical];
+        }
+    }
+    map.phys_out[logical] = (uint8_t)pin;
+    if (!set_servo_output_map(&map)) {
+        ESP_LOGW(TAG, "servo output map applied live but failed to persist to NVS");
+    }
+    return send_json(req, servo_output_map_json(), 200);
+}
+
+static cJSON *trim_json(void) {
+    trim_cfg_t trim = get_trim_cfg();
+    cJSON *o = cJSON_CreateObject();
+    cJSON *arr = cJSON_CreateArray();
+    for (int ch = 0; ch < NUM_RC_CHANNELS; ch++) {
+        if (!trim_channel_allowed(ch)) continue;
+        cJSON *e = cJSON_CreateObject();
+        cJSON_AddNumberToObject(e, "logical", ch + 1);
+        cJSON_AddStringToObject(e, "name", CHANNEL_NAMES[ch]);
+        cJSON_AddNumberToObject(e, "center_us", trim.center_us[ch]);
+        cJSON_AddNumberToObject(e, "live_us", get_channel_pulse_width(ch));
+        cJSON_AddItemToArray(arr, e);
+    }
+    cJSON_AddItemToObject(o, "channels", arr);
+    cJSON_AddNumberToObject(o, "neutral_us", TRIM_NEUTRAL_US);
+    cJSON_AddNumberToObject(o, "max_offset_us", TRIM_MAX_OFFSET_US);
+    return o;
+}
+
+static esp_err_t api_trim_get(httpd_req_t *req) {
+    return send_json(req, trim_json(), 200);
+}
+
+// Body is one of:
+//   {"capture": true}                    -- capture all trimmable channels
+//   {"logical": N, "center_us": US}      -- set one channel by hand
+static esp_err_t api_trim_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+
+    if (cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(body, "capture"))) {
+        cJSON_Delete(body);
+        char err[128];
+        if (!capture_trim_from_inputs(err, sizeof(err))) {
+            return send_error(req, 400, err);
+        }
+        return send_json(req, trim_json(), 200);
+    }
+
+    cJSON *logical_j = cJSON_GetObjectItemCaseSensitive(body, "logical");
+    cJSON *center_j = cJSON_GetObjectItemCaseSensitive(body, "center_us");
+    if (!cJSON_IsNumber(logical_j) || !cJSON_IsNumber(center_j)) {
+        cJSON_Delete(body);
+        return send_error(req, 400, "expected {\"capture\": true} or numeric \"logical\" and \"center_us\"");
+    }
+    int ch = logical_j->valueint - 1;
+    int center = center_j->valueint;
+    cJSON_Delete(body);
+
+    if (ch < 0 || ch >= NUM_RC_CHANNELS || !trim_channel_allowed(ch)) {
+        return send_error(req, 400, "\"logical\" must be a trimmable channel (aileron, elevator, rudder)");
+    }
+    if (center < TRIM_NEUTRAL_US - TRIM_MAX_OFFSET_US || center > TRIM_NEUTRAL_US + TRIM_MAX_OFFSET_US) {
+        return send_error(req, 400, "\"center_us\" must be within " STR(TRIM_MAX_OFFSET_US) " us of " STR(TRIM_NEUTRAL_US));
+    }
+    if (!set_trim_center(ch, (uint16_t)center)) {
+        ESP_LOGW(TAG, "trim applied live but failed to persist to NVS");
+    }
+    return send_json(req, trim_json(), 200);
+}
+
+static const char *reset_reason_name(uint32_t r) {
+    switch ((esp_reset_reason_t)r) {
+        case ESP_RST_POWERON:   return "power on";
+        case ESP_RST_EXT:       return "external pin reset";
+        case ESP_RST_SW:        return "software reset";
+        case ESP_RST_PANIC:     return "CRASH (panic)";
+        case ESP_RST_INT_WDT:   return "CRASH (interrupt watchdog)";
+        case ESP_RST_TASK_WDT:  return "CRASH (task watchdog)";
+        case ESP_RST_WDT:       return "CRASH (other watchdog)";
+        case ESP_RST_BROWNOUT:  return "BROWNOUT (supply voltage sagged)";
+        case ESP_RST_DEEPSLEEP: return "deep sleep wake";
+        case ESP_RST_SDIO:      return "SDIO reset";
+        default:                return "unknown";
+    }
+}
+
+static const char *const FLOG_TYPE_NAMES[FLOG_TYPE_COUNT] = {
+    [FLOG_BOOT]               = "boot",
+    [FLOG_RC_DROPOUT]         = "rc_dropout",
+    [FLOG_RC_LOST]            = "rc_lost",
+    [FLOG_RC_REGAINED]        = "rc_regained",
+    [FLOG_FAILSAFE_RTH]       = "failsafe_rth",
+    [FLOG_FAILSAFE_DESCEND]   = "failsafe_descend",
+    [FLOG_FAILSAFE_CLEARED]   = "failsafe_cleared",
+    [FLOG_AUTONOMOUS_LOCKOUT] = "autonomous_lockout",
+    [FLOG_IMU_FAULT]          = "imu_fault",
+    [FLOG_NO_RADIO_SAFE]      = "no_radio_safe",
+};
+
+static cJSON *flight_log_json(void) {
+    static flight_log_entry_t entries[FLIGHT_LOG_CAPACITY];  // static: keep it off the httpd stack
+    size_t n = flight_log_read(entries, FLIGHT_LOG_CAPACITY);
+    cJSON *o = cJSON_CreateObject();
+    cJSON_AddNumberToObject(o, "current_boot", flight_log_current_boot());
+    cJSON *arr = cJSON_CreateArray();
+    for (size_t i = 0; i < n; i++) {
+        const flight_log_entry_t *e = &entries[i];
+        cJSON *j = cJSON_CreateObject();
+        cJSON_AddNumberToObject(j, "boot", e->boot);
+        cJSON_AddNumberToObject(j, "t_ms", e->uptime_ms);
+        cJSON_AddStringToObject(j, "type", e->type < FLOG_TYPE_COUNT ? FLOG_TYPE_NAMES[e->type] : "unknown");
+        cJSON_AddNumberToObject(j, "value", e->value);
+        if (e->type == FLOG_BOOT) {
+            cJSON_AddStringToObject(j, "reset_reason", reset_reason_name(e->value));
+        }
+        cJSON_AddItemToArray(arr, j);
+    }
+    cJSON_AddItemToObject(o, "entries", arr);
+    return o;
+}
+
+static esp_err_t api_flight_log_get(httpd_req_t *req) {
+    return send_json(req, flight_log_json(), 200);
+}
+
+// Body: {"clear": true}
+static esp_err_t api_flight_log_post(httpd_req_t *req) {
+    cJSON *body;
+    if (recv_json_body(req, &body) != ESP_OK) {
+        return send_error(req, 400, "invalid or missing JSON body");
+    }
+    bool clear = cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(body, "clear"));
+    cJSON_Delete(body);
+    if (!clear) {
+        return send_error(req, 400, "expected {\"clear\": true}");
+    }
+    flight_log_clear();
+    return send_json(req, flight_log_json(), 200);
+}
+
 static esp_err_t api_mode_get(httpd_req_t *req) {
     return send_json(req, rc_mode_json(), 200);
 }
@@ -674,7 +1009,7 @@ static esp_err_t marker_shadow_get(httpd_req_t *req)  { return send_embedded_bin
 
 void http_server_start(void) {
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    config.max_uri_handlers = 24;
+    config.max_uri_handlers = 40;
     config.stack_size = 8192;
     config.uri_match_fn = httpd_uri_match_wildcard;
 
@@ -697,12 +1032,22 @@ void http_server_start(void) {
         { .uri = "/api/pid",               .method = HTTP_POST, .handler = api_pid_post },
         { .uri = "/api/outputs",           .method = HTTP_GET,  .handler = api_outputs_get },
         { .uri = "/api/outputs",           .method = HTTP_POST, .handler = api_outputs_post },
+        { .uri = "/api/nav_mode",          .method = HTTP_POST, .handler = api_nav_mode_post },
         { .uri = "/api/airframe",          .method = HTTP_POST, .handler = api_airframe_post },
         { .uri = "/api/airspeed",          .method = HTTP_GET,  .handler = api_airspeed_get },
         { .uri = "/api/airspeed",          .method = HTTP_POST, .handler = api_airspeed_post },
         { .uri = "/api/motor",             .method = HTTP_POST, .handler = api_motor_post },
+        { .uri = "/api/control_test",      .method = HTTP_GET,  .handler = api_control_test_get },
+        { .uri = "/api/control_test",      .method = HTTP_POST, .handler = api_control_test_post },
+        { .uri = "/api/motor_test",        .method = HTTP_POST, .handler = api_motor_test_post },
         { .uri = "/api/rc_map",            .method = HTTP_GET,  .handler = api_rc_map_get },
         { .uri = "/api/rc_map",            .method = HTTP_POST, .handler = api_rc_map_post },
+        { .uri = "/api/servo_map",         .method = HTTP_GET,  .handler = api_servo_map_get },
+        { .uri = "/api/servo_map",         .method = HTTP_POST, .handler = api_servo_map_post },
+        { .uri = "/api/trim",              .method = HTTP_GET,  .handler = api_trim_get },
+        { .uri = "/api/trim",              .method = HTTP_POST, .handler = api_trim_post },
+        { .uri = "/api/flight_log",        .method = HTTP_GET,  .handler = api_flight_log_get },
+        { .uri = "/api/flight_log",        .method = HTTP_POST, .handler = api_flight_log_post },
         { .uri = "/api/mode",              .method = HTTP_GET,  .handler = api_mode_get },
     };
     for (size_t i = 0; i < sizeof(routes) / sizeof(routes[0]); i++) {

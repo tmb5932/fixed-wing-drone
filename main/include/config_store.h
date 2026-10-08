@@ -105,4 +105,47 @@ typedef struct {
 bool config_store_load_rc_input_map(rc_input_map_cfg_t *out);
 esp_err_t config_store_save_rc_input_map(const rc_input_map_cfg_t *cfg);
 
+// Output-side counterpart to rc_input_map_cfg_t: which physical servo output
+// pin (0-5, i.e. CH1_OUT_GPIO is 0 .. CH6_OUT_GPIO is 5, see main.c) each
+// logical RC_* function drives. Lets e.g. the aileron servo be plugged into
+// servo_out_6 without it being driven as "Aux (switch)". Always a
+// permutation of {0..5} -- two functions sharing one pin would fight over
+// the same comparator -- so setters swap rather than overwrite. Indexed by
+// logical channel; ESC1/ESC2 have dedicated connectors and aren't remappable.
+// Per-channel calibration (output_cfg_t) stays keyed by logical function, so
+// a servo's range/reversal follows it when it moves to another pin.
+#define SERVO_OUTPUT_MAP_CHANNELS (6)
+typedef struct {
+    uint8_t phys_out[SERVO_OUTPUT_MAP_CHANNELS];
+} servo_output_map_cfg_t;
+
+// Returns false (leaving *out untouched) if nothing is persisted -- the
+// caller should default to the identity mapping {0,1,2,3,4,5} in that case.
+bool config_store_load_servo_output_map(servo_output_map_cfg_t *out);
+esp_err_t config_store_save_servo_output_map(const servo_output_map_cfg_t *cfg);
+
+// Autonomous-mode trim: the neutral pulse width (in the same "stick space"
+// as a live RC input, i.e. before output_cfg_t reversal/clipping) each
+// logical RC_* function is commanded around when the PID loop takes over,
+// in place of a flat 1500us. Manual pass-through never uses this -- the
+// transmitter's own trim is already baked into the live input there. Kept
+// out of output_cfg_t on purpose so adding it didn't change that blob's
+// size and invalidate every already-persisted calibration. Indexed by
+// logical channel; only aileron/elevator/rudder are actually trimmable (see
+// main.c's trim_channel_allowed()), the rest stay at 1500.
+#define TRIM_CHANNELS (6)
+typedef struct {
+    uint16_t center_us[TRIM_CHANNELS];
+} trim_cfg_t;
+
+// Returns false (leaving *out untouched) if nothing is persisted -- the
+// caller should default every channel to 1500us in that case.
+bool config_store_load_trim_cfg(trim_cfg_t *out);
+esp_err_t config_store_save_trim_cfg(const trim_cfg_t *cfg);
+
+// Returns false (leaving *out untouched) if nothing valid is persisted -- the
+// caller should default to NAV_MODE_WAYPOINT in that case.
+bool config_store_load_nav_mode(nav_mode_t *out);
+esp_err_t config_store_save_nav_mode(nav_mode_t mode);
+
 #endif // CONFIG_STORE_H

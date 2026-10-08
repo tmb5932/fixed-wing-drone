@@ -8,8 +8,9 @@ so a gain that behaves well here is a gain that will behave the same way on the 
 ## Build & run
 
 Requires a host C compiler (this repo's ESP-IDF toolchain is a cross-compiler for the ESP32S3 and
-can't build a Windows executable; see project memory / setup notes for the MSYS2/mingw-w64 install
-used here).
+can't build a host executable). On Windows that's MSYS2/mingw-w64 (`mingw32-make`); on macOS/Linux
+plain `gcc`/`clang` with `make` works (`make`, `make test`). The binaries are named `.exe` on every
+platform.
 
 ```sh
 cd sitl

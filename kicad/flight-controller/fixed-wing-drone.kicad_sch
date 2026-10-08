@@ -201,7 +201,7 @@
 		)
 		(uuid "3a08748d-9a7b-49e5-a456-0119718c55b8")
 	)
-	(label "MOSI"
+	(label "SD_MOSI"
 		(at 212.09 36.83 180)
 		(effects
 			(font
@@ -421,7 +421,7 @@
 		)
 		(uuid "8a292682-0cea-467e-b7a9-fc5d290dcba5")
 	)
-	(label "MISO"
+	(label "SD_MISO"
 		(at 255.27 48.26 0)
 		(effects
 			(font
@@ -481,6 +481,16 @@
 		)
 		(uuid "9f4addca-9c16-4cb1-beff-c1bc210ea171")
 	)
+	(label "SD_MISO"
+		(at 35.56 118.11 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a2c7bafc-dd32-4f09-8f39-9e30a73d1700")
+	)
 	(label "SCK"
 		(at 220.98 127 180)
 		(effects
@@ -520,6 +530,16 @@
 			(justify right bottom)
 		)
 		(uuid "b3813e07-cc28-4480-b8cd-36a7373bc1c3")
+	)
+	(label "SD_MOSI"
+		(at 35.56 120.65 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b6812fd2-ffd8-455f-a0d0-d1ccf67b810d")
 	)
 	(label "RC_SBUS"
 		(at 175.26 35.56 0)
@@ -801,7 +821,7 @@
 		)
 		(uuid "f3f4c73c-d1e9-46bb-98f9-d69bbbd93091")
 	)
-	(label "SCK"
+	(label "SD_SCK"
 		(at 212.09 39.37 180)
 		(effects
 			(font
@@ -820,6 +840,16 @@
 			(justify right bottom)
 		)
 		(uuid "f717df3b-a3cf-4664-ade4-1ce10ddebb88")
+	)
+	(label "SD_SCK"
+		(at 35.56 123.19 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fdeef22e-ddf1-47f7-b6a2-29983521cb6e")
 	)
 	(label "BAROMETER_CS"
 		(at 85.09 101.6 0)
@@ -1131,7 +1161,7 @@
 				(justify left)
 			)
 		)
-		(pin "MISO" output
+		(pin "SD_MISO" output
 			(at 255.27 48.26 0)
 			(uuid "792ecd4b-62cb-4194-90d7-8eaaa761a0fd")
 			(effects
@@ -1141,7 +1171,7 @@
 				(justify right)
 			)
 		)
-		(pin "MOSI" input
+		(pin "SD_MOSI" input
 			(at 212.09 36.83 180)
 			(uuid "331c552f-3c2e-49d4-b0e3-6827cb2e987c")
 			(effects
@@ -1151,7 +1181,7 @@
 				(justify left)
 			)
 		)
-		(pin "SCK" input
+		(pin "SD_SCK" input
 			(at 212.09 39.37 180)
 			(uuid "01badfd9-e21e-4b00-80aa-7e6f979b7d92")
 			(effects
@@ -1561,6 +1591,36 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(pin "SD_MISO" input
+			(at 35.56 118.11 180)
+			(uuid "85b9bb3b-de20-4c49-8062-492bfef0f481")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SD_MOSI" output
+			(at 35.56 120.65 180)
+			(uuid "a1e08b32-f78b-45bb-b8ee-430e9225d594")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SD_SCK" output
+			(at 35.56 123.19 180)
+			(uuid "364cf45e-ab85-4bd8-8e90-98fab29d9add")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 		(pin "MISO" input

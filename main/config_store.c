@@ -12,6 +12,9 @@ static const char *TAG = "CONFIG_STORE";
 #define CONFIG_STORE_AIRSPEED_KEY "aspd_cfg"
 #define CONFIG_STORE_MOTOR_KEY "motor_cfg"
 #define CONFIG_STORE_RC_MAP_KEY "rc_map"
+#define CONFIG_STORE_SERVO_MAP_KEY "servo_map"
+#define CONFIG_STORE_TRIM_KEY "trim"
+#define CONFIG_STORE_NAV_MODE_KEY "nav_mode"
 
 esp_err_t config_store_init(void) {
     esp_err_t ret = nvs_flash_init();
@@ -277,6 +280,105 @@ esp_err_t config_store_save_rc_input_map(const rc_input_map_cfg_t *cfg) {
     nvs_close(handle);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "failed to persist rc input map: %d", ret);
+    }
+    return ret;
+}
+
+bool config_store_load_servo_output_map(servo_output_map_cfg_t *out) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_STORE_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) {
+        return false;
+    }
+    size_t len = sizeof(servo_output_map_cfg_t);
+    esp_err_t ret = nvs_get_blob(handle, CONFIG_STORE_SERVO_MAP_KEY, out, &len);
+    nvs_close(handle);
+    if (ret != ESP_OK || len != sizeof(servo_output_map_cfg_t)) {
+        return false;
+    }
+    return true;
+}
+
+esp_err_t config_store_save_servo_output_map(const servo_output_map_cfg_t *cfg) {
+    nvs_handle_t handle;
+    esp_err_t ret = nvs_open(CONFIG_STORE_NAMESPACE, NVS_READWRITE, &handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "nvs_open failed for servo output map: %d", ret);
+        return ret;
+    }
+    ret = nvs_set_blob(handle, CONFIG_STORE_SERVO_MAP_KEY, cfg, sizeof(servo_output_map_cfg_t));
+    if (ret == ESP_OK) {
+        ret = nvs_commit(handle);
+    }
+    nvs_close(handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "failed to persist servo output map: %d", ret);
+    }
+    return ret;
+}
+
+bool config_store_load_trim_cfg(trim_cfg_t *out) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_STORE_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) {
+        return false;
+    }
+    size_t len = sizeof(trim_cfg_t);
+    esp_err_t ret = nvs_get_blob(handle, CONFIG_STORE_TRIM_KEY, out, &len);
+    nvs_close(handle);
+    if (ret != ESP_OK || len != sizeof(trim_cfg_t)) {
+        return false;
+    }
+    return true;
+}
+
+esp_err_t config_store_save_trim_cfg(const trim_cfg_t *cfg) {
+    nvs_handle_t handle;
+    esp_err_t ret = nvs_open(CONFIG_STORE_NAMESPACE, NVS_READWRITE, &handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "nvs_open failed for trim cfg: %d", ret);
+        return ret;
+    }
+    ret = nvs_set_blob(handle, CONFIG_STORE_TRIM_KEY, cfg, sizeof(trim_cfg_t));
+    if (ret == ESP_OK) {
+        ret = nvs_commit(handle);
+    }
+    nvs_close(handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "failed to persist trim cfg: %d", ret);
+    }
+    return ret;
+}
+
+bool config_store_load_nav_mode(nav_mode_t *out) {
+    nvs_handle_t handle;
+    if (nvs_open(CONFIG_STORE_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) {
+        return false;
+    }
+    uint8_t raw;
+    size_t len = sizeof(raw);
+    esp_err_t ret = nvs_get_blob(handle, CONFIG_STORE_NAV_MODE_KEY, &raw, &len);
+    nvs_close(handle);
+    if (ret != ESP_OK || len != sizeof(raw) || raw >= NAV_MODE_COUNT) {
+        return false;
+    }
+    *out = (nav_mode_t)raw;
+    return true;
+}
+
+esp_err_t config_store_save_nav_mode(nav_mode_t mode) {
+    nvs_handle_t handle;
+    esp_err_t ret = nvs_open(CONFIG_STORE_NAMESPACE, NVS_READWRITE, &handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "nvs_open failed for nav mode: %d", ret);
+        return ret;
+    }
+    uint8_t raw = (uint8_t)mode;
+    ret = nvs_set_blob(handle, CONFIG_STORE_NAV_MODE_KEY, &raw, sizeof(raw));
+    if (ret == ESP_OK) {
+        ret = nvs_commit(handle);
+    }
+    nvs_close(handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "failed to persist nav mode: %d", ret);
     }
     return ret;
 }

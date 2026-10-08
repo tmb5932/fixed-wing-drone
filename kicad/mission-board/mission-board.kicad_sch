@@ -140,16 +140,6 @@
 		)
 		(uuid "0b99561c-2b9a-465e-86b1-110094641cec")
 	)
-	(label "SPI_CS"
-		(at 181.61 133.35 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0c9ae2d6-5a6e-47cc-aa89-c4a04d28d271")
-	)
 	(label "GND"
 		(at 41.91 152.4 180)
 		(effects
@@ -310,16 +300,6 @@
 		)
 		(uuid "2efd6509-d4fc-4d09-93ef-4b2311d33cd6")
 	)
-	(label "SPI_MISO"
-		(at 245.11 118.11 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "3168f93c-2081-4279-bcac-16a75375c27a")
-	)
 	(label "HBRIDGE_BIN2"
 		(at 205.74 38.1 180)
 		(effects
@@ -420,16 +400,6 @@
 		)
 		(uuid "43ac5aa1-e335-4cd0-b20a-0bb9cd62c610")
 	)
-	(label "SPI_MOSI"
-		(at 95.25 45.72 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "43bc1519-13bb-4a5c-ae8d-b3bc39544ba3")
-	)
 	(label "DEBUG_UART_RX"
 		(at 31.75 33.02 180)
 		(effects
@@ -490,15 +460,15 @@
 		)
 		(uuid "496992cd-09e6-4093-ba4b-a9dfcbec05b3")
 	)
-	(label "SPI_MOSI"
-		(at 181.61 128.27 180)
+	(label "FASTIO5"
+		(at 82.55 69.85 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify right bottom)
 		)
-		(uuid "510a7b16-0a35-4074-8c0e-61e22f25f36f")
+		(uuid "51865cb7-3e1a-45e9-b1e6-e486f98d6450")
 	)
 	(label "HBRIDGE2_BIN1"
 		(at 166.37 27.94 0)
@@ -660,26 +630,6 @@
 		)
 		(uuid "702b8892-b0d1-4fa2-8538-3c2b736a3206")
 	)
-	(label "SPI_SCK"
-		(at 95.25 48.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "72a29732-49ec-49ff-ae4e-f5f3f97052b1")
-	)
-	(label "SPI_MISO"
-		(at 31.75 38.1 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "776302f6-7f91-4e00-8f72-336f584c1c41")
-	)
 	(label "MOSFET4_ISENSE"
 		(at 250.19 81.28 0)
 		(effects
@@ -770,16 +720,6 @@
 		)
 		(uuid "8b0f58c0-a8b0-4520-97a3-cfe38cf020c1")
 	)
-	(label "SPI_CS"
-		(at 95.25 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8b6671ee-b1c9-48f1-b16d-8cd018c70431")
-	)
 	(label "HBRIDGE_NFAULT"
 		(at 31.75 101.6 180)
 		(effects
@@ -799,6 +739,16 @@
 			(justify left bottom)
 		)
 		(uuid "9378821c-9f6e-4884-9163-27f0d325f51e")
+	)
+	(label "FASTIO5"
+		(at 220.98 143.51 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9655d361-cdf1-4574-8fdd-4a9664d1668f")
 	)
 	(label "HBRIDGE3_BIN2"
 		(at 166.37 40.64 0)
@@ -879,6 +829,16 @@
 			(justify left bottom)
 		)
 		(uuid "ac8c7adf-805f-49dd-9dd9-d16555190450")
+	)
+	(label "FASTIO4"
+		(at 226.06 143.51 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ad54f535-1945-49f1-ab1e-1d195d7df18f")
 	)
 	(label "CAM_D0"
 		(at 31.75 48.26 180)
@@ -1110,15 +1070,15 @@
 		)
 		(uuid "ceb503b9-96ed-415a-a359-888f24ac1b38")
 	)
-	(label "SPI_SCK"
-		(at 181.61 130.81 180)
+	(label "FASTIO4"
+		(at 80.01 69.85 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify right bottom)
 		)
-		(uuid "d0e624de-1600-48d6-aa5e-6236c0175b9b")
+		(uuid "d1342a6b-bffd-41a5-bbaa-db51dcb26619")
 	)
 	(label "HBRIDGE_NSLEEP"
 		(at 205.74 40.64 180)
@@ -1432,7 +1392,7 @@
 	)
 	(sheet
 		(at 31.75 15.24)
-		(size 63.5 53.34)
+		(size 63.5 54.61)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -1457,7 +1417,7 @@
 			)
 		)
 		(property "Sheetfile" "esp32_core.kicad_sch"
-			(at 31.75 69.08 0)
+			(at 31.75 70.612 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1540,16 +1500,6 @@
 		(pin "I2C_SDA" bidirectional
 			(at 31.75 35.56 180)
 			(uuid "d49e8a2c-0d71-49ed-b6a6-7e3742a9642b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SPI_MISO" input
-			(at 31.75 38.1 180)
-			(uuid "46132afb-4481-4230-9abb-b096959a4013")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1747,24 +1697,24 @@
 				(justify right)
 			)
 		)
-		(pin "SPI_MOSI" output
-			(at 95.25 45.72 0)
-			(uuid "7716cb7a-a4c1-40a2-9236-ad339153749b")
+		(pin "FASTIO4" bidirectional
+			(at 80.01 69.85 270)
+			(uuid "9f3c2e16-6300-4c2b-8063-c0a0de59a184")
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
-		(pin "SPI_SCK" output
-			(at 95.25 48.26 0)
-			(uuid "fe0d1d92-8e9e-43e5-9a5f-1358fd540e3b")
+		(pin "FASTIO5" bidirectional
+			(at 82.55 69.85 270)
+			(uuid "67a88656-2d72-442b-b945-ac8dd8e68864")
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 		(instances
@@ -2292,7 +2242,7 @@
 			)
 		)
 		(property "Sheetfile" "expander_mux.kicad_sch"
-			(at 31.75 127.5 0)
+			(at 32.512 137.668 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2525,16 +2475,6 @@
 		(pin "SENSE_MUX_OUT" output
 			(at 95.25 104.14 0)
 			(uuid "f7ddd21e-928e-44f7-b995-d73a4a01a2f5")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "SPI_CS" output
-			(at 95.25 106.68 0)
-			(uuid "dd82cf35-13f9-4c05-9bae-001d52916201")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2862,36 +2802,6 @@
 				(justify left)
 			)
 		)
-		(pin "SPI_MOSI" input
-			(at 181.61 128.27 180)
-			(uuid "5171e58e-f57b-4bb4-b5d1-d42f50bf6d2b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SPI_SCK" input
-			(at 181.61 130.81 180)
-			(uuid "a8b96e2f-9387-4d32-a240-00f69ce95232")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "SPI_CS" input
-			(at 181.61 133.35 180)
-			(uuid "b02ae6e0-25e0-4247-a730-46355aae9629")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "EXP_GPIO1" input
 			(at 181.61 135.89 180)
 			(uuid "ddb91bf6-3480-4e59-a774-cccac9324182")
@@ -2922,16 +2832,6 @@
 				(justify right)
 			)
 		)
-		(pin "SPI_MISO" output
-			(at 245.11 118.11 0)
-			(uuid "30ed6738-20fb-4e25-9e7a-5ad43d9a904e")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "EXP_ADC" output
 			(at 245.11 120.65 0)
 			(uuid "b945ba1b-9684-4dac-8e39-5b7159ac008a")
@@ -2940,6 +2840,26 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(pin "FASTIO4" bidirectional
+			(at 226.06 143.51 270)
+			(uuid "96b4cbfb-7c82-4476-8acc-b573c60e9e0f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FASTIO5" bidirectional
+			(at 220.98 143.51 270)
+			(uuid "729a64c4-47fd-4df4-83f9-2550c166904a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 		(instances

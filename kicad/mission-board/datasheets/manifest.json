@@ -1,6 +1,6 @@
 {
   "schematic": "mission-board.kicad_sch",
-  "last_sync": "2026-10-01T03:16:22.304461+00:00",
+  "last_sync": "2026-10-04T18:55:31.397111+00:00",
   "parts": {
     "C1691": {
       "manufacturer": "",
@@ -481,6 +481,145 @@
       "status": "failed",
       "error": "No datasheet URL or all download methods failed",
       "last_attempt": "2026-10-01T03:16:21.609799+00:00"
+    },
+    "C96123": {
+      "manufacturer": "",
+      "description": "Unpolarized capacitor",
+      "value": "47uF",
+      "references": [
+        "C32",
+        "C31",
+        "C30",
+        "C33"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:28.752649+00:00"
+    },
+    "C19666": {
+      "manufacturer": "",
+      "description": "",
+      "value": "4.7uF",
+      "references": [
+        "C15"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:28.752623+00:00"
+    },
+    "C23630": {
+      "manufacturer": "",
+      "description": "DRV8833 VINT bypass, 2.2uF 6.3V+ per datasheet",
+      "value": "2.2uF",
+      "references": [
+        "C5",
+        "C14",
+        "C12"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:28.752694+00:00"
+    },
+    "C15195": {
+      "manufacturer": "",
+      "description": "",
+      "value": "10nF",
+      "references": [
+        "C11",
+        "C13",
+        "C4"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:28.752311+00:00"
+    },
+    "C25900": {
+      "manufacturer": "",
+      "description": "",
+      "value": "4.7k",
+      "references": [
+        "R36",
+        "R35"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:29.657614+00:00"
+    },
+    "C25744": {
+      "manufacturer": "",
+      "description": "",
+      "value": "10k",
+      "references": [
+        "R38",
+        "R37"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:29.681068+00:00"
+    },
+    "C52923": {
+      "manufacturer": "",
+      "description": "ESP32 EN RC delay (10k/1uF per Espressif HW guidelines)",
+      "value": "1uF",
+      "references": [
+        "C7",
+        "C25",
+        "C28",
+        "C27",
+        "C26"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:29.647438+00:00"
+    },
+    "C25335": {
+      "manufacturer": "",
+      "description": "DRV8833 xISEN sense: ITRIP = 0.2V/0.2R = 1A; 0.2V per A on mux",
+      "value": "0.2R",
+      "references": [
+        "R12",
+        "R11",
+        "R32",
+        "R31",
+        "R33",
+        "R34"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:29.657525+00:00"
+    },
+    "C393074": {
+      "manufacturer": "",
+      "description": "Actuator-rail current shunt",
+      "value": "0.005R",
+      "references": [
+        "R8"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:30.363972+00:00"
+    },
+    "XC6206P122MR-Y": {
+      "manufacturer": "",
+      "description": "OV2640 DVDD 1.2V LDO (300mA)",
+      "value": "XC6206P122MR",
+      "references": [
+        "U17"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:30.392007+00:00"
+    },
+    "XC6206P282MR": {
+      "manufacturer": "",
+      "description": "OV2640 AVDD 2.8V LDO",
+      "value": "XC6206P282MR",
+      "references": [
+        "U16"
+      ],
+      "status": "failed",
+      "error": "No datasheet URL or all download methods failed",
+      "last_attempt": "2026-10-04T18:55:30.378125+00:00"
     }
   }
 }

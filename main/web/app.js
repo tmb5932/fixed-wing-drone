@@ -221,7 +221,6 @@ function buildOutputRows(outputs) {
   outputs.forEach((o) => {
     const row = template.content.firstElementChild.cloneNode(true);
     row.dataset.channel = o.channel;
-    row.querySelector(".output-title").textContent = `${o.channel}. ${o.name} (${o.type})`;
     outputDirty[o.channel] = new Set();
 
     row.querySelectorAll("input[data-field]").forEach((input) => {
@@ -257,7 +256,9 @@ function buildOutputRows(outputs) {
 function renderOutputChannel(o) {
   const row = outputRowFor(o.channel);
   row.dataset.liveUs = o.live_us;
-  row.querySelector(".live-us").textContent = `${o.live_us} µs`;
+  const pinLabel = o.output_pin == null ? "" : ` → servo_out_${o.output_pin}`;
+  row.querySelector(".output-title").textContent = `${o.name} (${o.type})${pinLabel}`;
+  row.querySelector(".live-us").textContent = `in ${o.live_us} µs → out ${o.out_us} µs`;
 
   const dirtyFields = outputDirty[o.channel];
   const minInput = row.querySelector('input[data-field="min_us"]');
@@ -346,7 +347,7 @@ function renderRcMap(data) {
   // Keeps each row's dropdown in sync with the live mapping, but never
   // clobbers one the user is actively changing.
   data.map.forEach((entry) => {
-    const row = document.querySelector(`.rc-map-row[data-logical="${entry.logical}"]`);
+    const row = document.querySelector(`#rc-map-rows .rc-map-row[data-logical="${entry.logical}"]`);
     if (!row) return;
     const select = row.querySelector(".rc-map-select");
     if (document.activeElement !== select) select.value = entry.physical_pin;
@@ -359,6 +360,263 @@ async function pollRcMap() {
   } catch (err) {
     // Transient hiccup on the local AP link -- ignore, next poll retries.
   }
+}
+
+// ---------------- Servo output mapping ----------------
+
+function buildServoMapRows(entries) {
+  const container = document.getElementById("servo-map-rows");
+  const template = document.getElementById("rc-map-row-template");
+  entries.forEach((entry) => {
+    const row = template.content.firstElementChild.cloneNode(true);
+    row.classList.add("servo-map-row");
+    row.dataset.logical = entry.logical;
+    row.querySelector(".rc-map-name").textContent = entry.name;
+
+    const select = row.querySelector(".rc-map-select");
+    entries.forEach((_, i) => {
+      const opt = document.createElement("option");
+      opt.value = i + 1;
+      opt.textContent = `servo_out_${i + 1}`;
+      select.appendChild(opt);
+    });
+    select.value = entry.output_pin;
+    select.addEventListener("change", async () => {
+      try {
+        // A swap moves another function too, so re-render every row from
+        // the response rather than just trusting this one select.
+        renderServoMap(await apiPost("/api/servo_map", { logical: entry.logical, output_pin: Number(select.value) }));
+        pollOutputs();
+        showToast(`${entry.name} now drives servo_out_${select.value}`);
+      } catch (err) {
+        showToast(`Couldn't save ${entry.name} output pin: ` + err.message);
+        renderServoMap(await apiGet("/api/servo_map"));
+      }
+    });
+
+    container.appendChild(row);
+  });
+}
+
+function renderServoMap(data) {
+  data.map.forEach((entry) => {
+    const row = document.querySelector(`.servo-map-row[data-logical="${entry.logical}"]`);
+    if (row) row.querySelector(".rc-map-select").value = entry.output_pin;
+  });
+}
+
+// ---------------- Autonomous trim ----------------
+
+let trimNeutralUs = 1500;
+
+function buildTrimRows(data) {
+  trimNeutralUs = data.neutral_us;
+  document.getElementById("trim-max-offset").textContent = data.max_offset_us;
+  document.getElementById("trim-neutral").textContent = data.neutral_us;
+
+  const container = document.getElementById("trim-rows");
+  data.channels.forEach((c) => {
+    const row = document.createElement("div");
+    row.className = "rc-map-row trim-row";
+    row.dataset.logical = c.logical;
+    row.innerHTML = `
+      <span class="rc-map-name"></span>
+      <span class="live-us trim-live"></span>
+      <input class="trim-input" type="number" step="1" inputmode="numeric">
+      <button class="secondary-btn trim-save-btn" type="button" disabled>Save</button>`;
+    row.querySelector(".rc-map-name").textContent = c.name;
+
+    const input = row.querySelector(".trim-input");
+    const saveBtn = row.querySelector(".trim-save-btn");
+    input.min = data.neutral_us - data.max_offset_us;
+    input.max = data.neutral_us + data.max_offset_us;
+    input.addEventListener("input", () => {
+      input.classList.add("dirty");
+      saveBtn.disabled = false;
+    });
+    saveBtn.addEventListener("click", () => saveTrim([{ logical: c.logical, center_us: parseInt(input.value, 10) }]));
+
+    container.appendChild(row);
+  });
+  renderTrim(data, true);
+}
+
+function renderTrim(data, force = false) {
+  data.channels.forEach((c) => {
+    const row = document.querySelector(`.trim-row[data-logical="${c.logical}"]`);
+    if (!row) return;
+    const offset = c.center_us - trimNeutralUs;
+    row.querySelector(".trim-live").textContent = `stick ${c.live_us} µs · trim ${offset >= 0 ? "+" : ""}${offset}`;
+    const input = row.querySelector(".trim-input");
+    if (force || (!input.classList.contains("dirty") && document.activeElement !== input)) {
+      input.value = c.center_us;
+      input.classList.remove("dirty");
+      row.querySelector(".trim-save-btn").disabled = true;
+    }
+  });
+}
+
+async function saveTrim(entries) {
+  const failEl = document.getElementById("trim-fail-reason");
+  try {
+    let result;
+    for (const e of entries) result = await apiPost("/api/trim", e);
+    failEl.textContent = "";
+    renderTrim(result, true);
+    showToast("Trim saved");
+  } catch (err) {
+    failEl.textContent = err.message;
+    showToast("Couldn't save trim: " + err.message);
+  }
+}
+
+function initTrimButtons() {
+  const captureBtn = document.getElementById("trim-capture-btn");
+  captureBtn.addEventListener("click", async () => {
+    const failEl = document.getElementById("trim-fail-reason");
+    captureBtn.disabled = true;
+    try {
+      renderTrim(await apiPost("/api/trim", { capture: true }), true);
+      failEl.textContent = "";
+      showToast("Trim captured from sticks");
+    } catch (err) {
+      failEl.textContent = err.message;
+      showToast("Trim capture failed: " + err.message);
+    } finally {
+      captureBtn.disabled = false;
+    }
+  });
+  document.getElementById("trim-reset-btn").addEventListener("click", () => {
+    const rows = document.querySelectorAll(".trim-row");
+    saveTrim([...rows].map((r) => ({ logical: Number(r.dataset.logical), center_us: trimNeutralUs })));
+  });
+}
+
+async function pollTrim() {
+  try {
+    renderTrim(await apiGet("/api/trim"));
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
+// ---------------- Control direction test ----------------
+
+function fmtSigned(n, digits = 0) {
+  const v = Number(n).toFixed(digits);
+  return n >= 0 ? `+${v}` : v;
+}
+
+function describeCmd(us, pos, neg) {
+  if (Math.abs(us) < 1) return "neutral";
+  return `${fmtSigned(us)} µs (${us > 0 ? pos : neg})`;
+}
+
+function renderControlTest(s) {
+  const el = document.getElementById("ctrl-test-status");
+  if (!s.active) {
+    el.textContent = "Idle";
+    return;
+  }
+  const left = `${(s.remaining_ms / 1000).toFixed(1)}s left`;
+  const roll = `roll ${describeCmd(s.roll_cmd_us, "right", "left")}`;
+  const pitch = `pitch ${describeCmd(s.pitch_cmd_us, "up", "down")}`;
+  if (s.kind === "level") {
+    el.textContent = `Level test, ${left} — IMU roll ${fmtSigned(s.roll_deg, 1)}°, pitch ${fmtSigned(s.pitch_deg, 1)}° — autopilot wants ${roll}, ${pitch}`;
+  } else {
+    el.textContent = `Direction test, ${left} — commanding ${roll}, ${pitch}`;
+  }
+}
+
+function initControlTest() {
+  document.querySelectorAll(".ctrl-test-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      try {
+        renderControlTest(await apiPost("/api/control_test", { test: btn.dataset.test }));
+        showToast(`Control test: ${btn.textContent}`);
+      } catch (err) {
+        showToast("Couldn't start control test: " + err.message);
+      }
+    });
+  });
+  document.getElementById("ctrl-test-stop").addEventListener("click", async () => {
+    try {
+      renderControlTest(await apiPost("/api/control_test", { test: "stop" }));
+    } catch (err) {
+      showToast("Couldn't stop control test: " + err.message);
+    }
+  });
+}
+
+async function pollControlTest() {
+  try {
+    renderControlTest(await apiGet("/api/control_test"));
+  } catch (err) {
+    // Transient hiccup on the local AP link -- ignore, next poll retries.
+  }
+}
+
+// ---------------- Flight log ----------------
+
+function describeFlightLogEntry(e) {
+  switch (e.type) {
+    case "boot": return `Boot #${e.boot} — reset reason: ${e.reset_reason}`;
+    case "rc_dropout": return `Radio dropout ${e.value} ms (recovered)`;
+    case "rc_lost": return "Radio LOST (silent > 1 s)";
+    case "rc_regained": return `Radio regained after ${(e.value / 1000).toFixed(1)} s`;
+    case "failsafe_rth": return "Failsafe: returning home";
+    case "failsafe_descend": return "Failsafe: motors off, spiral descent";
+    case "failsafe_cleared": return "Failsafe cleared";
+    case "autonomous_lockout": return e.value === 1 ? "Autonomous locked out: radio regained during descent" : "Autonomous locked out: no GPS fix";
+    case "imu_fault": return "IMU FAULT — autonomous disabled until reboot";
+    case "no_radio_safe": return "No radio, autonomous unavailable — trim + motors off";
+    default: return `${e.type} (${e.value})`;
+  }
+}
+
+function isBadFlightLogEntry(e) {
+  if (e.type === "boot") return /BROWNOUT|CRASH/.test(e.reset_reason);
+  return ["rc_lost", "failsafe_descend", "imu_fault", "no_radio_safe"].includes(e.type);
+}
+
+function renderFlightLog(data) {
+  const list = document.getElementById("flight-log");
+  list.innerHTML = "";
+  if (data.entries.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "No events.";
+    list.appendChild(li);
+    return;
+  }
+  data.entries.forEach((e) => {
+    const li = document.createElement("li");
+    const t = e.type === "boot" ? "" : `[boot #${e.boot} +${(e.t_ms / 1000).toFixed(1)}s] `;
+    li.textContent = t + describeFlightLogEntry(e) + (e.boot === data.current_boot && e.type === "boot" ? " (this setup session)" : "");
+    if (e.type === "boot") li.classList.add("flog-boot");
+    if (isBadFlightLogEntry(e)) li.classList.add("flog-bad");
+    list.appendChild(li);
+  });
+}
+
+async function loadFlightLog() {
+  try {
+    renderFlightLog(await apiGet("/api/flight_log"));
+  } catch (err) {
+    showToast("Couldn't load flight log: " + err.message);
+  }
+}
+
+function initFlightLog() {
+  document.getElementById("flight-log-refresh").addEventListener("click", loadFlightLog);
+  document.getElementById("flight-log-clear").addEventListener("click", async () => {
+    try {
+      renderFlightLog(await apiPost("/api/flight_log", { clear: true }));
+      showToast("Flight log cleared");
+    } catch (err) {
+      showToast("Couldn't clear flight log: " + err.message);
+    }
+  });
+  loadFlightLog();
 }
 
 // ---------------- Mode status (manual vs. autonomous) ----------------
@@ -413,6 +671,24 @@ function initMotorCfg(cfg) {
   });
   updateSideRowVisibility(cfg.motor_count);
 
+  document.querySelectorAll(".esc-test-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const esc = Number(btn.dataset.esc);
+      try {
+        const result = await apiPost("/api/motor_test", { esc });
+        showToast(`Spinning ESC${esc}...`);
+        // Mirrors the firmware's own timeout -- purely to stop double-taps
+        // from re-triggering mid-test; the board ends the test on its own.
+        document.querySelectorAll(".esc-test-btn").forEach((b) => (b.disabled = true));
+        setTimeout(() => {
+          document.querySelectorAll(".esc-test-btn").forEach((b) => (b.disabled = false));
+        }, result.duration_ms);
+      } catch (err) {
+        showToast(`Couldn't test ESC${esc}: ` + err.message);
+      }
+    });
+  });
+
   leftCheckbox.checked = cfg.esc1_is_left;
   leftCheckbox.addEventListener("change", async () => {
     try {
@@ -425,6 +701,20 @@ function initMotorCfg(cfg) {
 }
 
 // ---------------- Airframe ----------------
+
+function initNavMode(mode) {
+  document.querySelectorAll('input[name="nav-mode"]').forEach((radio) => {
+    radio.checked = radio.value === mode;
+    radio.addEventListener("change", async () => {
+      try {
+        const result = await apiPost("/api/nav_mode", { mode: radio.value });
+        showToast(result.nav_mode === "heading_hold" ? "Autonomous: straight & level" : "Autonomous: follow waypoints");
+      } catch (err) {
+        showToast("Couldn't save autonomous mode: " + err.message);
+      }
+    });
+  });
+}
 
 function initAirframe(mode) {
   document.querySelectorAll('input[name="airframe"]').forEach((radio) => {
@@ -533,10 +823,25 @@ function updatePlaneMarker(lat, lon) {
   }
 }
 
+let homeMarker = null;
+
+function updateHomeMarker(home) {
+  if (!map || !home) return;
+  if (!homeMarker) {
+    homeMarker = L.circleMarker([home.lat, home.lon], {
+      radius: 8, color: "#16a34a", weight: 3, fillColor: "#16a34a", fillOpacity: 0.35, interactive: false,
+    }).addTo(map);
+    homeMarker.bindTooltip("Home (return-to-home point)", { direction: "top" });
+  } else {
+    homeMarker.setLatLng([home.lat, home.lon]);
+  }
+}
+
 async function pollGps() {
   try {
     const data = await apiGet("/api/gps");
     if (data.valid) updatePlaneMarker(data.lat, data.lon);
+    updateHomeMarker(data.home);
   } catch (err) {
     // Transient hiccup on the local AP link -- ignore, next poll retries.
   }
@@ -590,10 +895,17 @@ async function loadInitialState() {
     buildOutputRows(state.outputs);
     initMotorCfg(state.motor_cfg);
     initAirframe(state.airframe);
+    initNavMode(state.nav_mode);
     initAirspeed(state.airspeed_cfg);
 
     const rcMap = await apiGet("/api/rc_map");
     buildRcMapRows(rcMap.map);
+
+    const servoMap = await apiGet("/api/servo_map");
+    buildServoMapRows(servoMap.map);
+
+    buildTrimRows(await apiGet("/api/trim"));
+    initTrimButtons();
   } catch (err) {
     showToast("Couldn't reach setup API: " + err.message);
     initMap(0, 0);
@@ -602,6 +914,8 @@ async function loadInitialState() {
 
 document.addEventListener("DOMContentLoaded", () => {
   buildPidCards();
+  initControlTest();
+  initFlightLog();
   document.getElementById("clear-mission-btn").addEventListener("click", clearMission);
   document.getElementById("loop-toggle").addEventListener("change", onLoopToggleChanged);
   loadInitialState();
@@ -609,6 +923,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(pollAirspeed, OUTPUT_POLL_INTERVAL_MS);
   setInterval(pollImu, OUTPUT_POLL_INTERVAL_MS);
   setInterval(pollRcMap, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollTrim, OUTPUT_POLL_INTERVAL_MS);
+  setInterval(pollControlTest, OUTPUT_POLL_INTERVAL_MS);
   setInterval(pollMode, OUTPUT_POLL_INTERVAL_MS);
   setInterval(pollGps, GPS_POLL_INTERVAL_MS);
 });

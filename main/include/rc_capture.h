@@ -15,7 +15,14 @@ typedef struct {
 
     volatile uint32_t last_rise_ticks;   // Tick counter of last rising edge
     volatile uint32_t pulse_width_us;    // Measured pulse width
-    volatile int64_t last_update_us;     // Most recent update in us
+    // Low 32 bits of esp_timer_get_time() at the most recent edge. 32-bit on
+    // purpose: the ISR writes it on one core while control_task reads it on
+    // the other, and a 64-bit value isn't read/written atomically on this
+    // 32-bit CPU -- a torn read could return a bogus old timestamp and fake
+    // a signal dropout. Compare with unsigned subtraction (wrap-safe for
+    // gaps under ~71 minutes).
+    volatile uint32_t last_update_us;
+    volatile bool ever_updated;          // false until the first edge
     volatile bool got_rise;              // True after rising edge, before falling edge
 } rc_input_t;
 

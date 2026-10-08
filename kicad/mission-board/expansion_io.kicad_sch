@@ -876,7 +876,7 @@
 	)
 	(hierarchical_label "INTER_ESP_UART_TX"
 		(shape input)
-		(at 121.92 35.56 0)
+		(at 121.92 40.64 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -895,17 +895,6 @@
 			(justify left)
 		)
 		(uuid "2ab7079a-7e3f-46a0-89a2-7d34bed928ae")
-	)
-	(hierarchical_label "GND"
-		(shape input)
-		(at 55.88 80.01 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "2e13fd51-e2dc-402b-b39d-2aca4d9e5457")
 	)
 	(hierarchical_label "I2C_SCL"
 		(shape input)
@@ -940,31 +929,9 @@
 		)
 		(uuid "50270168-77fa-425c-9179-45ab66d6568e")
 	)
-	(hierarchical_label "SPI_CS"
-		(shape input)
-		(at 55.88 90.17 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "60d70f4e-d977-4f63-9599-eedb924b71cf")
-	)
-	(hierarchical_label "SPI_MOSI"
-		(shape input)
-		(at 55.88 82.55 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "83e59879-0a04-456c-9245-9757dd100b97")
-	)
 	(hierarchical_label "GND"
 		(shape input)
-		(at 121.92 40.64 0)
+		(at 121.92 35.56 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -972,17 +939,6 @@
 			(justify left)
 		)
 		(uuid "84cf21ce-1836-4626-bf36-c004579798c4")
-	)
-	(hierarchical_label "SPI_SCK"
-		(shape input)
-		(at 55.88 87.63 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8c2fcccd-2c65-4618-ae44-47d0b0e13f64")
 	)
 	(hierarchical_label "DEBUG_UART_RX"
 		(shape output)
@@ -1039,27 +995,27 @@
 		)
 		(uuid "e0aad761-4e68-4e75-b3c8-ff03fb63eb06")
 	)
-	(hierarchical_label "SPI_MISO"
-		(shape output)
-		(at 55.88 85.09 0)
+	(hierarchical_label "FASTIO4"
+		(shape bidirectional)
+		(at 107.95 85.09 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "f53df766-63ec-4c24-bb8b-d531d1d79974")
+		(uuid "e85adf3f-2c2a-412a-9478-5d4a0745cddb")
 	)
-	(hierarchical_label "ESP_3V3"
-		(shape input)
-		(at 55.88 77.47 0)
+	(hierarchical_label "FASTIO5"
+		(shape bidirectional)
+		(at 107.95 87.63 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "fb5def03-9583-4006-bd68-1a9e4b3c8624")
+		(uuid "f404037f-6f1e-48c6-b678-56e0ca02810b")
 	)
 	(hierarchical_label "I2C_SDA"
 		(shape bidirectional)
@@ -1126,6 +1082,17 @@
 			)
 		)
 		(property "Description" "Spare GPIO/ADC expansion: 3V3, GND, GPIO1-3, ADC"
+			(at 102.87 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C2895846"
 			(at 102.87 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -1227,6 +1194,17 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C2895846"
+			(at 133.35 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "43b6b752-ebea-4fac-aa9f-08f63dd1dcfd")
 		)
@@ -1302,6 +1280,17 @@
 			)
 		)
 		(property "Description" "I2C expansion: 3V3, GND, SDA, SCL"
+			(at 44.45 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C2895846"
 			(at 44.45 38.1 0)
 			(hide yes)
 			(show_name no)
@@ -1421,97 +1410,6 @@
 			(project "mission-board"
 				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058/be2b88e7-186f-4dad-a753-1e9e423eef4a"
 					(reference "J18")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_01x06_Pin")
-		(at 50.8 82.55 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "fe9e5564-7fbe-4b80-ab1c-8d18f3c1e927")
-		(property "Reference" "J15"
-			(at 45.72 80.01 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "SPI Expansion"
-			(at 44.704 83.566 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
-			(at 50.8 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 50.8 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "SPI expansion: 3V3, GND, MOSI, MISO, SCK, CS"
-			(at 50.8 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "57274239-46b3-4a22-b078-5a8305b3c2e3")
-		)
-		(pin "2"
-			(uuid "3e2864f7-6d31-48d7-8e9b-4b9eb5ac228d")
-		)
-		(pin "3"
-			(uuid "97f124a3-d92c-4107-8c85-0f5eadb51a3c")
-		)
-		(pin "4"
-			(uuid "05f8d714-6c34-4116-ac3a-3b5434dc9b09")
-		)
-		(pin "5"
-			(uuid "29de975f-72c5-4b68-93ee-338e4261791e")
-		)
-		(pin "6"
-			(uuid "42889abd-be1c-4f76-8645-0795747e145e")
-		)
-		(instances
-			(project "mission-board"
-				(path "/3c2d59a7-2630-4960-9e06-c91fd9ee8058/be2b88e7-186f-4dad-a753-1e9e423eef4a"
-					(reference "J15")
 					(unit 1)
 				)
 			)
